@@ -11,12 +11,19 @@ jobs:
       - name: Send Message to Feishu
         env:
           FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          REPO: ${{ github.repository }}
+          ACTOR: ${{ github.actor }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          TIMESTAMP: ${{ github.event.head_commit.timestamp }}
+          COMPARE: ${{ github.event.compare }}
         run: |
+          TEXT="🚀 GitHub 代码提交通知
+仓库：${REPO}
+提交人：${ACTOR}
+提交信息：${COMMIT_MSG}
+提交时间：${TIMESTAMP}
+查看代码：${COMPARE}"
+
           curl -s -X POST "$FEISHU_WEBHOOK_URL" \
             -H "Content-Type: application/json" \
-            -d "{
-              \"msg_type\": \"text\",
-              \"content\": {
-                \"text\": \"🚀 GitHub 代码提交通知\n仓库：${{ github.repository }}\n提交人：${{ github.actor }}\n提交信息：${{ github.event.head_commit.message }}\n提交时间：${{ github.event.head_commit.timestamp }}\n查看代码：${{ github.event.compare }}\"
-              }
-            }"
+            -d "$(jq -n --arg text "$TEXT" '{"msg_type":"text","content":{"text":$text}}')"
