@@ -1,0 +1,92 @@
+---
+description: Agent 还原超大 Figma 节点（高度 > 8000px / 多章节并列 / 嵌套表格 + 代码块）的稀疏结构规避与持久化规则
+globs: "**/*.tsx"
+alwaysApply: true
+---
+
+# 大稿分批模式（Large Design / Sparse Structure 规避）
+
+## 规则如何启用
+
+1. **自动启用**：凡满足下文「触发条件」任一的 Figma 还原任务，必须按本规则全文执行；**禁止**不拉稿索引、不拆 phase 直接对超大父节点 `get_design_context` 后产出单文件。
+2. **显式启用（与 `figma-to-react-pipeline` 协同）**：当用户声明须按本文件执行、或要求「精确还原 / 双端高保真」、或在触发 **`@.cursor/skills/figma-to-react-pipeline/SKILL.md`** 的任务中明确要求与本规则联动时，**即使未命中**下文数值型触发条件，仍须执行：**`get_metadata` 先索引**（目标节点或最近合理父 frame）→ 子段 `get_design_context` + `get_screenshot` → **桌面与移动端** frame 同步拉取与对照 → **`planning-with-files`** 维护 `task_plan.md` / `findings.md` / `progress.md`（含 **2-Action Rule**）→ 5 步流水与单文件 ≤200 行等门禁**全文适用**；体量与分段以稿面子结构为准，不因节点较矮而跳过持久化与双端验收。
+
+## 触发条件（任一命中即自动启用）
+
+- **节点高度** > **8000px**（单一 `frame` 即「巨型节点」）。
+- **同级章节** ≥ 5 个，且每个章节自身含表格 / 代码块 / 列表 / 子段（结构密度高）。
+- 同一父 frame 下 **并列表格 ≥ 3 张**，或**代码块 ≥ 3 处**。
+- 经验上 `get_design_context` 一次返回出现 **稀疏 / 截断 / 占位**（`...`、`[truncated]`、子节点缺文本等）。
+
+## 拉稿顺序硬约束（先索引后下钻）
+
+```mermaid
+flowchart TD
+    A[get_metadata 父节点] --> B[拿到子节点 ID + 类型 + 文本预览索引]
+    B --> C{子节点高度 / 复杂度}
+    C -->|<= 2000px 且 表格 <= 2| D[get_design_context 章节根]
+    C -->|> 2000px 或 表格 / 代码块密集| E[get_design_context 子段节点]
+    D --> F[get_screenshot 同节点 视觉对照]
+    E --> F
+    F --> G[2-Action Rule 写 findings.md]
+    G --> H[落 tsx + i18n]
+```
+
+- **必须**先 `get_metadata(parentNodeId)` 取得子节点索引（含 frame 高度、文本节点预览）。
+- **禁止**在未索引前对超大父节点直接 `get_design_context`，避免稀疏结构吞文本。
+- 对 `> 2000px` 或表格 / 代码块密集的子段，**必须**逐子节点 `get_design_context + get_screenshot`，而非整段一次拉。
+- 表格内文案需要逐单元格落地时，子段 `get_design_context` 输出应**在写代码前**抄录到 `findings.md`，不能仅靠模型记忆。
+
+## 必须搭配 `planning-with-files`
+
+启用本规则的任务**必须**同步触发 **`planning-with-files`** 技能，在仓库根新建并维护：
+
+- `task_plan.md`：按 **每章节 = 1 phase** 拆分（外加准备 + 整合 + 规则沉淀 phase）。
+- `findings.md`：每章节文案 / 表头 / 表行 / 公式 / 间距数值 / 节点 ID 表，逐 phase 增量补全。
+- `progress.md`：Session log + 错误日志 + 偏离 Figma（typo 修正等）说明。
+
+会话开始 / `/clear` 后**第一动作**是 read 三件套，按未完成 phase 续做；不得忘记上下文重启。
+
+## 每子模块固定 5 步流水（强制）
+
+每个章节 / 子段都按以下 5 步执行，**禁止**跳步：
+
+1. **fetch**：`get_design_context(子节点)` + `get_screenshot(子节点)`。
+2. **records**：把可见文本、表头、表行、代码块、间距 / 字号 / 行高数值写入 `findings.md`。
+3. **implement**：基于 findings 实现 `XxxChapterXX*.tsx` + i18n key 同步落 `en.json` / `zh-CN.json`。
+4. **self-check**：对照 `get_screenshot` 逐项核 `font-size / leading / spacing / 换行`，桌面 + `<md` 双端。
+5. **mark complete**：更新 `task_plan.md` phase 状态 + `progress.md` 增量日志。
+
+## 2-Action Rule（每 2 次拉稿即写 findings）
+
+每完成 **2 次** Figma MCP 调用（`get_design_context` / `get_screenshot` / `get_metadata`），**必须**立即将结构化产物写入 `findings.md`，避免多模态上下文稀释、模型遗忘。
+
+## 单文件体量门禁
+
+- 单 `Chapter*.tsx` ≤ **200 行**；超过须按子段（如 13.1 / 13.2 / ...）继续拆出 `chapters/chapter13/Section131.tsx` 等。
+- 公共结构（表格、代码块、卡片）**复用既有组件**（如 `WhitepaperBorderedTable` / `WhitepaperCodeBlock`），不允许在每个 chapter 内重写。
+- 数据驱动：表头 / 表行用 `as const` 数组 + `headerKeys / rowKeys` 喂入复用组件；**禁止**手写 `<table>` 拼接长 className。
+
+## i18n 批量写入
+
+- 实现一个 chapter 后**立即**把新 keys 同步写入 `en.json` 与 `zh-CN.json`（中文 key 时 `key === value` 逐字一致）。
+- 推荐做法：本地一次性脚本（一次性 `.mjs` 写入后删除）批量补 keys，按字母序重写 JSON，避免手抖漏写。
+- 全部 chapters 完成后**告知用户**手动执行 `pnpm i18n:translate`（AI 不触发自动翻译）。
+
+## 稿面偏离的处理
+
+Figma 文档自身可能有 **typo / 复制粘贴残留 / 比例不一致** 等。处理原则：
+
+- **明显 typo**（如表头第 3 列写「角色」但语义为「现金分润」）：在实现中按语义修正，并在 `findings.md` 标注「Figma 偏离原因 / 修正后值」。
+- **数值不一致**（如 `10% / 15` 比例与数量不匹配）：按 Figma 原值保留，`findings.md` 记录潜在歧义，**不在代码层擅改**。
+- **复制粘贴残留**（同一段落在 13.4 重复出现 13.3 内容）：按设计意图判定为 typo，仅渲染一次，并记录依据。
+
+## 断点续做（会话恢复）
+
+- 若上下文丢失或 `/clear` 后续做，必须先 read `task_plan.md` 顶部 50 行 + 最新 `progress.md`，再决定下一步。
+- 不得在未确认未完成 phase 前盲目"重做整页"；按 `findings.md` 已记录数据直接续写新 chapter。
+
+## 与既有规则的关系
+
+- 本规则**只**约束「大稿分批 + 持久化 + 5 步流水」工作流；具体的 React / Tailwind / i18n / icon / format 落地条款仍以 **`@.cursor/rules/agent-to-react.mdc`** 及其子规则为准。
+- 与 **`@.cursor/skills/figma-to-react-pipeline/SKILL.md`** 配合使用：流水线技能负责 MCP 拉稿与高保真目标，本规则负责「大稿如何分批不漏内容」的执行细节。

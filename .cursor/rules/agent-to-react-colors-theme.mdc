@@ -1,0 +1,22 @@
+---
+description: 颜色与主题 — 语义色、app.css token、深浅色模式
+globs: "**/*.tsx"
+alwaysApply: true
+---
+
+# 颜色与主题：基于 CSS 变量的 Tailwind 类名
+
+- 颜色、边框色、带透明度的背景等一律写在 **`className`**。
+- 使用 Tailwind 主题语义色（如 `bg-background`、`text-foreground`、`bg-card`、`border-border`、`bg-muted`、`text-muted-foreground`、`bg-primary` 等），**避免**硬编码 `#FFFFFF`、`#130261` 等。
+- 暗黑模式自动由 `dark:` 类名和底层 CSS 变量控制，只需正确使用语义化颜色变量。
+- **全局颜色自动补全（强制）**：当某个 Figma 模块使用的颜色在现有全局 token 中不存在时，必须**自动**在**项目全局样式入口**（如 `app.css`、`globals.css` 等，以仓库实际文件为准）中补齐 CSS 变量并接入 **`@theme inline`**（或项目等价的主题扩展方式）下的 `--color-*` 映射，然后组件改用新语义色类；禁止在业务组件里直接落地十六进制颜色。
+  - 推荐命名：按业务域前缀统一（如 `launchpad-*` / `index-*`），最小集合覆盖 `bg / text / border / chip` 等语义。
+  - 写入位置：同时补 `:root` 与 `.dark,[data-theme="dark"]`，确保主题切换稳定；若当前阶段仅有暗色稿，可先两端同值，后续再细分。
+  - 代码落地顺序：先加变量，再替换组件 class；避免先改 class 导致构建期找不到颜色类。
+
+# 深 / 浅色模式
+
+- 本项目基于 `data-theme="dark"` / `.dark` 类实现深色模式。
+- 直接使用语义颜色（`bg-background`, `text-foreground`）自动适配。
+- 如果特定元素需要定制，使用 `dark:bg-black` 这种 Tailwind 变体前缀。
+- 深色下图标/图片可读性差时，可用 `dark:invert` 等适度处理。

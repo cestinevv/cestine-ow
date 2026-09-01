@@ -1,0 +1,100 @@
+---
+description: 联调、接接口、前后端连线、静态页接真实数据、OpenAPI、Orval、useQuery、useMutation、invalidateQueries、prefetch、缓存更新、分页、useInView、fetchNextPage、AppLoadingContainer、TanStack Table、useReactTable、loading/error/empty、formatDateFromMillisecond、formatNumber、mathUtil、mark 游标、容器与展示分层、api-to-ui；纯 Figma 静态还原、仅改样式无请求逻辑时不要启用。与 `@.cursor/skills/api-to-ui-pipeline/SKILL.md` 分工配合；联调任务建议在对话中 @ 本文件确保生效。
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# Agent 到 API（全局规范）
+
+凡在本仓库进行**静态页接真实数据、联调、路由与 hooks 打通、补齐 loading/error/empty/mutation 反馈**等工作时，均按本文及其子规则执行。与 **流水线步骤、对话输出格式** 的分工见 **`@.cursor/skills/api-to-ui-pipeline/SKILL.md`**；若本文与该技能正文冲突，**以本文（`.mdc`）为准**。
+
+联调涉及的 **`tsx` 展示与布局**仍须遵守 **`@.cursor/rules/agent-to-react.mdc`** 及适用的子规则（`components` / `layout` / `translation` / `format` 等）。
+
+## 适用场景
+
+- 已有静态页面，要求接入后端接口。
+- 已有 OpenAPI/SDK/接口客户端产物，要求完成联调。
+- 要求把路由层、页面组件层、接口客户端层打通。
+- 要求补齐 `loading` / `error` / `empty` / `mutation feedback` 状态。
+
+## 目标
+
+把「能看」的静态页面改造成「能跑」的真实业务页面，并保持：
+
+- 复用项目既有接口客户端与缓存 key 体系，避免重复封装。
+- 容器层与展示层职责边界清晰，不混乱下沉逻辑。
+- 缓存更新策略明确（失效、局部更新或 optimistic），交互有反馈。
+- 提供可执行的验证结果，而非「看起来可用」。
+
+## 项目适配（迁移性关键，强制先行）
+
+在动手前先识别当前仓库的「等价实现」，并将后续步骤映射到该实现，不强制固定技术栈：
+
+- 路由承载层：可能是 React Router / Next route segment / 页面容器。
+- 接口客户端层：可能是 Orval 生成 hooks、SDK client、自定义 query hooks。
+- 缓存层：可能是 TanStack Query、SWR、RTK Query 或其他状态管理。
+- 通知反馈层：可能是 toast / snackbar / message 组件。
+
+产出一段「映射表」：`本规范术语 -> 本项目实际实现`，后续全程按映射执行。
+
+## 文档结构（MVC 速查）
+
+细则按 **MVC** 拆分为独立规则文件，以下为目录；若条目与正文冲突，以对应 `.mdc` 正文为准。
+
+```mermaid
+graph TD
+    Parent[agent-to-api]
+    Parent --> Model[agent-to-api-model]
+    Parent --> View[agent-to-api-view]
+    Parent --> Controller[agent-to-api-controller]
+```
+
+- **`@.cursor/rules/agent-to-api-model.mdc`**：**Model（数据层）**——接口客户端复用、`@/utils` 聚合导入、生成 model 直接消费、Feature 类型沉淀、默认值禁忌、派生值 `undefined` 语义、`mathUtil` 数值计算工具、`mark` 游标协议。
+- **`@.cursor/rules/agent-to-api-view.mdc`**：**View（展示层）**——**`AppLoadingContainer`**（普通列表 + Table `asTable`）统一首屏三态、通用 `loading / error / empty / submitting` 落位、TanStack `useReactTable` + shadcn `Table` 列模型、日期/数字/枚举展示格式化与位置约束。
+- **`@.cursor/rules/agent-to-api-controller.mdc`**：**Controller（控制层）**——模块边界与数据流、接口能力 → UI 状态映射、预取与组件消费分工、Mutation 缓存更新策略、静态残留清理、自动滚动分页基线（`useInView` + 哨兵 + `!isFetchingNextPage`）、`useCallback` 禁令、中间变量最小化、事件抽离、组件体内 5 环节顺序。
+
+## 交付治理（唯一事实来源）
+
+负责**联调任务完成时如何回复、如何被验收、何时必须返工**。技能侧（`api-to-ui-pipeline`）在交付阶段一律以本节为准。
+
+### 输出格式（任务完成时回复须包含）
+
+1. 本次真实修改文件列表（不得为空）与每个文件承担的职责。
+2. 数据流与缓存更新策略（按 query / mutation 列出）。
+3. 覆盖了哪些状态（loading / error / empty / submitting）。
+4. 本地验证结果（必填：至少 2 条真实命令与结果摘要）。
+5. 剩余风险与建议下一步。
+
+### 强制执行门禁（必须同时满足）
+
+- 必须产生真实代码改动，且至少覆盖「容器层 + 组件层」中的任意两处修改点。
+- 必须运行仓库可用验证命令（至少 lint 或 typecheck + 1 条运行 / 行为验证）。
+- 必须提供证据矩阵：`断言/目标 -> 文件路径 -> 关键符号`（符号以项目实际命名为准）。
+- 若用户没有明确要求「仅评审」，禁止只输出方案文档而不落地代码。
+
+### 验收清单
+
+- 是否全链路使用了项目既有接口客户端层（而非重复造轮子）。
+- 是否存在 query key 参数不一致导致缓存失效失败。
+- 是否覆盖 loading / error / empty / success 四类核心状态。
+- 主列表 / 数据表首屏三态是否使用 **`@/components/common/AppLoadingContainer`**（表格须 `asTable` + `colSpan`，见 **`agent-to-api-view.mdc`** §1）。
+- 是否每个 mutation 都有明确的后置缓存策略。
+- 是否避免把联调逻辑塞进纯展示组件。
+- 是否按规范复用了 `@/utils/formatDate`（历史记录时间统一 `formatDateFromMillisecond`）展示日期时间。
+- 是否按规范复用了 `@/utils/formatNumber`（`formatNumber`）展示金额/数量等数字字段。
+- 是否执行了仓库约定的 lint / format / test（按可用脚本）。
+- 自静态转入联调后，是否已移除该模块 **Mock / 假数据**，且未保留与 Orval **`model` 同构**的 feature 内重复类型（见 **`@.cursor/rules/agent-to-api-controller.mdc`** §5、**`@.cursor/rules/agent-to-api-model.mdc`** §3）。
+
+### 失败信号（出现任一项需返工）
+
+- 仍保留关键假数据或 **Mock 文件**而未标注原因；或与 Orval 生成模型**同构重复**的 feature 内 `types`/行模型未删除。
+- mutation 成功后 UI 不更新或刷新范围失控。
+- 只实现 happy path，没有错误态 / 空态。
+- 列表 / 表格首屏三态用手写 `Spinner` 或独立 `TableRow` 状态行，未走 **`AppLoadingContainer`**。
+- 复用了接口但绕开了项目既有缓存 / key 体系。
+- 仅输出建议 / 方案，未提供真实代码改动与命令验证证据。
+
+## 注释留白（全局）
+
+- 行内逻辑注释（`//`）若用于解释其下方代码块，**注释上方必须留一行空行**，避免注释与上一条语句粘连。
+- 连续多行注释可视为同一注释块，不要求注释块内部再额外插空行；但注释块与其上一条代码之间仍需保留 1 行空行。

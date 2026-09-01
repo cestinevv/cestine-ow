@@ -1,0 +1,22 @@
+---
+description: 尺寸还原与验收 — Figma 数值对齐、4px 与排版边界、提交前自检（与 typography / layout 配合）
+globs: "**/*.tsx"
+alwaysApply: true
+---
+
+# 尺寸还原与验收清单（强制）
+
+字号 / 行高 / 字距及「移动端无原稿」缩放系数等细则见 **`@.cursor/rules/agent-to-react-typography.mdc`**；布局间距刻度见 **`@.cursor/rules/agent-to-react-layout.mdc`**。本节聚焦 **尺寸与稿面对齐** 及 **交付自检**。
+
+- **禁止主观发挥**：以下属性必须按 Figma 数值优先还原：`width/height/min-height/padding/gap/radius/font-size/line-height/letter-spacing`。
+- **4px 刻度只约束布局间距**：`p/m/gap/size` 优先用 4px 刻度；但字体、字距、行高应以 Figma 原值为准，不得被 4px 刻度“二次改写”。
+- **断点行为一致**：若 Figma 仅提供桌面稿，`md` 及以上必须先 1:1 还原桌面尺寸；移动端再做最小必要改造，不能反向影响桌面值。
+- **移动端友好例外（允许）**：当用户明确允许时，`<md` 可以为可读性与信息密度做“适度缩小”：
+  - 允许对 `font-size/line-height/padding/gap/min-height` 做下调；
+  - 字号缩放优先遵循 **typography** 中「统一缩放系数」规则（默认 0.88，可在 0.85~0.90 内统一调整），且遵守 **12px 下限**与 **36px 上限**（先按比例算，再钳制到 `[12, 36]`）；`padding/gap/min-height` 等间距按**同一系数**推导目标后，**映射到 4px 刻度**（允许 ±1 档容错），写法上仍须符合 **layout** 中「Tailwind 间距刻度」与标准 `p-* / gap-*` 类名规范；
+  - `md` 及以上必须继续保持 Figma 1:1，不得被移动端策略污染。
+- **提交前自检（必须执行）**：
+  1. 对照 `get_screenshot`，检查文字块的行数与换行位置是否一致；
+  2. 核对关键节点的 `height/padding/font-size` 是否与 Figma 一致（允许 ±1px 渲染误差）；
+  3. 用户已指出具体 DOM 节点时，先精修该节点，不得只做全局“近似调整”。
+  4. 同一模块必须完成 `<md` 与 `md` 双端复核，避免“桌面修正后移动端回退”。

@@ -1,0 +1,118 @@
+---
+description: 联调 Controller：useQuery、useMutation、invalidateQueries、setQueryData、乐观更新、分页 useInView 哨兵 fetchNextPage、禁止 useCallback、组件五环节顺序、容器预取；无请求与缓存编排时不要启用。
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# Agent 到 API · Controller（控制层）
+
+负责**编排**：模块边界、Query/Mutation 触发、缓存更新、分页触发与组件代码形态。Model（数据契约）与 View（展示）之间的**桥**。
+
+## 1) 识别模块边界与数据流
+
+先定位：
+
+- 入口容器（layout / index / detail 或等价页面层）。
+- 组件边界（容器组件 vs 展示组件）。
+- 对应 API 能力（read / create / update / delete / search / pagination / filter）。
+
+产出一份最小数据流图（文本即可），至少包含：`Container -> Query Read -> UI Props -> Mutation -> Cache Update`。
+
+## 2) 接口能力映射到 UI 状态
+
+按页面区块逐个映射：
+
+- **Query**：谁发起、谁消费、谁决定 skeleton。
+- **Mutation**：由谁触发、成功后更新哪些 query。
+- **异常**：网络错误、空数据、业务失败分别如何呈现。
+
+禁止直接在纯展示组件里散落请求逻辑；展示组件优先接受已归一化数据。列表 / 表格首屏三态须用 **`AppLoadingContainer`**，见 **`@.cursor/rules/agent-to-api-view.mdc`** §1（普通列表 §1.1、Table `asTable` §1.2）。
+
+## 3) 预取与组件消费分工
+
+默认策略：
+
+- **容器层**：负责预取、参数解析、错误边界与首屏加载策略。
+- **组件层**：负责消费查询结果与触发 mutation，不重复构建请求语义。
+- **缓存时效参数默认从全局继承**：联调代码中默认不在业务组件/页面的 query 上显式设置 `staleTime`；除非有明确产品或性能诉求（可追溯）才允许覆盖，并需在代码处加中文注释说明原因。
+
+若项目不使用 suspense，则按现有模式统一，不要混搭多套状态管理。
+
+## 4) Mutation 与缓存更新
+
+每个 mutation 明确写出：
+
+- 成功后更新哪个缓存域（invalidate / patch / revalidate）。
+- 是否需要 optimistic update（高频、强感知交互优先考虑）。
+- 失败反馈（toast + 可重试动作 + 禁用态恢复）。
+
+不要「请求成功但页面不刷新」；也不要无条件全量失效导致闪烁。
+
+## 5) 静态残留清理
+
+检查并替换联调常见遗漏：
+
+- **Mock 与假数据（强制）**：自静态页转入**真实接口联调**后，须**删除**该模块内全部 Mock 文件、`*mock*`、未接接口的写死列表/占位数组；禁止在合并联调代码后仍保留「仅演示用」数据源。参考：`src/features/invite` 联调完成后不得再引入本地 Mock。
+- **镜像类型（强制）**：与 Orval `model` 同构的本地 `types.ts` / 行模型 `type` 须在联调阶段移除，改用语义一致的生成类型（见 **`@.cursor/rules/agent-to-api-model.mdc`** §3 / §3.1）。
+- 写死计数、占位文案（与接口无关且误导验收）。
+- 仅成功路径可用、失败路径无可视反馈。
+- 分页 / 筛选参数硬编码且和接口约定耦合。
+
+## 6) 分页交互基线（强制，默认自动滚动分页）
+
+- 本项目分页交互默认基线为：**`useInView` + 哨兵节点 + `useEffect` 条件触发 `fetchNextPage`**，实现与 `src/features/order/OrderView.tsx` 当前实现一致的自动滚动分页；后续模块分页联调必须按该基线执行。
+- 触发条件固定为：`inView && hasNextPage && !isFetchingNextPage`；禁止去掉 `!isFetchingNextPage` 防抖条件，避免并发重复请求。
+- 分页加载反馈固定为：哨兵区域内展示加载态（如 `Loading` / `Spinner`），**禁止默认使用"加载更多"按钮**作为主分页交互。
+- 仅当产品需求明确要求"手动点击加载"或"分页条跳页"时，才允许偏离自动滚动基线；偏离时必须在代码注释与提测说明中注明依据。
+- 该交互基线仅约束"下一页触发方式"；`queryKey`、`getNextPageParam`、`mark` 原样透传与 `hasMore` 判定严格遵循 **`@.cursor/rules/agent-to-api-model.mdc`**「mark 协议」。
+
+## 7) React 组件：禁止 `useCallback`（强制，本项目）
+
+- 按本规范落地的联调代码中，**禁止使用 `useCallback`** 包裹事件处理函数、`invalidateQueries` 辅助函数或其它内联回调。
+- 使用组件体内的 **`const handler = async () => { ... }` / `async function handler() { ... }`** 等普通函数即可。
+- 对**串联多接口**的方法（例如预下单 → 支付 → 失效缓存）须添加**简短中文注释**，标明 HTTP 路径或职责顺序与成功后的缓存更新意图，便于评审与交接。
+
+## 8) 中间变量最小化（强制，本项目）
+
+- 联调代码默认**尽量少使用中间变量**：优先内联简单表达式，避免为一次性值或仅转手传递值新增 `const`。
+- 仅在以下情况允许新增中间变量：**复用 ≥2 次**、表达式明显影响可读性、需要承载业务语义（如金额口径/集数口径/缓存键口径）。
+- **展示层禁止"仅展示用途"的中间变量/函数**：凡只在 JSX 单点使用、且不承载业务口径的字段拼接/文案格式化（如 `getTitle`、`getFallback`、`getXxxLabel`）必须直接内联到渲染处；仅当同一表达式被复用（≥2 次）或具备明确业务语义时才允许抽出，并在定义处补中文注释说明口径。
+- 只要新增了中间变量（尤其是金额、折扣、集数、状态聚合等业务变量），该变量定义处**必须有中文注释**，说明其业务含义或计算口径；禁止"无语义命名 + 无注释"。
+- 临时调试变量（仅 `console.log` 使用）禁止进入提交代码。
+
+## 9) 展示层事件处理抽离（强制，本项目）
+
+- 展示层（JSX/DOM）禁止内联编写事件业务逻辑；`onClick`、`onChange`、`onKeyDown`、`onMouseEnter` 等监听中不得出现多分支判断、状态写入、请求触发或副作用逻辑。
+- 所有事件监听必须引用组件体内已声明的方法，方法命名统一以 `handle` 前缀开头（如 `handleOpenDialog`、`handleSubmit`、`handleProgressKeyDown`）。
+- 每一个事件方法都必须在定义处添加**中文注释**，说明触发条件与行为目的，禁止出现无注释的 `handle*` 事件方法。
+- 需要传参时，优先使用 `handleXxx` 命名的函数工厂（例如 `const handleSelectEpisode = (ep: number) => () => { ... }`），禁止在 JSX 中直接写匿名箭头函数承载业务逻辑。
+- 事件方法应集中放在组件「函数部分」（即下文 §10 的第 5 环节）并紧邻 `return` 之前，确保展示层仅负责绑定，不承载业务细节。
+
+## 10) 联调组件体内代码顺序（强制，本项目）
+
+在落地联调的 React 组件中，**函数组件体内自上而下**固定为下列 **5 个环节**（与既有「Hooks → 派生 → 方法 → `return`」门禁一致，仅拆细可读性）。**`return (` 之前不得再出现任何 Hook 或新的派生 `const`**。
+
+### 10.1) 环节总览（自上而下）
+
+1. **第三方部分**：npm / 官方生态提供的 **Hooks 与客户端单例**（如 `useTranslation`、`useQueryClient`、路由库 `useNavigate` / `useParams` 等）。*说明：`toast()` 等多数为函数调用，放在第 5 环节的方法体内即可，不必为「第三方」在组件顶再包一层。*
+2. **全局 Store 部分**：项目级状态 hooks（如 `useGlobalStore`、其它 zustand/redux 选择器 hooks）。
+3. **Hook 部分（业务数据 / 联调）**：接口客户端层产物与数据 hooks（Orval 的 `useGet*` / `usePost*`、`useMutation`/`useQuery` 封装、`useSearchParams` 等与当前联调直接相关的 hooks）。**同一环节内**同类调用可按稳定习惯排序（例如先 `useQueryClient` 已归入环节 1 时，本环节以数据 hooks 为主）。
+4. **局部变量部分**：由 **props**、**环节 2–3 的返回值** 计算得到的 **纯 `const` 标量/对象**、**`useMemo`**、以及 **`useState` / `useRef`**；按需的 **`useEffect`** **必须落在本环节**，且 **早于** 第 5 环节的任意 `const handleXxx` / `async function`（避免「先写方法再补 effect」颠倒依赖阅读顺序）。
+5. **函数部分**：不违反 Hooks 规则的 **普通函数 / 箭头函数**——如 `invalidateQueries` 封装、`handleXxx`、串联多接口的流程函数；**一律紧挨 `return`（渲染层）之前**，作为组件逻辑块末尾。
+
+### 10.2) 示例对齐（`PlayEpisodeUnlockDialog.tsx`）
+
+以下文件体顺序可作为评审时的 **对照范例**（环节边界以注释或空行区分更佳，非强制）：
+
+- **环节 1**：`useTranslation()`、`useQueryClient()`。
+- **环节 2**：`useGlobalStore()` 解构登录态与余额等。
+- **环节 3**：`usePostDramaUnlockPreorder` 等 Orval mutation hooks。
+- **环节 4**：`isUnlockBusy`、`totalEpisodes` / `singlePoints` 等由 props 与规则得到的 `const`，以及打包价相关的 **`useMemo`** 链。
+- **环节 5**：`invalidateAfterUnlock`、`handleSinglePointUnlock`、`handleSingleUsdtUnlock` 等；其后接 **`return (`**。
+
+文件顶部的 **`import` 顺序**建议保持：**第三方包** → **`@/` 项目别名** → **相对路径**；`import type` 可与实现 import 分组一致即可（不强制与体内 5 环节一一对应）。
+
+### 10.3) 目的与禁令（重申）
+
+- **目的**：先读完「外部能力 → 全局态 → 数据请求态 → 派生视图数据」，再集中阅读「交互与流程入口」，降低阅读与 diff 成本。
+- **禁令**：**方法块（环节 5）之后**不得再出现 `useMemo` / `useEffect` / `useState` 或新的派生 `const`（避免「渲染层上方」逻辑顺序颠倒、违反 Hooks 线性规则）。

@@ -1,0 +1,70 @@
+---
+description: 联调 Model：Orval 类型、queryKey、getQueryKey、mark 游标原样透传、hasMore、派生 undefined、mathUtil、禁止伪造默认值、复用接口模型；纯 UI、Figma 还原、无接口契约时不要启用。
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# Agent 到 API · Model（数据层）
+
+负责**数据从哪来、长什么样、如何承载默认值与派生**。本层是 Controller / View 的事实来源，禁止重复造轮子或伪造业务数据。
+
+## 1) 优先复用既有接口客户端层
+
+优先使用项目中已有接口客户端产物，例如：
+
+- `use*` query / mutation hooks
+- `get*QueryOptions` / `build*RequestOptions` 或等价工厂
+- `get*QueryKey` / key factory / cache tag
+
+除非项目已有明确 domain 封装约定，否则不要再手写一层「重复语义」的 API hook / client。
+
+## 2) 工具函数导入风格（强制，本项目）
+
+- 对 `src/utils/index.ts` 已稳定导出的通用工具（如 `cn`、`toNumber`），默认使用聚合导入：`import { cn, toNumber } from '@/utils';`。
+- 非必要禁止把上述通用工具强制改成深路径导入（如 `@/utils/cn`、`@/utils/mathUtil`），以保持项目内 import 风格一致与可读性稳定。
+- 仅当工具**未在 `@/utils` 导出**或存在明确循环依赖/构建问题证据时，才允许使用深路径导入，并需在代码评审说明中给出原因。
+
+## 3) 模型来源一致性（强制）
+
+- 优先直接使用接口生成模型（例如 OpenAPI / Orval 产物中的 `model` 目录类型），避免在业务目录重复声明等价类型。
+- **静态页进入接口联调阶段后（强制）**：列表项、卡片数据等**一律**以 Orval 生成的 `*Response` / `*Item` 等接口模型为唯一数据形状；**禁止**在 `src/features/<feature>/` 下保留与 OpenAPI 同构的本地 `interface` / `type` 文件（如 `inviteRecords.types.ts`）或「仅联调前占位」的镜像结构；组件 `props` 直接标注 `@/api/__generated__/.../model/...` 中的类型。
+- 组件传参优先传递 API 生成模型对象（如 `dramaInfo`、`playbackRule`、`roles`），避免在容器层过度拆成基础类型参数再传递。
+- 组件内部禁止新增「仅本组件使用」的 **业务数据镜像** `type`（与 Orval 列表项/实体同构的一整套字段）；组件 **Props** 允许使用 `type XxxProps = { record: InviteRecordItemResponse }` 等形式直接引用生成模型。
+- 若确需衍生 UI 字段，优先在容器层做最小派生（`const` 计算），而不是新增一套「镜像 model」文件。
+- 禁止把 generated model 复制到 `feature/model` 再二次维护；字段演进应跟随接口模型单源更新。
+- 仅当项目已有明确的 BFF / Domain model 约定且团队已长期采用时，才允许新增领域模型层，并需在提交说明中解释原因。
+
+### 3.1) Feature 内共享类型沉淀（强制）
+
+- 若某类型与 Orval **`model` 中已有接口定义同构**（字段一一对应、仅换名），**禁止**在 `src/features/<feature>/types.ts` 或组件旁再声明一遍；应 **`import type { Xxx } from '@/api/__generated__/.../model/...'`** 在各处复用。
+- 同一 `feature` 下若某类型被 **2 处及以上文件复用**、且 **OpenAPI / Orval 未生成**（例如组合多条接口的只读视图模型、纯前端路由参数聚合），才允许提取到该 feature 的 `types.ts`（或等价文件），禁止复制生成模型字段手写第二份。
+- 提取后由各组件 `import type { Xxx } from '../types'`（或等价相对路径）复用，确保非生成类型只维护一处。
+
+## 4) 联调阶段默认值策略（强制）
+
+- 联调真实接口时，禁止为业务字段写「拍脑袋默认值」（如默认标题、默认价格、默认集数、默认标签）。
+- 容器层应直接消费接口原值；字段缺失时通过 `loading` / `error` / `empty` 或缺省不展示表达，而不是伪造业务数据。
+- 仅允许两类兜底：**技术性空安全**（可选链 / 判空）与**明确产品约定的协议默认值**（需可追溯到接口文档或产品规则）。
+
+### 4.1) 派生值空态语义（强制）
+
+- 联调真实接口时，凡由接口字段推导的展示/业务派生值（如 `remainingEpisodes`、`savedPoints`、`savedUsdt`、`nextEpisode`），必须采用 **`useMemo + undefined`** 语义：**输入缺失即返回 `undefined`**，避免把"未知态"误当"零值态"。
+- 禁止以 `?? 0`、`|| 0`、`Number(x ?? 0)` 等方式把缺失值直接吞并为 0 后参与派生计算；仅当产品/协议明确约定"缺失即 0"且可追溯时才允许，并需在定义处加中文注释说明依据。
+- 多级派生必须保持同口径：上游派生值为 `undefined` 时，下游派生值也应返回 `undefined`，不得继续计算出看似有效的数字。
+- 渲染层展示时，统一在 JSX 处按 `undefined` 做显式分支（不展示/占位文案/骨架），禁止在派生层提前"兜底成 0"。
+- 对复用频次低（1~2 处）且表达式不复杂的场景，允许内联判空；复用较高或影响可读性时，优先提取为 `useMemo` 派生变量并附中文口径注释。
+
+## 5) 数值计算工具（强制）
+
+- 联调真实接口时，凡涉及积分/USDC/金额/数量的数值计算（加减乘除、截断、保留小数、对比等），必须使用 `@/utils/mathUtil.ts` 提供的计算函数（如 `plus/minus/multipliedBy/div/trunc/abs/isGreaterThan/isLessThan`），避免 JS 浮点误差导致展示/校验不一致。
+- `mathUtil` 返回多为 `string`（例如 `trunc` / `multipliedBy` 等），需要作为 `number` 参与后续计算或用于比较时，必须显式使用 `toNumber(...)`；禁止在派生计算阶段直接使用 `* / + -` 裸算。
+- 数值计算结果作为展示层派生输入时，仍遵循 `4.1 派生值空态语义（强制）`：缺失输入返回 `undefined` 并在渲染侧显式分支。
+
+## 6) 游标分页 mark 协议（强制）
+
+- 当接口采用 `mark`（或等价 cursor）分页时，**下一页请求参数必须使用上一页响应返回的 `mark` 原值**，禁止自行计算、重编码或使用页码替代。
+- `mark` 为字符串语义时，禁止以业务规则对其做数值判断（如 `mark <= 0`、`Number.isFinite(mark)`）；是否继续翻页只由接口返回的 `hasMore`（或等价字段）决定。
+- 第二页请求参数必须来自第一页响应的 `mark`；第三页来自第二页响应的 `mark`；以此类推，保持"请求 N+1 页使用 N 页返回游标"的链路一致性。
+- 若客户端类型与接口真实语义不一致（例如生成类型把 `mark` 误标为 `number`），应在联调层做最小兼容处理，并保留"游标值原样透传"这一业务口径，不得反向改写分页策略。
+
+> **配套触发**：分页交互的触发机制（`useInView` + 哨兵 + `fetchNextPage`）属于 Controller 层，详见 **`@.cursor/rules/agent-to-api-controller.mdc`**「分页交互基线」。

@@ -1,0 +1,18 @@
+---
+description: Figma样式精准还原（禁止主观调整）
+alwaysApply: true
+---
+
+# Figma 样式精准还原（强制）
+
+- 禁止“凭感觉”改 UI；所有视觉值必须来自 Figma 节点数据（`get_design_context` / `get_metadata` / `get_screenshot`）。
+- 当用户要求“精准还原”时，以下属性必须 1:1 落地（允许渲染误差 ±1px）：`width/height/padding/margin/gap/font-size/line-height/letter-spacing/radius/border/shadow`。
+- 若设计稿未明确某值，优先复用**同模块已存在的 Figma 数值**；仍不明确时，先向用户确认，不得自行拍值。
+- 任何一次样式改动都要在回复里说明：改了哪些节点、对应的关键数值来源。
+- 对移动端抽屉/导航类组件，必须先还原结构层级再还原样式层级：外层容器 -> 头部区 -> 列表区 -> 列表项 -> 图标/文本。
+
+## 禁止项
+
+- 禁止以“看起来差不多”替代数值还原。
+- 禁止在未核对 Figma 节点前先改 className。
+- 禁止为了省事跳过用户指出的具体 DOM 节点。

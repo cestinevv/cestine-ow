@@ -1,0 +1,24 @@
+---
+description: 矢量图标 — Icon 与栅格图分流、本地 SVG 组件、use_figma 导出、禁止 MCP/lucide 直链
+globs: "**/*.tsx"
+alwaysApply: true
+---
+
+# 图标（Icons，矢量）
+
+- **目录与别名（迁移友好）**：Icon 组件的落盘路径、import 别名以**本仓库既有约定**为准。编码前先在仓库内检索已有 `Icon*.tsx` 或 `svg` / `icons` 等目录，**与同一路径、同一命名风格保持一致**；勿在未确认前臆造新目录。
+- **`Icon*.tsx` 的语义（强制）**：文件名 **`Icon` 前缀且放在矢量目录（如 `src/assets/svg/`）的组件**，其**根节点必须是 `<svg>`**，并满足下文「自定义 Icon 格式要求」。**禁止**在该目录放置根节点为 `div` + 多张 `<img>` 的拼装件、或纯位图包装组件。
+- **禁止「Figma 垃圾桶」式聚合文件（强制）**：不得在业务目录创建 `*Figma*.tsx`、`PointsFigmaIcons.tsx` 等**把多类无关图形堆在一个文件**的做法。每个图示/标记单一职责：矢量走 `Icon[Name].tsx`；位图叠层走业务旁 **`XxxMark.tsx` / `XxxLayered.tsx`** 等**与产品语义一致**的命名，**禁止**用 `Figma` 作为文件名或导出前缀。
+- **禁止无意义的 Icon 再导出（强制）**：若仓库已有 `IconXxx.tsx`，业务组件须 **`import IconXxx from '@/assets/svg/IconXxx'`** 直接使用；**禁止**再包一层仅转发 `className` 的同名业务导出（徒增跳转与重复问题定位成本）。
+- **Icon 与栅格图分流（优先判断）**：从 Figma 拉节点时先判断是否为 **Icon**（小型 UI 符号、单色/简单填色、矢量为主、可无损放大）还是 **栅格图**（照片、复杂渐变位图、大插画背景、**需多 PNG 叠层才能还原的复杂标**等）。**可单文件 SVG 无损表达**的走本文件；**本质为位图或叠层位图**的遵守 **`@.cursor/rules/agent-to-react-images.mdc`**，用 2× 资源 + 小组件拼装，**勿**将叠层位图塞进 `assets/svg` 冒充矢量。
+- **禁止使用 Figma 资源链接或第三方图标库（针对 Icon）**：严禁使用类似 `https://www.figma.com/api/mcp/asset/...` 的链接作为 `<img>` 的 `src` 来展示 **图标**，也**禁止**引入 `lucide-react` 等任何第三方图标库。**Icon** 必须导出并封装为本地的 SVG React 组件。
+- **图标替换与生成工作流（防幻觉必读！）**：
+  1. 仔细比对设计稿中的图标（形状、线条粗细等细节）。
+  2. 先在**项目矢量 Icon 目录**（按上条检索到的实际路径）查找是否已存在完全匹配的图标。
+  3. **获取真实 SVG 代码**：如果不存在，**严禁自行根据常识“幻觉”生成或盲猜 `<svg>` 内容**。你**必须**调用 `use_figma` 工具执行 JS 脚本，指定该图标的节点 ID 并执行类似于 `await node.exportAsync({ format: "SVG_STRING" })` 的操作，来获取设计稿中 100% 真实的 SVG 字符串。
+  4. 将提取出的真实 SVG 封装成组件存入**同一矢量 Icon 目录**，文件命名采用大驼峰 `Icon[Name].tsx`（例如 `IconLogo.tsx`、`IconAiSearch.tsx`），并与仓库内已有 Icon 文件风格一致。
+- **指定 Figma 节点的图标位（强制）**：当实现来自**明确 fileKey / node-id（或设计稿链接）**的 UI 区块，且稿面在各功能位点配置了**独立图标矢量**时，**禁止**仅用仓库内「语义接近」的其它 `Icon*` 替代稿面轮廓；须按上文工作流为对应节点各建 `src/assets/svg/Icon[语义].tsx`，且路径/描边颜色须落实为 `currentColor`。鼓励在图标文件内用**单行注释**标注来源 `fileKey` 与节点 id，便于设计回归审计。
+- **自定义 Icon 格式要求**：须参考现有模式编写：
+  - 必须使用 `import type { SVGProps } from 'react';` 并声明 `(props: SVGProps<SVGSVGElement>)` 接收所有属性。
+  - 将 `{...props}` 传递给根 `<svg>` 标签。
+  - **颜色适配**：移除写死的颜色（如 `fill="#000000"` 或 `stroke="#60646C"`），并替换为 `currentColor`，通过外层 Tailwind `className` 的 text 颜色继承来控制（例如 `text-foreground`、`text-muted-foreground` 等），保证无缝适配暗黑模式。

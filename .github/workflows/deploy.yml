@@ -1,0 +1,105 @@
+on:
+  workflow_call:
+    inputs:
+      APPLICATION_NAME:
+        default: 'soc-official-website'
+        type: string
+      AWS_REGION:
+        default: 'us-east-2'
+        type: string
+      DEPLOYMENT_ENV:
+        required: true
+        type: string
+      ECR_REPOSITORY:
+        required: true
+        type: string
+      ECS_CLUSTER:
+        required: true
+        type: string
+      SECURITY_GROUP_IDS_SSM:
+        required: true
+        type: string
+      SUBNET_IDS_SSM:
+        required: true
+        type: string
+      VPC_ID_SSM:
+        required: true
+        type: string
+      SNS_TO_LARK_LAMBDA_ARN:
+        required: true
+        type: string
+      CERERTIFICATE_US_EAST_2_ARN: 
+        required: true
+        type: string
+      ECS_EXECUTION_ROLE_ARN:
+        required: true
+        type: string
+    
+    secrets:
+      DEPLOYMENT_AWS_ACCESS_KEY_ID:
+        required: true
+      DEPLOYMENT_AWS_SECRET_ACCESS_KEY:
+        required: true
+      ED25519_CI_KEY: 
+        required: true
+      PAT:
+        required: true
+
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.DEPLOYMENT_ENV }}
+    runs-on: ubuntu-latest
+    concurrency: deployment-${{ inputs.DEPLOYMENT_ENV }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.DEPLOYMENT_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DEPLOYMENT_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ inputs.AWS_REGION }}
+      
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Set SHORT_SHA
+        id: set_short_sha
+        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >>$GITHUB_ENV
+      - name: Set IMAGE_TAG
+        id: set_image_tag
+        run: echo "IMAGE_TAG=${{ inputs.APPLICATION_NAME }}-$SHORT_SHA" >> $GITHUB_ENV
+      - name: Set GIT_BRANCH
+        id: set_git_branch
+        run: echo "GIT_BRANCH=${{ github.ref_name }}" >> $GITHUB_ENV
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        
+        run: |
+          docker build --build-arg AWS_REGION=${{inputs.AWS_REGION}} --build-arg GIT_BRANCH=$GIT_BRANCH --build-arg GIT_PAT_TOKEN=${{ secrets.PAT }} --build-arg MODEL=${{ inputs.DEPLOYMENT_ENV }} --build-arg GIT_COMMIT=${{ github.sha }} -t $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Deploy CloudFormation
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: ${{ inputs.APPLICATION_NAME }}-${{ inputs.DEPLOYMENT_ENV }}
+          template: aws/cloudformation-ecs-service-template.yml
+          no-fail-on-empty-changeset: "1"
+          parameter-overrides: >-
+            CertificateArn=${{ inputs.CERERTIFICATE_US_EAST_2_ARN }},
+            ExecutionRoleArn=${{ inputs.ECS_EXECUTION_ROLE_ARN }},
+            ECSClusterName=${{ inputs.ECS_CLUSTER }},
+            ApplicationName=${{ inputs.APPLICATION_NAME }},
+            EnvName=${{ inputs.DEPLOYMENT_ENV }},
+            SecurityGroupIDs=${{ inputs.SECURITY_GROUP_IDS_SSM }},
+            SubnetIDs=${{ inputs.SUBNET_IDS_SSM }},
+            VpcID=${{ inputs.VPC_ID_SSM }},
+            DockerImageUrl=${{ steps.build-image.outputs.image }},
+            SnsToLarkLambda=${{ inputs.SNS_TO_LARK_LAMBDA_ARN }}

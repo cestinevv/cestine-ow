@@ -1,0 +1,31 @@
+---
+description: Agent 全局 React / TSX 编码规范入口（shadcn/ui + Tailwind，版本以仓库为准）
+globs: "**/*.tsx"
+alwaysApply: true
+---
+
+# Agent 到 React（全局规范）
+
+凡在本仓库编写或修改 `tsx` UI 相关代码，均按下列规则执行；与 `tsx` 强相关，且通过 `globs` 在对应文件中生效。从 **Figma 还原**时的 **MCP 拉稿顺序、移动端 frame、截图与资源 URL** 等流水线步骤不在本规范中重复，见 **`@.cursor/skills/figma-to-react-pipeline/SKILL.md`**。栈以仓库为准，常见为 **shadcn/ui + Tailwind CSS**（具体 major 版本见 `package.json`）。
+
+## 文档结构（速查）
+
+细则已拆分为独立规则文件，以下为目录；若条目与正文冲突，以对应 `.mdc` 正文为准。
+
+- **`@.cursor/rules/agent-to-react-components.mdc`**：元素与组件（Shadcn 映射、`cn`、按仓库路径检查 `components/ui`）。
+- **`@.cursor/rules/agent-to-react-layout.mdc`**：布局与排版（HTML5 语义化、版心检索与复用并以代码/token 为事实来源、Scope Splitting、类名顺序、`md` 断点、交付验收、4px 间距刻度）。
+- **`@.cursor/rules/agent-to-react-colors-theme.mdc`**：颜色与主题（语义色、全局样式入口 / `@theme inline` 补 token）及深 / 浅色模式。
+- **`@.cursor/rules/agent-to-react-typography.mdc`**：字体与排版（高保真数值、移动端缩放 0.88、字号上下限、间距同步缩放）。
+- **`@.cursor/rules/agent-to-react-sizing.mdc`**：尺寸还原与验收清单（Figma 数值对齐、4px 与排版边界、提交前自检；与 typography / layout 配合）。
+- **`@.cursor/rules/agent-to-react-icons.mdc`**：矢量图标（Icon 与栅格图分流、`use_figma` 导出 SVG、落盘路径以仓库检索为准，禁止 MCP/lucide 当图标用）。
+- **`@.cursor/rules/agent-to-react-images.mdc`**：栅格图片（2× 导出、位图目录与 import 以仓库为准、JPG 与 PNG 选型）。
+- **`@.cursor/rules/agent-to-react-animate.mdc`**：滚动入场动画（AOS；仅当稿面有 scroll-triggered 动效时适用）。
+- **`@.cursor/rules/agent-to-react-translation.mdc`**：文案与翻译（i18n、`useTranslation`、键名、locale **拼音排序**与 import 约定）。
+- **`@.cursor/rules/agent-to-react-i18n-auto.mdc`**：i18n 自动翻译（DeepL 增量翻译、**`package.json` scripts**、变量保护、中文 key 策略、**locale 拼音排序**）。
+- **`@.cursor/rules/agent-to-react-large-design.mdc`**：大稿分批模式（节点 > 8000px / 多章节 / 嵌套表格 → `get_metadata` 先索引、5 步流水、2-Action Rule、`planning-with-files` 持久化）；与 **`figma-to-react-pipeline`** 联动的「精确还原」任务可按该文件 **显式启用** 条款执行同一套门禁（含双端拉稿与 findings 落盘）。
+- **`@.cursor/rules/agent-to-react-format.mdc`**：Format（以 **`package.json` 脚本**为准；Biome 等为例示）。
+
+## 注释留白（全局）
+
+- 行内逻辑注释（`//`）若用于解释其下方代码块，**注释上方必须留一行空行**，避免注释与上一条语句粘连。
+- 连续多行注释可视为同一注释块，不要求注释块内部再额外插空行；但注释块与其上一条代码之间仍需保留 1 行空行。

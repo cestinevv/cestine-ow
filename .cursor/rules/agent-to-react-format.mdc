@@ -1,0 +1,10 @@
+---
+description: Format — 以 package.json 脚本为准；常见 Biome / ESLint / Prettier
+globs: "**/*.tsx"
+alwaysApply: true
+---
+
+# Format（代码格式化）
+
+- **以项目脚本为准（强制）**：完成 AI 提取、修改、生成或替换过的 UI 相关代码（组件、Icon、资源引用所在目录等）后，**必须**执行 **`package.json` 中声明的** format / lint fix 命令（如 `pnpm format`、`npm run lint:fix` 等）；勿假设固定工具链。
+- **本仓库示例**：若存在 Biome 且未单独封装脚本，可运行 `npx biome check --write ./src`（路径以仓库源码根为准，可能是 `./src` 或其它目录）。

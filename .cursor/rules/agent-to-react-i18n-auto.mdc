@@ -1,0 +1,214 @@
+---
+description: i18n 翻译规范 — DeepL 增量翻译、开发者手动触发翻译命令、变量保护、中文 key 策略
+globs: "**/*.tsx"
+alwaysApply: true
+---
+
+# i18n 翻译规范
+
+**重要提示**：本规则**默认不自动执行翻译**。翻译由开发者手动触发，禁止 AI 擅自运行翻译脚本。
+
+**迁移说明**：下列路径、脚本名、环境变量名为**本仓库惯例**；其它项目以 **`package.json` `scripts`**、实际 locales 目录及脚本 README / `.env.example` 为准。
+
+## 翻译命令（需手动执行）
+
+翻译命令**由开发者自行在终端执行**，AI 仅负责告知开发者需要执行什么命令。
+
+本仓库命令示例（以 **`package.json`** 为准）：
+
+```bash
+# 仅翻译（增量更新；仅维护 zh-CN）
+pnpm i18n:translate
+
+# 提取 + 翻译（完整流程）
+pnpm i18n:auto
+```
+
+## 核心机制
+
+### 0. 无中文 key / 英文常量豁免（强制）
+
+- **无中文 key 禁止入翻译体系**：locale key **必须含至少一个汉字**（`\u4e00-\u9fff`）。纯英文、数字、符号、英文常量、公式串等**一律不得**写入翻译文件；组件中直接写常量。详见 **`@.cursor/rules/agent-to-react-translation.mdc`**。
+- 若文案属于**跨语言不翻译**的英文常量（如 `NFT`、`USDC`、`AI`、品牌名、协议名、代币符号），且产品明确要求全语言保持英文，**不得纳入 i18n**（上条的典型子集）。
+- 对上述文案：组件中直接写英文常量，不新增 key，不改各语言 locale 文件，也不进入翻译脚本流程。
+- 本规则优先级高于“所有文案都走 `t()`”的一般建议。
+- `scripts/i18n-auto/extract.ts` 提取时须跳过并清理不含中文的 key。
+
+### 1. 增量翻译
+
+以**本仓库** `src/locales/zh-CN.json` 为源，**仅维护 zh-CN**：
+- 已存在的中文 key/value 不会被覆盖
+- 若仍残留“英文 key / 未被翻译的英文 value”，脚本会按需补成中文
+
+### 2. 变量保护
+
+使用 `{{variable}}` 格式的 i18next 变量会被 XML Tag 保护，不会被 DeepL 误翻译：
+
+```
+原文: "Welcome {{name}}"
+       ↓ 保护为 XML
+       "Welcome <x id="0">{{name}}</x>"
+       ↓ 翻译
+       "欢迎 <x id="0">{{name}}</x>"
+       ↓ 恢复
+最终: "欢迎 {{name}}"
+```
+
+### 3. 中文 Key 直接复制
+
+- 若 key 包含中文，翻译到 `zh-CN` 时**直接复制原文**（不做翻译）
+- 若 key 不含中文（英文 key），脚本会按 DeepL 结果把 value 补成中文
+- 当 key 为中文时，`zh-CN.json` 中的 value 必须与 key **逐字一致**（包含空格、标点与大小写）；禁止把中文 value 改成简写或优化文案（例如 `白皮书目录 -> 目录`）。
+
+### 4. Locale key 拼音排序（强制；多分支降冲突）
+
+与 **`@.cursor/rules/agent-to-react-translation.mdc`**「Locale key 排序」一致。
+
+**为何强制排序**：并行分支都会往 `src/locales/*.json` 加 key。若新 key 随意 append 或按 Unicode 码点排，中文位置不稳定，merge 时容易大段冲突。统一 **拼音 / 字典序** 后，不同分支的新 key 落在可预期的相邻位置，冲突通常只落在各自插入行附近，便于自动或手工合并。
+
+本仓库脚本侧硬约束：
+
+- `src/locales/*.json` 写回时**必须**经 `scripts/i18n-auto/utils.ts` 的 `sortLocaleRecord`（内部 `compareLocaleKeys`）。
+- **首字符为汉字**：`localeCompare(..., 'zh-CN')` 拼音序；**禁止** `Object.keys(...).sort()` 默认 Unicode 码点序；**禁止**新 key 只追加到文件末尾而不重排。
+- **首字符为数字 / 字母 / 符号**：默认字典序；非汉字开头 key 整体排在汉字开头 key 之前。
+- **所有语言文件**共用同一 key 顺序；`extract.ts`（写 `zh-CN.json`）与 `index.ts`（写各语言）均须调用 `sortLocaleRecord`；新增写 locale 的脚本同样遵守。
+- 解决 locale merge 冲突后，须再次排序写回再提交。
+
+## 翻译文件更新流程
+
+### AI 职责
+
+1. 在**源语言 JSON**（本仓库为 `src/locales/zh-CN.json`）中添加翻译键（key 可为中文，与稿面一致）
+2. 当 key 为中文时，同步确保 `zh-CN.json` 中 `key === value`（逐字一致）
+3. 在组件中使用 `t()` 函数引用翻译 key（满足「无中文 key / 英文常量豁免」的文案除外）
+4. 写回 / 合并 locale 后 key 顺序须符合拼音排序规则（优先走 i18n 脚本，勿手排）
+5. **不执行翻译脚本**，仅在回复中提示开发者需要手动运行翻译命令
+
+### 开发者职责
+
+开发者在完成翻译 key 的添加后，**自行决定何时执行翻译命令，不自动执行**：
+
+```bash
+pnpm i18n:translate
+```
+
+## 组件层集成
+
+### 使用 `t()` 函数（推荐）
+
+```tsx
+import { useTranslation } from 'react-i18next';
+
+export function XxxSection() {
+  const { t } = useTranslation();
+
+  return (
+    <section>
+      <h1>{t('页面主标题')}</h1>
+      <p>{t('这是页面描述文案')}</p>
+      <Button type="button">{t('了解更多')}</Button>
+    </section>
+  );
+}
+```
+
+### 数据驱动文案（列表 / 卡片）
+
+```tsx
+const ITEMS = [
+  {
+    id: '01',
+    titleKey: '最多 4 轮推进',
+    descriptionKey: '平台支持 Angel...',
+  },
+] as const;
+
+export function XxxSection() {
+  const { t } = useTranslation();
+
+  return (
+    <section>
+      {ITEMS.map((item) => (
+        <article key={item.id}>
+          <h3>{t(item.titleKey)}</h3>
+          <p>{t(item.descriptionKey)}</p>
+        </article>
+      ))}
+    </section>
+  );
+}
+```
+
+## 翻译键命名规范
+
+| 规范 | 示例 | 说明 |
+|------|------|------|
+| 与稿面一致 | `"最多 4 轮推进"` | key 可与中文原文相同 |
+| 英文稿面 | `"Up to 4 funding rounds"` | 源语言为英文 |
+| 变量 | `"Welcome {{name}}"` | i18next 插值 |
+| 复数 | `"{{count}} item_one"` / `_other` | 按 i18next 复数约定 |
+
+## 变量使用规范
+
+**正确：**
+```json
+{
+  "Welcome {{name}}": "Welcome {{name}}",
+  "You have {{count}} messages": "You have {{count}} messages"
+}
+```
+
+**错误：**
+```json
+{
+  "Welcome {name}": "Welcome {name}",          // ❌ 单括号
+  "Welcome $name": "Welcome $name",            // ❌ 不支持的格式
+  "Welcome <%= name %>": "Welcome <%= name %>" // ❌ 不支持的格式
+}
+```
+
+## 闭环检查清单
+
+- [ ] 组件已 `import { useTranslation }` 并 `const { t } = useTranslation()`
+- [ ] 用户可见文本均经 `t('…')` 或 `t(item.xxxKey)`
+- [ ] 数据常量对文案使用 `*Key` 后缀字段
+- [ ] 源语言 JSON 已补全新增键
+- [ ] 中文 key 在 `zh-CN.json` 中满足 `key === value`（逐字一致）
+- [ ] 所有 locale key **均含至少一个汉字**；不含中文的 key 未写入任何语言文件
+- [ ] `src/locales/*.json` key 已按拼音规则排序（`sortLocaleRecord`；各语言同一顺序；禁止只 append）
+- [ ] locale merge 冲突解决后已重新排序
+- [ ] 仅英文且不翻译的常量文案（如 `NFT`）未进入 i18n（未新增 key、未改 locale、未走翻译脚本）
+- [ ] **回复中已提示开发者手动执行翻译命令** `pnpm i18n:translate`
+- [ ] 交付说明中注明已接入 i18n（本次翻译由开发者手动触发）
+
+## 踩坑提醒
+
+### 1. ES Modules 导入扩展名
+
+```typescript
+// ❌ 错误
+import { LANGUAGES } from './config'
+
+// ✅ 正确
+import { LANGUAGES } from './config.js'  // 必须加 .js 扩展名
+```
+
+### 2. Trans 组件不翻译
+
+```tsx
+// ❌ 可能不工作
+<Trans>多语言的翻译</Trans>
+
+// ✅ 推荐使用 t()
+{t("多语言的翻译")}
+```
+
+### 3. DeepL API 认证失败
+
+检查 `.env`（或 `.env.example` 所列变量）中**翻译脚本要求的 API Key** 是否已配置（本仓库示例：`VITE_DEEPL_API_KEY`）。
+
+## 当前支持的语言
+
+- 🇨🇳 简体中文 (zh-CN)
+
+若仓库包含 i18n 自动翻译文档（如 `docs/i18n-auto.md`），细节以该文档为准。

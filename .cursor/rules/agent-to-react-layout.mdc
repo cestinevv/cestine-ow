@@ -1,0 +1,37 @@
+---
+description: 布局与排版 — HTML5 语义化、Tailwind、检索复用版心（实现/token 为事实来源）、Scope Splitting、md 断点、4px 刻度、交付验收
+globs: "**/*.tsx"
+alwaysApply: true
+---
+
+# 布局与排版：仅 Tailwind；间距遵守 4px 刻度
+
+- **所有布局**（flex、grid、定位、宽高、内外边距、圆角等）写在 **`className`**。
+- **HTML 语义化（强制优先）**：在遵守 **`@.cursor/rules/agent-to-react-components.mdc`**（交互与标准控件仍用 shadcn/ui，禁止原生 `button`/`input` 等手搓控件）的前提下，**结构层须按 UI / 文档语义选用 HTML5 标签**，避免可用语义标签时仍堆叠无意义 `div`。
+  - **页面级地标**：`main` 包裹**一页一处**的主内容；页级或模块级页头/页尾用 `header` / `footer`；主导航、面包屑等**导航链接组**用 `nav`；侧栏、补充栏用 `aside`。
+  - **内容分区**：有明确主题且适合分节的区域用 `section`（宜配合可见标题层级）；**可独立分发**的一条内容（如资讯条目、帖子）外层可用 `article`；纯装饰性、无语义包裹且无任何更贴切标签时再用 `div`。
+  - **标题与列表**：按层级使用 `h1`–`h6`，**不跳级**；列表型 UI 用 `ul` / `ol` / `li`（含导航项、功能列表等），不用一堆 `div` 冒充列表。
+  - **行内与辅助语义**：需要强调语义时用 `strong` / `em`（与视觉粗体/斜体类名可同时由设计决定）；日期时间用 `time`；图文成组且需要说明时用 `figure` + `figcaption`。
+  - **与组件库的关系**：shadcn 组件（如 `Card`、`Button`）内部实现可能是 `div`/`button`，**仍可在组件外**用 `section` / `article` / `header` 等包一层以补全文档轮廓；**不得**为了「全是 div 省事」而放弃外层语义标签。
+- **版心固定规范（强制）**：页面主内容区须与 **项目内既有的版心布局实现** 一致。编码前应在代码库中检索已封装「主内容最大宽度 + 水平居中 + 统一左右内边距」的组件或复用片段（例如 `max-w-*`、`mx-auto`、水平 `padding`）；若版心宽度集中在全局样式、`@theme`、CSS 变量或导出常量中，**一并视为同一事实来源**。**直接复用该模式**包裹主内容，勿在业务层另起一套版心。**版心宽度与水平留白仅以该实现与 token/常量为依据**，从 Figma 还原时对照稿面主内容区或 frame 与之对齐。**禁止**在业务组件中通过 `max-w-none`、自定义更大/更小 `max-w-*`、或额外水平 `padding` 覆盖，破坏全站版心宽度与左右留白节奏。
+- **作用域拆分法 (Scope Splitting)**：当 Tailwind 类名过长（超过 5-6 个词或包含复杂的条件状态）时，**禁止将它们写成冗长的一行**。必须使用 `cn()` 并结合多行字符串数组/参数，按以下逻辑进行结构化拆分，并附带注释：
+  1. `// Layout & Positioning` (如: `fixed inset-y-0 z-10 hidden md:flex`)
+  2. `// Sizing & Spacing` (如: `h-svh w-full px-4 gap-2`)
+  3. `// Visuals & Typography` (如: `bg-white text-sm font-medium rounded-lg`)
+  4. `// Interactions & States` (如: `hover:bg-gray-100 data-[state=open]:animate-in`)
+- **类名固定顺序（强制）**：无论是内联 `className="..."` 还是 `cn(...)` 拆分，Tailwind 类名都必须按统一顺序书写：`Layout -> Spacing -> Visual -> State`。  
+  - `Layout`：`flex/grid/block/absolute/relative/w-full/max-w/.../items-.../justify-...`
+  - `Spacing`：`gap-* / p* / m* / h-* / min-h-*`
+  - `Visual`：`rounded-* / border-* / bg-* / text-* / shadow-* / opacity-*`
+  - `State`：`transition-* / hover:* / focus-visible:* / active:* / data-[state=*]:*`
+  - 断点前缀（`sm:`/`md:`/`lg:`）保持在各自所属分组中，不得打乱整体顺序。
+- **响应式断点策略（强制）**：默认采用单断点移动优先，仅使用 `md`（768px）作为适配分界。  
+  - `<768px`：移动端默认样式（无断点前缀）。
+  - `>=768px`：平板端与 PC 端保持同一套样式（统一使用 `md:` 覆盖）。
+  - 非必要禁止新增 `sm:` / `lg:` / `xl:` 等断点；确有必要时必须在代码注释中说明原因。
+  - 推荐写法：`px-5 md:px-10`、`grid md:flex`、`text-sm md:text-[13px]`。
+- **交付验收（强制）**：每次 Figma 还原都必须同时验收桌面与移动端，至少核对：`container width/max-width`、`padding`、`gap`、`font-size`、`line-height`、关键卡片 `min-height`。若仅完成桌面，视为未完成。
+- **Tailwind 间距刻度**：在本项目中 **`1` = 4px**。Figma 中的 `Npx` 若为布局尺寸，须为 **4 的倍数**，并 **优先用标准类名**，避免任意值 `[]`。
+  - 示例：`8px`→`2`，`12px`→`3`，`16px`→`4`，`20px`→`5`，`24px`→`6`，`32px`→`8`，`36px`→`9`，`48px`→`12`，`64px`→`16`。
+  - **禁止**写 `px-[24px]`，应写 **`px-6`**；同理 `gap-4` 而非 `gap-[16px]`。
+  - 设计稿数值不是 4 的倍数时，**就近取整到 4 的倍数**后再选最近刻度（如 22→24 用 `gap-6`，17→16 用 `rounded-2xl`）。

@@ -1,0 +1,88 @@
+---
+description: 滚动入场动画 — AOS 依赖、全局样式入口、View 单次 init、data-aos 与 stagger
+globs: "**/*.tsx"
+alwaysApply: true
+---
+
+# 滚动动画（AOS）
+
+## 何时必须遵守
+
+- **适用**：Figma 中明确存在 **滚动进入视口后触发的入场动效**（scroll-triggered / on-scroll reveal），或设计说明要求区块依次显现。
+- **不适用**：稿面为静态展示、无此类动效时，**不要**为「好看」强行加 AOS，避免与稿面不一致。
+
+满足适用条件时，**必须**使用 **AOS (Animate On Scroll)** 实现，不得用随意 CSS 动画凑合替代（除非稿面指定其它技术方案）。
+
+## 依赖与全局样式
+
+1. `package.json` 含 `aos`；否则使用**项目包管理器**安装（如 `pnpm add` / `npm install` / `yarn add` / `bun add` `aos`）。
+2. 在**全局样式入口**（如 `app.css`、`globals.css`，以仓库为准）的 `@import` 区加入：`@import "aos/dist/aos.css";`（若已存在则勿重复）。
+
+## View 层初始化
+
+- **每个带上述动效的页面入口 View**（如 `XxxView.tsx`）在挂载时调用 **`AOS.init` 一次**即可；避免同一路由树内多个 `useEffect` 重复 `init`。
+- 若使用客户端路由且 **整页区块被条件渲染/替换**后动效不触发，可在 DOM 稳定后调用 **`AOS.refresh()`**（按需，避免滥用）。
+
+```tsx
+import { useEffect } from 'react';
+import AOS from 'aos';
+
+export function XxxView() {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out',
+      once: true,
+      offset: 50,
+    });
+  }, []);
+
+  return <main>{/* 页面区块 */}</main>;
+}
+```
+
+## 组件层：`data-aos` 放哪
+
+- 加在 **需要入场动效的元素根节点**上（常与 **`@.cursor/rules/agent-to-react-layout.mdc`** 的 `section` / `article` 等语义根一致）。
+- **不要**把 `data-aos-*` 堆在无关内层节点上导致整卡不动或重复触发混乱。
+
+### 推荐参数（与现有页面惯例对齐）
+
+| 场景 | `data-aos` | duration (ms) | delay (ms) | 说明 |
+|------|------------|---------------|------------|------|
+| Hero 主标题 | `fade-up` | 800 | 100 | 主标题略晚于首屏 |
+| 副标题 / 描述 | `fade-up` | 600 | 200 | 次级文案再延后 |
+| 列表 / 网格项（交错） | `fade-up` | 600 | `0` / `100` | 用索引做 stagger，见下 |
+| 普通单块 | `fade-up` | 600 | 0 | 默认入场 |
+
+**两列网格交错示例**（`index % 2` 形成 0 / 100ms 交替，可按列数改为 `% 3` 等）：
+
+```tsx
+{items.map((item, index) => (
+  <article
+    key={item.id}
+    data-aos="fade-up"
+    data-aos-duration="600"
+    data-aos-delay={String((index % 2) * 100)}
+  >
+    {/* ... */}
+  </article>
+))}
+```
+
+## `data-aos-*` 速查
+
+| 属性 | 常用值 | 说明 |
+|------|--------|------|
+| `data-aos` | `fade-up`, `fade-down`, `fade-left`, `fade-right`, `zoom-in`, `flip-left` 等 | 动画类型，以稿面为准 |
+| `data-aos-duration` | `400`–`1200` | 持续时间 (ms) |
+| `data-aos-delay` | `0`, `100`, `200`, `300`… | 延迟，用于 stagger |
+| `data-aos-offset` | `50`–`200` | 距视口多少 px 触发 |
+| `data-aos-once` | `true` | 仅播放一次（也可在 `init` 里统一 `once`） |
+
+## 交付前自检
+
+- [ ] `aos` 已在依赖中，全局样式入口已导入 AOS 样式表。
+- [ ] 对应 **View** 已 `AOS.init`（及按需 `refresh`）。
+- [ ] 需动效节点已设置 `data-aos`（及 duration / delay 等与稿面一致）。
+- [ ] 若本次实现了滚动入场动效，在回复中简要说明已按稿集成 **AOS**。

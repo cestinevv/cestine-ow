@@ -1,0 +1,114 @@
+---
+description: 文案与翻译 — 以 Figma 为准、useTranslation、t()、中文 key、locale 拼音排序、locales 路径与脚本以仓库为准
+globs: "**/*.tsx"
+alwaysApply: true
+---
+
+# 文案与翻译（i18n）
+
+## 稿面与 Key 策略
+
+- **以 Figma 文案为准**：还原与落地时，用户可见文案的**语种、措辞、层级**以设计稿为准；无论稿面是中文、英文或其它语言，**翻译 JSON / key 策略都按稿面语言来对齐**，不要为了「统一英文 key」而擅自改写稿面用语。
+- **Key 与稿面一致**：若 Figma 侧（或设计标注）使用**中文**作为文案 key / 命名依据，项目中可使用**中文 key**（与现有 `useTranslation`、**项目内 locales 目录下的 JSON** 及 `keySeparator: false` 等配置保持一致即可）。**禁止**同一模块内随意中英 key 混用导致无法对照稿面。
+- **无中文 key 禁止入翻译体系（强制）**：locale JSON（含 `zh-CN.json` 及各语言文件）中的 **key 必须包含至少一个汉字**（`\u4e00-\u9fff`）。凡 key **不含中文**——包括纯英文句子/单词、纯数字、纯符号、英文常量（如 `NFT` / `USDC` / `AI`）、季度标注（如 `(Q2 2026)`）、公式串（如 `0.001 / STORY`）、代码路径、CSS class、插值模板且无汉字等——**一律不得**写入任何语言的翻译文件，也不得用 `t('…')` 包一层再依赖 missing-key fallback。此类文案在组件中**直接写常量**；若确需多语言，必须改用**含中文**的 key（与稿面中文一致）。`scripts/i18n-auto/extract.ts` 提取时须**跳过并清理**此类 key。本条优先于「英文稿面可用英文 key」的一般说明。
+- **中文键值一致性（强制）**：当 i18n key 为中文时，`zh-CN.json` 中的 value 必须与 key **逐字一致**（包含空格、标点与大小写）；禁止对 value 做缩写、润色或“文案优化”（例如 `白皮书目录 -> 目录`）。若 UI 需要不同展示文案，必须新增独立 key，不得复用旧 key 并改写其中文 value。
+- **Locale key 排序（强制，拼音；为多分支合并降冲突）**：`src/locales/*.json` 中的 key **必须**按统一、确定性规则排序写入。目的不是「好看」，而是让**多个分支并行新增翻译 key** 时，各自插入到稳定的拼音位置，merge / rebase 时冲突面最小；禁止手改顺序、禁止把新 key 随手 append 到文件末尾、禁止使用 JS 默认 Unicode 码点序（中文会挤在码点乱序，分支间更容易整块冲突）。
+  - **首字符为汉字**（`\u4e00-\u9fff`）：按 **拼音序**（拼音首字母 / 完整拼音 collation），实现上使用 `localeCompare(a, b, 'zh-CN')`（Node ICU）；例如 `白皮书`（bai）在 `充值`（chong）之前，`一、缘起`（yi）排在 y 段而非 Unicode 首位。
+  - **首字符为数字 / 字母 / 符号**：保持默认字典序（Unicode 码点）。
+  - **分组**：非汉字开头的 key 整体排在汉字开头的 key **之前**。
+  - **各语言文件同一套 key 顺序**：`zh-CN` / `en` / `ja` 等**全部** locale JSON 必须共用同一排序结果（同一 `sortLocaleRecord`），避免「中文已按拼音、其它语言仍乱序」导致并行改翻译时冲突放大。
+  - **执行入口**：新增 / 提取 / 翻译写回 locale 时，**必须**走 `scripts/i18n-auto/utils.ts` 的 `compareLocaleKeys` / `sortLocaleRecord`（`extract.ts`、`index.ts` 已接入）；人工补 key 后也应经上述脚本重排，或等价调用同一比较函数。
+  - **合并冲突处理**：若 locale JSON 出现排序相关冲突，解决后**必须重新** `sortLocaleRecord`（或跑 extract / translate 写回）再提交，禁止留下「半套拼音、半套追加」的混合顺序。
+- **英文常量豁免（强制）**：当文案属于**跨语言不翻译**的英文常量（如 `NFT`、`USDC`、`AI`、品牌名、协议名、代币符号）且产品明确要求全语言保持英文时，**禁止纳入 i18n**；应直接在组件中使用英文常量，且不要新增 locale key。本条是「无中文 key 禁止入翻译体系」的典型子集。
+
+## 集成步骤（含用户可见文案的组件）
+
+生成或修改包含**用户可见文本**的 React 组件时，默认**必须**接入 i18n；但满足「无中文 key / 英文常量豁免」的文案除外。
+
+### 前置依赖检查
+
+1. `package.json` 含 `i18next` 与 `react-i18next`。
+2. 仓库内存在各语言 JSON（路径以 **i18n 初始化代码与既有文件**为准，常见为 `src/locales/` 或 `public/locales/` 等）。
+3. 若项目提供自动翻译 / 增量翻译说明文档，优先遵循；无文档则按现有脚本与目录惯例扩展。
+
+### 组件层：统一使用 `t()`
+
+**所有用户可见文案**须通过 `t()` 输出，禁止长期硬编码在 JSX 中（与稿面一致的 key 仍通过 `t('…')` 引用）：
+
+```tsx
+import { useTranslation } from 'react-i18next';
+
+export function XxxSection() {
+  const { t } = useTranslation();
+
+  return (
+    <section>
+      <h1>{t('页面主标题')}</h1>
+      <p>{t('这是页面描述文案')}</p>
+      <Button type="button">{t('了解更多')}</Button>
+    </section>
+  );
+}
+```
+
+### 数据驱动文案（列表 / 卡片）
+
+文案在常量中时，使用 `titleKey`、`descriptionKey` 等字段存 **i18n key**（与稿面语种一致），渲染时再 `t()`：
+
+```tsx
+const ITEMS = [
+  {
+    id: '01',
+    titleKey: '最多 4 轮推进',
+    descriptionKey: '平台支持 Angel...',
+  },
+] as const;
+
+export function XxxSection() {
+  const { t } = useTranslation();
+
+  return (
+    <section>
+      {ITEMS.map((item) => (
+        <article key={item.id}>
+          <h3>{t(item.titleKey)}</h3>
+          <p>{t(item.descriptionKey)}</p>
+        </article>
+      ))}
+    </section>
+  );
+}
+```
+
+### 翻译键命名参考
+
+| 规范 | 示例 | 说明 |
+|------|------|------|
+| 与稿面一致（须含中文） | `"最多 4 轮推进"` | key 可与中文原文相同，便于对照 Figma；**key 必须含汉字** |
+| 禁止无中文 key | `"About Us"` / `"NFT"` / `"10%"` | 不含汉字的字符串**不得**作为 locale key |
+| 变量 | `"欢迎 {{name}}"` | i18next 插值；key 本身仍须含中文 |
+| 复数 | `"{{count}} 项_one"` / `_other` | 按 i18next 复数约定；key 仍须含中文 |
+
+**与上文冲突时以「稿面与 Key 策略」为准。**
+
+### 翻译文件与自动翻译
+
+若仓库配置了**增量机器翻译**，以 **`package.json` 的 `scripts`** 与脚本实现为准（源语言文件、目标语言列表因项目而异）。
+
+1. 在**脚本约定的源语言 JSON**中为新 key 补充条目（本仓库为 `zh-CN.json`；key 可为中文等，与稿面一致；中文 key 时 value === key）。
+2. 运行项目脚本，例如本仓库：`pnpm i18n:translate`（其它项目可能是 `npm run i18n:translate` 等）。
+3. 脚本会增量更新其它语言文件；写回时**必须**用 `sortLocaleRecord` 保持拼音排序；边界条件以仓库文档或脚本注释为准。
+
+### 闭环检查清单
+
+- [ ] 组件已 `import { useTranslation }` 并 `const { t } = useTranslation()`
+- [ ] 用户可见文本均经 `t('…')` 或 `t(item.xxxKey)`（无中文 / 英文常量除外，直接写常量）
+- [ ] 数据常量对文案使用 `*Key` 后缀字段
+- [ ] 源语言 JSON（及稿面对应语言文件）已补全新增键
+- [ ] 所有 locale key **均含至少一个汉字**；不含中文的 key 未写入任何语言文件
+- [ ] 中文 key 在 `zh-CN.json` 中满足 `key === value`（逐字一致）
+- [ ] `src/locales/*.json` 的 key 已按 **拼音规则**排序（汉字开头走 `zh-CN` collation；各语言同一顺序；经 `sortLocaleRecord` 写回；禁止只 append 末尾）
+- [ ] 若涉及 locale merge 冲突，解决后已重新排序再提交
+- [ ] 仅英文且不翻译的常量文案（如 `NFT`）未进入 i18n（未新增 key、未改 locale）
+- [ ] 已按需执行 **`package.json` 中的翻译脚本**（若存在）
+- [ ] 交付说明中注明已接入 i18n（若本次涉及文案）

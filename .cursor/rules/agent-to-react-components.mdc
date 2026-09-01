@@ -1,0 +1,20 @@
+---
+description: 元素与组件 — 强制优先 shadcn/ui、按需安装、cn 合并类名
+globs: "**/*.tsx"
+alwaysApply: true
+---
+
+# 元素与组件（强制优先使用 shadcn/ui 组件）
+
+- **必须主动识别与替换（核心要求）**：**AI 在生成代码时，无需用户提醒，必须主动、自动识别所有具备交互特性的设计元素，并严格将其映射为 shadcn/ui 组件**。严禁使用 `div`, `button`, `input` 等原生 HTML 标签去模拟按钮、输入框或下拉框的样式和交互。同时，必须优先使用现有的展示类组件（如 `Card` 作为容器、`Avatar` 作为头像、`Badge` 作为标签、`Progress` 作为进度条），绝对不要手写带长串 className 的原生 `div` 去实现这些现成组件。
+- **布局容器**：仅针对**结构 / 布局**使用原生标签 + Tailwind `className`；**优先**按 **`@.cursor/rules/agent-to-react-layout.mdc`** 选用 `main` / `header` / `nav` / `section` / `article` 等语义标签，无合适语义时再用 `div` / `span`。
+- **表单与标准 UI 控件（按需安装 shadcn/ui）**：
+  - **识别与映射**：分析 Figma 节点，主动识别常见标准控件。常见映射参考：按钮 -> `Button`，普通输入框 -> `Input`，带搜索补全的输入框 -> `Command` 或 `Combobox`，选择器 -> `Select`，弹窗 -> `Dialog`，气泡卡片 -> `Popover`，开关 -> `Switch`，复选框 -> `Checkbox`，头像 -> `Avatar`，标签 -> `Badge`，进度条 -> `Progress`，下拉菜单 -> `DropdownMenu`，卡片 -> `Card` 等。
+  - **数据表格（Table + TanStack Table，强制）**：凡 Figma 为**可排序 / 可筛选 / 多列数据表**（交易记录、列表型后台表等），**必须**同时采用 **`@/components/ui` 的 shadcn `Table` 原语**（`Table` / `TableHeader` / `TableBody` / `TableRow` / `TableHead` / `TableCell`）**与** **`@tanstack/react-table`**（`useReactTable`、`createColumnHelper` 或 `ColumnDef`、`getCoreRowModel`，按需叠加 `getSortedRowModel`、`getFilteredRowModel`、`getPaginationRowModel` 等）。**禁止**仅用 shadcn `Table` 手写循环而无 TanStack 列模型；**禁止**不用 `Table` 原语、纯 `div`/`grid` 冒充表格语义（除非稿面明确非表结构且产品确认非数据表）。
+  - **检查**：在编写代码前，**必须检查** shadcn/ui 组件目录是否已存在所需组件（常见为 `components/ui`，以 **`components.json`** 与仓库实际路径为准）。
+  - **按需安装**：如果对应组件不存在，**严禁自行用原生标签模拟复杂交互组件**。你**必须**主动调用终端执行命令按需安装；命令以项目文档或 `package.json` / shadcn 惯例为准（常见形如 `npx shadcn@latest add <组件名>`，包管理器按仓库选择 npx / pnpm dlx / bunx 等）。
+  - **替换与覆盖**：安装或导入完成后，严格使用该 shadcn 组件进行实现，并在其自带属性的基础上，通过 `className` 传入 Tailwind 样式以精确覆盖和匹配设计稿的视觉细节。
+- **Dialog 头部统一规范（强制）**：以 `DialogTitle + DialogClose` 为标准结构。`header` 统一 `flex w-full items-center justify-between gap-4`；`DialogTitle` 统一 `m-0 min-w-0 flex-1 text-left text-lg leading-[26px] font-bold tracking-[-0.04px] text-foreground`；关闭按钮统一使用 `DialogClose` 的 `render` 方式挂载 `Button`（`variant="ghost"` + `size="icon"` + `className="shrink-0 rounded-full"`），并使用项目内 `IconX`（`size-6`）作为关闭图标，禁止用 `&times;` 代替。
+- **Dialog 组件选型（强制）**：业务组件中新增或改造弹窗时，**默认优先使用** `@/components/common/AppDialog`，禁止继续直接组合 `@/components/ui/dialog` 的 `DialogContent` + 手写头部。仅当需求超出 `AppDialog` 能力且无法通过扩展 `AppDialog` 满足时，才允许回退到底层 `dialog` 原语，并需在代码说明中标注原因。
+- **Dialog 移动端宽度（强制，`<md`）**：`DialogContent` 在移动端必须**横向占满视口**（与 `dialog.tsx` 中 `Viewport` 的 `p-0`、Popup 的 `w-full` 一致），**禁止**在 `DialogContent` 的 `className` 里写无前缀的 `max-w-*` / `max-w-[…]`（会在大屏手机上把弹层限成窄条）。桌面稿上的固定最大宽度一律写成 **`md:max-w-*` / `md:max-w-[…]`**（例如 `w-full md:max-w-[424px]`）。`dialog.tsx` 已对 Popup 追加 `max-md:max-w-none` 作为兜底；业务侧仍须遵守 `md:` 前缀，避免与 `tailwind-merge` 的合并顺序产生意外覆盖。
+- **合并样式**：统一使用项目中已有的 `cn`（或等价）工具合并 Tailwind 类名（常见位于 `src/lib/utils.ts` 或 `src/utils.ts`，**先检索再 import**）。

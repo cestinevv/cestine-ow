@@ -1,0 +1,21 @@
+name: Feishu Push Notify
+
+on:
+  push:
+    branches: [ "main", "master" ] # 监听 main 和 master 分支的提交
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Message to Feishu
+        uses: whatwewant/action-robot-feishu@v0.0.1 # 使用社区成熟的飞书推送组件
+        with:
+          url: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          title: "🚀 GitHub 代码提交通知"
+          text: |
+            **仓库**：${{ github.repository }}
+            **提交人**：${{ github.actor }}
+            **提交信息**：${{ github.event.head_commit.message }}
+            **提交时间**：${{ github.event.head_commit.timestamp }}
+            **查看代码**：[点击跳转](${{ github.event.compare }})
