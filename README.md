@@ -68,3 +68,8 @@
 - **辅助脚本**：`scripts/docker-test.sh`、`scripts/docker-build-test.sh`、`scripts/deploy-aws.sh`。
 
 以上构成当前仓库的端到端技术架构：**全栈 React + 类型安全路由 + Query 数据层 + Orval 契约驱动 + 国际化 + 可选 Privy/Wagmi 链上身份 + 完整工程化链路**。
+
+
+
+
+测试改动
