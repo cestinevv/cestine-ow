@@ -1,0 +1,97 @@
+openapi: 3.0.1
+info:
+  title: 默认模块
+  description: |
+    钱包服务 HTTP 接口 OpenAPI 文档。
+    覆盖登录注册验签、邀请关系、用户资产、平台资产、充值、提现相关接口。
+  version: 1.0.0
+tags: []
+paths:
+  /api/admin/v1/configs/keys/{keys}:
+    get:
+      summary: 根据多个 key 获取配置
+      deprecated: false
+      description: 根据单个 key 获取配置
+      tags: []
+      parameters:
+        - name: keys
+          in: path
+          description: 英文逗号分隔
+          required: true
+          example: test,test1
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    title: 状态码
+                  data:
+                    type: object
+                    properties: {}
+                    title: 响应数据
+                  errors:
+                    title: 错误消息
+                    nullable: true
+                    anyOf:
+                      - type: string
+                      - type: object
+                  meta:
+                    type: object
+                    nullable: true
+                    title: 元信息
+                  msg:
+                    type: string
+                    title: 响应消息
+                    example: Success
+                required:
+                  - code
+                  - msg
+          headers: {}
+      security: []
+components:
+  schemas: {}
+  responses:
+    Success:
+      description: ""
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: number
+                title: 状态码
+              data:
+                title: 响应数据
+                nullable: true
+                anyOf:
+                  - type: string
+                  - type: object
+                  - type: array
+              msg:
+                type: string
+                title: 响应消息
+                example: Success
+              meta:
+                type: object
+                nullable: true
+                title: 元信息
+              errors:
+                title: 错误消息
+                nullable: true
+                anyOf:
+                  - type: string
+                  - type: object
+            required:
+              - code
+              - msg
+  securitySchemes: {}
+servers: []
+security: []

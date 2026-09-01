@@ -1,0 +1,1396 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+@import "aos/dist/aos.css";
+
+@source "./";
+
+@theme inline {
+  /*
+   * md / lg 默认会在「等于 768 / 1024」时命中；产品要求临界点等于时与更小档一致，
+   * 故分别抬到 768.5 / 1024.5：整数视口宽下仅 ≥769 / ≥1025 才进入对应档。
+   */
+  --breakpoint-md: 768.5px;
+  --breakpoint-lg: 1024.5px;
+
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC",
+    "Noto Sans SC", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-heading: var(--font-sans);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  /* 全站主品牌红（主按钮、默认 shadcn primary 等）— Logo #E8001B */
+  --color-onestory-brand-red: var(--onestory-brand-red);
+  --color-onestory-brand-red-foreground: var(--onestory-brand-red-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  /* 全站滚动条滑块 — 与候场面板 Figma input-disable 同色 */
+  --color-scrollbar: var(--scrollbar);
+  --color-footer: var(--footer);
+  --color-footer-foreground: var(--footer-foreground);
+  --color-launchpad-card: var(--launchpad-card);
+  --color-launchpad-panel: var(--launchpad-panel);
+  --color-launchpad-border-soft: var(--launchpad-border-soft);
+  --color-launchpad-border-strong: var(--launchpad-border-strong);
+  --color-launchpad-accent: var(--launchpad-accent);
+  --color-launchpad-text-primary: var(--launchpad-text-primary);
+  --color-launchpad-text-secondary: var(--launchpad-text-secondary);
+  --color-launchpad-chip: var(--launchpad-chip);
+  --color-launchpad-chip-border: var(--launchpad-chip-border);
+  --color-launchpad-rail: var(--launchpad-rail);
+  --color-launchpad-badge: var(--launchpad-badge);
+  --color-index-referral-rank-gold: var(--index-referral-rank-gold);
+  --color-play-hero-description: var(--play-hero-description);
+  --color-play-hero-tag-text: var(--play-hero-tag-text);
+  --color-play-drama-stat-foreground: var(--play-drama-stat-foreground);
+  --color-play-drama-stat-surface: var(--play-drama-stat-surface);
+  --color-play-drama-stat-border: var(--play-drama-stat-border);
+  /* 演员发行信息 / 价格曲线 — Figma 7369:77436 */
+  --color-actor-issue-formula: var(--actor-issue-formula);
+  --color-actor-issue-success: var(--actor-issue-success);
+  --color-actor-curve-accent: var(--actor-curve-accent);
+  --color-actor-search-badge-official: var(--actor-search-badge-official);
+  --color-actor-search-badge-community: var(--actor-search-badge-community);
+  --color-actor-search-badge-partner: var(--actor-search-badge-partner);
+  --color-actor-search-badge-verified: var(--actor-search-badge-verified);
+  --color-play-synopsis-expand-surface: var(--play-synopsis-expand-surface);
+  --color-play-synopsis-expand-border: var(--play-synopsis-expand-border);
+  --color-play-synopsis-expand-foreground: var(
+    --play-synopsis-expand-foreground
+  );
+  --color-play-synopsis-expand-hover: var(--play-synopsis-expand-hover);
+  --color-play-episode-selected-surface: var(--play-episode-selected-surface);
+  --color-play-episode-panel-surface: var(--play-episode-panel-surface);
+  --color-play-episode-cell-surface: var(--play-episode-cell-surface);
+  --color-play-episode-bulk-banner-surface: var(
+    --play-episode-bulk-banner-surface
+  );
+  --color-play-episode-bulk-banner-border: var(
+    --play-episode-bulk-banner-border
+  );
+  --color-play-progress-track: var(--play-progress-track);
+  --color-play-progress-fill: var(--play-progress-fill);
+  --color-play-progress-hover: var(--play-progress-hover);
+  --color-play-progress-paused: var(--play-progress-paused);
+  --color-play-controls-fg: var(--play-controls-fg);
+  --color-play-controls-hover: var(--play-controls-hover);
+  --color-play-meta-cta-bg: var(--play-meta-cta-bg);
+  --color-watch-like-active: var(--watch-like-active);
+  --color-watch-bookmark-active: var(--watch-bookmark-active);
+  /* 播放页关注 + — Figma 6:1105 primary/primary #e50815（仅 watch 局部，不改全局 teal primary） */
+  --color-watch-follow-primary: var(--watch-follow-primary);
+  --color-site-settings-lang-selected-bg: var(--site-settings-lang-selected-bg);
+  --color-site-settings-lang-selected-fg: var(--site-settings-lang-selected-fg);
+  --color-site-settings-switch-checked: var(--site-settings-switch-checked);
+  /* 设置浮层底 / 开态旋钮 — Figma 655:76323 white-to-secondary / white-to-dark */
+  --color-site-settings-panel-surface: var(--site-settings-panel-surface);
+  --color-site-settings-switch-thumb: var(--site-settings-switch-thumb);
+  /* 播放侧栏 / Page&Sheet thirdly — 浅 #fff+#f6f6f6 / 深 #212225+#111113 */
+  --color-play-side-panel: var(--play-side-panel);
+  --color-play-drama-side-panel: var(--play-drama-side-panel);
+  --color-page-thirdly: var(--page-thirdly);
+  /* 播放底栏 Toggle 关轨 — Figma Colors/Page&Sheet/unavailable */
+  --color-play-toggle-unchecked: var(--play-toggle-unchecked);
+  --color-play-toggle-checked: var(--play-toggle-checked);
+  --color-play-toggle-thumb: var(--play-toggle-thumb);
+  --color-play-unlock-bulk-border: var(--play-unlock-bulk-border);
+  --color-play-unlock-discount-bg: var(--play-unlock-discount-bg);
+  --color-play-unlock-discount-fg: var(--play-unlock-discount-fg);
+  --color-play-unlock-permanent-badge-surface: var(
+    --play-unlock-permanent-badge-surface
+  );
+  --color-play-unlock-permanent-badge-foreground: var(
+    --play-unlock-permanent-badge-foreground
+  );
+  /* 二级导航 / 筛选 pill — Figma 7390:89032（浅）/ 7622:85098（深） */
+  --color-filter-pill-active-surface: var(--filter-pill-active-surface);
+  --color-filter-pill-active-foreground: var(--filter-pill-active-foreground);
+  --color-filter-pill-inactive-surface: var(--filter-pill-inactive-surface);
+  --color-filter-pill-inactive-foreground: var(
+    --filter-pill-inactive-foreground
+  );
+  /* 短剧页筛选 pill — Figma 14:7238：深浅主题同色（选中 dark / 未选中 secondary） */
+  --color-theater-filter-pill-active-surface: var(
+    --theater-filter-pill-active-surface
+  );
+  --color-theater-filter-pill-active-foreground: var(
+    --theater-filter-pill-active-foreground
+  );
+  --color-theater-filter-pill-inactive-surface: var(
+    --theater-filter-pill-inactive-surface
+  );
+  --color-theater-filter-pill-inactive-foreground: var(
+    --theater-filter-pill-inactive-foreground
+  );
+  --color-theater-drama-card-surface: var(--theater-drama-card-surface);
+  --color-theater-drama-card-border: var(--theater-drama-card-border);
+  --color-theater-ip-glass-surface: var(--theater-ip-glass-surface);
+  --color-play-rating-star: var(--play-rating-star);
+  --color-points-page-surface-muted: var(--points-page-surface-muted);
+  --color-points-icon-tile-bg: var(--points-icon-tile-bg);
+  --color-points-pill-surface: var(--points-pill-surface);
+  --color-points-pill-text: var(--points-pill-text);
+  --color-points-stat-caption: var(--points-stat-caption);
+  --color-points-invite-aside-border: var(--points-invite-aside-border);
+  --color-points-invite-aside-overlay: var(--points-invite-aside-overlay);
+  --color-points-invite-card-border: var(--points-invite-card-border);
+  --color-points-invite-share-control: var(--points-invite-share-control);
+  --color-points-share-dialog-banner-text: var(
+    --points-share-dialog-banner-text
+  );
+  --color-points-tier-card-surface: var(--points-tier-card-surface);
+  --color-points-tier-card-border: var(--points-tier-card-border);
+  --color-points-tier-icon-bg: var(--points-tier-icon-bg);
+  --color-points-rebate-positive: var(--points-rebate-positive);
+  --color-points-link-action: var(--points-link-action);
+  --color-points-status-unlocked: var(--points-status-unlocked);
+  --color-points-list-row-border: var(--points-list-row-border);
+  --color-mining-card-surface: var(--mining-card-surface);
+  --color-mining-story-amount: var(--mining-story-amount);
+  --color-mining-pool-chip-surface: var(--mining-pool-chip-surface);
+  --color-mining-pool-chip-text: var(--mining-pool-chip-text);
+  --color-mining-settlement-badge-surface: var(
+    --mining-settlement-badge-surface
+  );
+  --color-mining-settlement-badge-foreground: var(
+    --mining-settlement-badge-foreground
+  );
+  --color-mining-quote-foreground: var(--mining-quote-foreground);
+  --color-mining-section-title: var(--mining-section-title);
+  --color-mining-rules-section-title: var(--mining-rules-section-title);
+  --color-mining-primary-action-surface: var(--mining-primary-action-surface);
+  --color-mining-primary-action-foreground: var(
+    --mining-primary-action-foreground
+  );
+  --color-mining-divider-border: var(--mining-divider-border);
+  --color-mining-rules-example-surface: var(--mining-rules-example-surface);
+  --color-game-page-surface: var(--game-page-surface);
+  --color-game-stat-surface: var(--game-stat-surface);
+  --color-game-deploy-slot-highlight-surface: var(
+    --game-deploy-slot-highlight-surface
+  );
+  --color-game-deploy-slot-highlight-border: var(
+    --game-deploy-slot-highlight-border
+  );
+  --color-game-deploy-slot-nav-active-border: var(
+    --game-deploy-slot-nav-active-border
+  );
+  --color-game-deploy-slot-dot-empty: var(--game-deploy-slot-dot-empty);
+  --color-game-deployed-card-warning-border: var(
+    --game-deployed-card-warning-border
+  );
+  --color-game-deployed-card-exhausted-border: var(
+    --game-deployed-card-exhausted-border
+  );
+  --color-game-deployed-card-replenish-soft-surface: var(
+    --game-deployed-card-replenish-soft-surface
+  );
+  --color-game-deployed-card-replenish-soft-text: var(
+    --game-deployed-card-replenish-soft-text
+  );
+  --color-game-deployed-card-rest-soft-surface: var(
+    --game-deployed-card-rest-soft-surface
+  );
+  --color-game-deployed-card-rest-soft-text: var(
+    --game-deployed-card-rest-soft-text
+  );
+  --color-game-deployed-card-replenish-solid-surface: var(
+    --game-deployed-card-replenish-solid-surface
+  );
+  --color-game-deployed-card-rest-solid-surface: var(
+    --game-deployed-card-rest-solid-surface
+  );
+  --color-game-deployed-card-stamina-warning: var(
+    --game-deployed-card-stamina-warning
+  );
+  --color-game-deployed-card-level-low-surface: var(
+    --game-deployed-card-level-low-surface
+  );
+  /* Figma Page&Sheet/white to secondary — 派遣卡面，区别于区块 white-to-thirdly(--card) */
+  --color-game-deployed-actor-card-surface: var(
+    --game-deployed-actor-card-surface
+  );
+  /* 空槽默认头像 — Socrates DS 4043:3933 */
+  --color-game-deploy-slot-empty-avatar-bg: var(
+    --game-deploy-slot-empty-avatar-bg
+  );
+  --color-game-deploy-slot-empty-avatar-overlay: var(
+    --game-deploy-slot-empty-avatar-overlay
+  );
+  --color-game-my-actor-deploy-surface: var(--game-my-actor-deploy-surface);
+  --color-game-my-actor-deploy-text: var(--game-my-actor-deploy-text);
+  --color-game-risk-badge-surface: var(--game-risk-badge-surface);
+  --color-game-risk-badge-text: var(--game-risk-badge-text);
+  /* GamePageHeader — Figma 198:44070 */
+  --color-game-header-surface: var(--game-header-surface);
+  --color-game-header-title: var(--game-header-title);
+  --color-game-header-subtitle: var(--game-header-subtitle);
+  --color-game-header-monetary: var(--game-header-monetary);
+  --color-game-header-action-surface: var(--game-header-action-surface);
+  --color-game-header-action-border: var(--game-header-action-border);
+  --color-game-header-action-foreground: var(--game-header-action-foreground);
+  --color-game-header-action-hover: var(--game-header-action-hover);
+  /* GameTodo / GameUpgrade — Figma 198:44074 light / 125:127912 dark */
+  --color-game-panel-row-surface: var(--game-panel-row-surface);
+  --color-game-panel-dot-success: var(--game-panel-dot-success);
+  --color-game-panel-dot-error: var(--game-panel-dot-error);
+  --color-game-panel-scrollbar: var(--game-panel-scrollbar);
+  --color-game-panel-cta-surface: var(--game-panel-cta-surface);
+  --color-game-panel-cta-foreground: var(--game-panel-cta-foreground);
+  --color-game-panel-cta-hover: var(--game-panel-cta-hover);
+  /* GameUpgradeActorsDialog — Figma 198:44095 / 191:38366 片酬对比底 thirdly */
+  --color-game-upgrade-compare-surface: var(--game-upgrade-compare-surface);
+  /* GameActorUpgradeDialog — Figma 198:44099 / 191:43793 colors/text/warning 升级费用 */
+  --color-game-upgrade-fee: var(--game-upgrade-fee);
+  /* GameActorPowerDialog — Figma 637:69335 primary/red 每小时片酬 */
+  --color-game-actor-rate-highlight: var(--game-actor-rate-highlight);
+  --color-game-actor-rate-highlight-surface: var(
+    --game-actor-rate-highlight-surface
+  );
+  --color-game-actor-rate-highlight-border: var(
+    --game-actor-rate-highlight-border
+  );
+  /* GameRestActorDialog — Figma 637:74679 primary/primary CTA */
+  --color-game-primary-cta-surface: var(--game-primary-cta-surface);
+  --color-game-primary-cta-foreground: var(--game-primary-cta-foreground);
+  --color-language-switcher-border: var(--language-switcher-border);
+  --color-language-switcher-item: var(--language-switcher-item);
+  --color-language-switcher-active: var(--language-switcher-active);
+  --color-language-switcher-active-bg: var(--language-switcher-active-bg);
+  /* 1011 专题页 — 浅色 Figma 7036:59693；深色 Figma 7039:38309 */
+  --color-topic-1011-surface: var(--topic-1011-surface);
+  --color-topic-1011-cta: var(--topic-1011-cta);
+  --color-topic-1011-cta-foreground: var(--topic-1011-cta-foreground);
+  /* 白皮书 Hero Banner — 浅 Figma 既有稿 / 深 Figma 2005:202293 */
+  --color-whitepaper-hero-bg: var(--whitepaper-hero-bg);
+  --color-whitepaper-hero-foreground: var(--whitepaper-hero-foreground);
+  --color-whitepaper-hero-cta: var(--whitepaper-hero-cta);
+  --color-whitepaper-hero-cta-foreground: var(--whitepaper-hero-cta-foreground);
+  /* /1011 故事提交 — Figma 7026:35546（浅）/ 6952:36847（深） */
+  --color-story-checkin-accent: var(--story-checkin-accent);
+  --color-story-checkin-title: var(--story-checkin-title);
+  --color-story-checkin-chip-bg: var(--story-checkin-chip-bg);
+  --color-story-checkin-chip-text: var(--story-checkin-chip-text);
+  --color-story-checkin-points: var(--story-checkin-points);
+  --color-story-checkin-toolbar: var(--story-checkin-toolbar);
+  --color-story-checkin-card: var(--story-checkin-card);
+  /* 登船后 Hero 磨砂信息卡 — 浅 7785:94313 / 深 7785:94247 */
+  --color-story-checkin-hero-panel: var(--story-checkin-hero-panel);
+  --color-story-checkin-input: var(--story-checkin-input);
+  /* 顶栏积分 / 绑定账号等控件底 — Page&Sheet/secondary */
+  --color-story-checkin-control: var(--story-checkin-control);
+  --color-story-checkin-bubble: var(--story-checkin-bubble);
+  --color-story-checkin-card-border: var(--story-checkin-card-border);
+  /* 未开始提交按钮边框 — Figma 7064:82326 Colors/Border/secondary */
+  --color-story-checkin-border-secondary: var(--story-checkin-border-secondary);
+  /* 上传区虚线边 / 主文案 / 提示 — Figma 7026:35646（浅）/ 6962:37731（深） */
+  --color-story-checkin-upload-border: var(--story-checkin-upload-border);
+  --color-story-checkin-upload-fg: var(--story-checkin-upload-fg);
+  --color-story-checkin-upload-hint: var(--story-checkin-upload-hint);
+  --color-story-checkin-page-bg: var(--story-checkin-page-bg);
+  --color-income-invite-badge-bg: var(--income-invite-badge-bg);
+  --color-income-invite-badge-text: var(--income-invite-badge-text);
+  /* 发布短剧 /create 第一步 — Figma 2086:17479 页底与区块强调色 */
+  --color-create-flow-page-bg: var(--create-flow-page-bg);
+  --color-create-flow-accent: var(--create-flow-accent);
+  --color-create-flow-input-surface: var(--create-flow-input-surface);
+  --color-create-flow-input-border: var(--create-flow-input-border);
+  --color-create-flow-step-inactive-bg: var(--create-flow-step-inactive-bg);
+  /* Figma 2095:6788 剧集视频上传进度条 — 主题 #1568f2、轨道 蓝10 */
+  --color-create-flow-upload-progress-track: var(
+    --create-flow-upload-progress-track
+  );
+  --color-create-flow-upload-progress-fill: var(
+    --create-flow-upload-progress-fill
+  );
+  --color-create-flow-episode-poster-placeholder: var(
+    --create-flow-episode-poster-placeholder
+  );
+  --color-create-draft-toast-bg: var(--create-draft-toast-bg);
+  --shadow-create-draft-toast: var(--create-draft-toast-shadow);
+  --color-history-border: var(--history-border);
+  --color-history-title-bar-bg: var(--history-title-bar-bg);
+  --color-history-table-header: var(--history-table-header);
+  --color-history-tab-text-inactive: var(--history-tab-text-inactive);
+  --color-narrator-publish-card-base: var(--narrator-publish-card-base);
+  --color-narrator-publish-fade-soft: var(--narrator-publish-fade-soft);
+  --color-narrator-publish-radial-violet: var(--narrator-publish-radial-violet);
+  --color-narrator-publish-radial-mint: var(--narrator-publish-radial-mint);
+  --color-narrator-publish-radial-sky: var(--narrator-publish-radial-sky);
+  --color-narrator-decoration-fill: var(--narrator-decoration-fill);
+  --color-narrator-review-pending: var(--narrator-review-pending);
+  --color-narrator-review-passed: var(--narrator-review-passed);
+  --color-narrator-review-rejected: var(--narrator-review-rejected);
+  /* 叙事者「绑定演员」弹窗 — 已绑定演员·分润分配卡片（Figma 2212:8222） */
+  --color-narrator-bind-card-surface: var(--narrator-bind-card-surface);
+  --color-narrator-bind-card-border: var(--narrator-bind-card-border);
+  --color-history-row-highlight: var(--history-row-highlight);
+  --color-history-amount-positive: var(--history-amount-positive);
+  --color-history-amount-negative: var(--history-amount-negative);
+  --color-wallet-divider: var(--wallet-divider);
+  --color-wallet-surface-muted: var(--wallet-surface-muted);
+  --color-wallet-text-secondary: var(--wallet-text-secondary);
+  --color-wallet-text-tertiary: var(--wallet-text-tertiary);
+  --color-wallet-outline-accent: var(--wallet-outline-accent);
+  --color-wallet-switch-thumb: var(--wallet-switch-thumb);
+  --color-wallet-switch-track-checked: var(--wallet-switch-track-checked);
+  --color-wallet-switch-track-unchecked: var(--wallet-switch-track-unchecked);
+  --color-site-nav-border: var(--site-nav-border);
+  --color-site-nav-item-active: var(--site-nav-item-active);
+  --color-site-search-border: var(--site-search-border);
+  /* 充值弹窗选择行 — Figma Page&Sheet/secondary */
+  --color-deposit-field-surface: var(--deposit-field-surface);
+  --color-deposit-field-surface-hover: var(--deposit-field-surface-hover);
+  --color-order-status-pending: var(--order-status-pending);
+  /* Figma colors/page&sheet/unavailable — Button disabled 文案（4657:22820 等待审核） */
+  --color-button-disabled-foreground: var(--button-disabled-foreground);
+  /* Figma unavailable 填充禁用主按钮：底 / 字（7390:98041） */
+  --color-button-disabled-surface: var(--button-disabled-surface);
+  --color-button-disabled-on-surface: var(--button-disabled-on-surface);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-spin: spin 1s linear infinite;
+  --animate-posts-fade-up: posts-fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+  --animate-posts-fade-in: posts-fade-in 0.5s ease-out both;
+
+  @keyframes posts-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes posts-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+@layer base {
+  :root {
+    /* StoryFun light theme — Figma web推荐浅色 70:70339 */
+    /* 主行动 / 品牌红：单一事实来源，供 primary、语言切换高亮、积分文案等复用 */
+    --onestory-brand-red: #e8001b;
+    --onestory-brand-red-foreground: #ffffff;
+
+    --background: #ffffff;
+    --foreground: #1c2024;
+    --card: #ffffff;
+    --card-foreground: #1c2024;
+    --popover: #ffffff;
+    --popover-foreground: #1c2024;
+    --primary: var(--onestory-brand-red);
+    --primary-foreground: var(--onestory-brand-red-foreground);
+    --secondary: #f0f0f3;
+    --secondary-foreground: #1c2024;
+    --muted: #f6f6f6;
+    --muted-foreground: #60646c;
+    --accent: oklch(0.96 0.02 181);
+    --accent-foreground: #1c2024;
+    --destructive: #e50815;
+    --destructive-foreground: #ffffff;
+    --actor-search-badge-official: #e50815;
+    --actor-search-badge-community: #009a9d;
+    --actor-search-badge-partner: #8e6be6;
+    --actor-search-badge-verified: #e3a300;
+    --success: oklch(0.627 0.171 149.214);
+    --success-foreground: oklch(0.985 0 0);
+    --brand: var(--onestory-brand-red);
+    --brand-foreground: var(--onestory-brand-red-foreground);
+    --warning: #ffc53d;
+    --warning-foreground: #1c2024;
+    --border: #d9d9e0;
+    --input: #d9d9e0;
+    --ring: #000000;
+    /* 全站滚动条 — Figma Page&Sheet/input disable #e5e5e5；保留系统 overlay 显隐 */
+    --scrollbar: #e5e5e5;
+    /* Figma colors/page&sheet/unavailable #c3c5ce */
+    --button-disabled-foreground: #c3c5ce;
+    /* Figma 填充禁用主按钮 — light: unavailable + white-contrast */
+    --button-disabled-surface: #c3c5ce;
+    --button-disabled-on-surface: #ffffff;
+    /* Website footer — Figma Website footer (black bar + light social icons) */
+    --footer: oklch(0 0 0);
+    --footer-foreground: oklch(1 0 0);
+    --chart-1: var(--onestory-brand-red);
+    --chart-2: oklch(0.55 0.02 265);
+    --chart-3: oklch(0.45 0.02 265);
+    --chart-4: oklch(0.35 0.02 265);
+    --chart-5: oklch(0.25 0.02 265);
+    --radius: 0.625rem;
+    /* Legacy token names — aligned to light UI for future sections */
+    --launchpad-card: oklch(1 0 0);
+    --launchpad-panel: oklch(0.97 0.004 265);
+    --launchpad-border-soft: oklch(0.91 0.01 265);
+    --launchpad-border-strong: oklch(0.85 0.02 265);
+    --launchpad-accent: var(--onestory-brand-red);
+    --launchpad-text-primary: oklch(0.21 0.03 265);
+    --launchpad-text-secondary: oklch(0.51 0.02 265);
+    --launchpad-chip: oklch(0.78 0.11 181 / 8%);
+    --launchpad-chip-border: oklch(0.78 0.11 181 / 20%);
+    --launchpad-rail: oklch(0.96 0.02 181);
+    --launchpad-badge: oklch(0.94 0.02 265);
+    --index-referral-rank-gold: #ffba18;
+    /* Play / 剧场 detail — Figma Frame 261:16433 */
+    --play-hero-description: #dadada;
+    --play-hero-tag-text: #edeef0;
+    /* Play drama meta stats — Figma 4940:5308 */
+    --play-drama-stat-foreground: #9b0016;
+    --play-drama-stat-surface: rgb(232 0 27 / 5%);
+    --play-drama-stat-border: rgb(232 0 27 / 16%);
+    /* 演员发行信息 — Figma 7369:77436（深红公式 / 曲线黄） */
+    --actor-issue-formula: #9b0016;
+    --actor-issue-success: #01bab2;
+    --actor-curve-accent: #ffb100;
+    --actor-chart-grid: rgb(217 217 224 / 0.5);
+    --actor-chart-tick: #8b8d98;
+    --actor-chart-label: #60646c;
+    /* Play synopsis 「展开」— Figma 444:16855 (page/sheet/secondary + border/tertiary + text/primary) */
+    --play-synopsis-expand-surface: #f0f0f3;
+    --play-synopsis-expand-border: #f0f0f3;
+    --play-synopsis-expand-foreground: #1c2024;
+    --play-synopsis-expand-hover: #e8e9ed;
+    /* Play episodes cell — selected / bulk banner — Figma 4681:23940 */
+    --play-episode-selected-surface: #e8001b29;
+    --play-episode-panel-surface: #111113;
+    --play-episode-cell-surface: #212225;
+    --play-episode-bulk-banner-surface: #e8001b0d;
+    --play-episode-bulk-banner-border: #e8001b29;
+    --play-progress-track: rgb(133 133 133 / 0.6);
+    --play-progress-fill: #696e77;
+    --play-progress-hover: #edeef0;
+    --play-progress-paused: #e50815;
+    --play-controls-fg: #696e77;
+    --play-controls-hover: #edeef0;
+    --play-meta-cta-bg: rgb(170 170 170 / 0.2);
+    /* Watch rail — Figma 4685:15029 / 4687:15287 / 4687:15289 */
+    --watch-like-active: #e5484d;
+    --watch-bookmark-active: #ffba18;
+    /* Watch follow + — Figma 6:1105 / 11:1507 → 27:7408 primary red */
+    --watch-follow-primary: #e50815;
+    /* Site settings — Figma 655:76680 */
+    --site-settings-lang-selected-bg: #f6f6f6;
+    --site-settings-lang-selected-fg: #1c2024;
+    --site-settings-switch-checked: #1c2024;
+    --site-settings-panel-surface: #ffffff;
+    --site-settings-switch-thumb: #ffffff;
+    /* 推荐侧栏 / 浮层图标底 — Figma 70:70339 浅色 + 11:1507 */
+    --play-side-panel: #ffffff;
+    /* 二级短剧播放右栏 — Figma 102:109303 page/sheet/secondary */
+    --play-drama-side-panel: #f0f0f3;
+    --page-thirdly: #f6f6f6;
+    /* Play desktop toggles — Figma 9:567 unavailable */
+    --play-toggle-unchecked: #50535a;
+    --play-toggle-checked: #edeef0;
+    --play-toggle-thumb: #111113;
+    /* Play unlock dialog — Figma 656:20119 bulk actions + discount chip */
+    --play-unlock-bulk-border: #05df72;
+    --play-unlock-discount-bg: #f3733f;
+    --play-unlock-discount-fg: #ffffff;
+    /* Figma 656:20121 「永久观看」— page/sheet/secondary + text/primary */
+    --play-unlock-permanent-badge-surface: #f0f0f3;
+    --play-unlock-permanent-badge-foreground: #1c2024;
+    /* 筛选 pill — Figma 7390:89032：选中 Page&Sheet/dark / 未选中 secondary */
+    --filter-pill-active-surface: #212225;
+    --filter-pill-active-foreground: #ffffff;
+    --filter-pill-inactive-surface: #f0f0f3;
+    --filter-pill-inactive-foreground: #1c2024;
+    /* 短剧页筛选 / 卡片 — Figma 14:7238 / 14:4322（浅色） */
+    --theater-filter-pill-active-surface: #212225;
+    --theater-filter-pill-active-foreground: #ffffff;
+    --theater-filter-pill-inactive-surface: #f0f0f3;
+    --theater-filter-pill-inactive-foreground: #1c2024;
+    --theater-drama-card-surface: #ffffff;
+    --theater-drama-card-border: #f0f0f3;
+    --theater-ip-glass-surface: rgb(0 0 0 / 0.3);
+    /* Play rating dialog — Figma 2254:11796 (page/sheet/monetary #ffc53d) */
+    --play-rating-star: #ffc53d;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.21 0.03 265);
+    --sidebar-primary: var(--onestory-brand-red);
+    --sidebar-primary-foreground: var(--onestory-brand-red-foreground);
+    --sidebar-accent: oklch(0.97 0.004 265);
+    --sidebar-accent-foreground: oklch(0.21 0.03 265);
+    --sidebar-border: oklch(0.91 0.01 265);
+    --sidebar-ring: var(--ring);
+    /* Points / 积分 — Figma Frame 452:826 */
+    --points-page-surface-muted: #f8f9fb;
+    --points-icon-tile-bg: #cdf2fc;
+    --points-pill-surface: rgb(232 0 27 / 16%);
+    --points-pill-text: #9b0016;
+    --points-stat-caption: #434654;
+    --points-invite-aside-border: #f0f0f3;
+    /* Figma 452:902 — overlay + blur */
+    --points-invite-aside-overlay: rgb(255 255 255 / 5%);
+    --points-invite-card-border: #f0f0f3;
+    /* Figma 452:907 / 452:909 — page/sheet/secondary */
+    --points-invite-share-control: #f0f0f3;
+    /* Points daily share modal — Figma 656:20403 banner body（品牌红） */
+    --points-share-dialog-banner-text: var(--onestory-brand-red);
+    /* Points tier card — Figma 1561:3983 (light cyan surface, translucent border, brand pill) */
+    --points-tier-card-surface: #e5f9fa;
+    --points-tier-card-border: rgb(232 0 27 / 16%);
+    --points-tier-icon-bg: var(--onestory-brand-red);
+    /* Points rebate / status / link — Figma 1561:3239 / 1561:3762 / 1561:4066 */
+    --points-rebate-positive: var(--onestory-brand-red);
+    --points-link-action: #3e63dd;
+    --points-status-unlocked: #30a46c;
+    --points-list-row-border: #d9d9e0;
+    /* Mining / 挖矿 — Figma 4359:10666 */
+    --mining-card-surface: #f6f6f6;
+    --mining-story-amount: #1c2024;
+    --mining-pool-chip-surface: #eff6ff;
+    --mining-pool-chip-text: #155dfc;
+    --mining-settlement-badge-surface: #eff6ff;
+    --mining-settlement-badge-foreground: #0a0a0a;
+    --mining-quote-foreground: #1e4e7a;
+    --mining-section-title: #0a0a0a;
+    --mining-rules-section-title: #0a1a2f;
+    --mining-primary-action-surface: #212225;
+    --mining-primary-action-foreground: #ffffff;
+    --mining-divider-border: #f0f0f3;
+    /* Figma 637:73746 — page/sheet/monetary-alpha-2 示例卡底 */
+    --mining-rules-example-surface: rgb(244 209 0 / 9%);
+    /* AppLoadingContainer 空态插画 — Figma 2532:10630 */
+    --no-data-floor: #f5f5f5;
+    --no-data-surface: #ffffff;
+    --no-data-stroke: #dfdfdf;
+    --no-data-body: #fafafa;
+    /* Game / 经纪工坊 — Figma 4663:19951 / 深色 7371:66107 */
+    --game-page-surface: #f8f9fb;
+    /* 卡内嵌统计底：浅色 story Bg #f8f9fb */
+    --game-stat-surface: #f8f9fb;
+    /* GamePageHeader — Figma 198:44070 light
+       white-to-thirdly / text primary·secondary·monetary / page&sheet secondary + border secondary */
+    --game-header-surface: #ffffff;
+    --game-header-title: #1c2024;
+    --game-header-subtitle: #60646c;
+    --game-header-monetary: #ffba18;
+    --game-header-action-surface: #f0f0f3;
+    --game-header-action-border: #d9d9e0;
+    --game-header-action-foreground: #1c2024;
+    --game-header-action-hover: #e8e9ed;
+    /* GameTodo / GameUpgrade — Figma 198:44074
+       secondary-to-primary 行底 / success·error 圆点 / Page&Sheet/dark CTA */
+    --game-panel-row-surface: #f0f0f3;
+    --game-panel-dot-success: #30a46c;
+    --game-panel-dot-error: #e5484d;
+    /* 候场 / 待办滚动条 — 复用全站 --scrollbar */
+    --game-panel-scrollbar: var(--scrollbar);
+    --game-panel-cta-surface: #212225;
+    --game-panel-cta-foreground: #ffffff;
+    --game-panel-cta-hover: #2a2d31;
+    /* Figma page&sheet/thirdly #f6f6f6 — 升级卡内 Lv/片酬对比条 */
+    --game-upgrade-compare-surface: #f6f6f6;
+    /* Figma colors/text/warning #ffc53d — 升级费用数值 */
+    --game-upgrade-fee: #ffc53d;
+    /* Figma primary/primary #e50815 — 角色片酬详情每小时数值 */
+    --game-actor-rate-highlight: #e50815;
+    --game-actor-rate-highlight-surface: rgb(229 8 21 / 5%);
+    --game-actor-rate-highlight-border: rgb(229 8 21 / 15%);
+    /* Figma primary/primary #e50815 — 确认休息等主色 CTA */
+    --game-primary-cta-surface: #e50815;
+    --game-primary-cta-foreground: #ffffff;
+    --game-deploy-slot-highlight-surface: rgb(232 0 27 / 5%);
+    --game-deploy-slot-highlight-border: rgb(232 0 27 / 16%);
+    /* Game deploy slot nav — Figma 5915:36303 选中态描边 */
+    --game-deploy-slot-nav-active-border: var(--onestory-brand-red);
+    /* Figma 119:124922 — Page&Sheet/unavailable 空槽菱形 */
+    --game-deploy-slot-dot-empty: #c3c5ce;
+    /* 风险账户标签 — Figma orange5 / orange5 alpha 2 */
+    --game-risk-badge-surface: #f3733f16;
+    --game-risk-badge-text: #f3733f;
+    /* Game deployed actor card — Figma 4955:28613 */
+    --game-deployed-card-warning-border: #ffba18;
+    --game-deployed-card-exhausted-border: #e5484d;
+    --game-deployed-card-replenish-soft-surface: rgb(244 209 0 / 10%);
+    --game-deployed-card-replenish-soft-text: #e2a336;
+    --game-deployed-card-rest-soft-surface: rgb(255 0 8 / 6%);
+    --game-deployed-card-rest-soft-text: #ee555a;
+    --game-deployed-card-replenish-solid-surface: #ffba18;
+    --game-deployed-card-rest-solid-surface: #e5484d;
+    --game-deployed-card-stamina-warning: #ffba18;
+    --game-deployed-card-level-low-surface: rgb(207 138 55 / 50%);
+    /* Figma Page&Sheet/white to secondary（浅色 white） */
+    --game-deployed-actor-card-surface: #ffffff;
+    /* 空槽默认头像 — 浅色：Border/secondary 底圆 + 白色人物 */
+    --game-deploy-slot-empty-avatar-bg: #d9d9e0;
+    --game-deploy-slot-empty-avatar-overlay: #ffffff;
+    /* Game my actor card deploy — Figma 4955:29428 */
+    --game-my-actor-deploy-surface: rgb(0 68 255 / 6%);
+    --game-my-actor-deploy-text: #3e63dd;
+    /* Language switcher dropdown — Figma 1133:9200 */
+    --language-switcher-border: #f0f0f3;
+    --language-switcher-item: #2b3438;
+    --language-switcher-active: var(--onestory-brand-red);
+    --language-switcher-active-bg: rgb(232 0 27 / 16%);
+    /* 1011 专题 — 浅蓝底（Figma H5 7036:59693 #edf5ff）/ CTA Page&Sheet/dark #212225 + 白字 */
+    --topic-1011-surface: #edf5ff;
+    --topic-1011-cta: #212225;
+    --topic-1011-cta-foreground: #ffffff;
+    /* Hero 底图：浅色显示 light、隐藏 dark */
+    --topic-1011-hero-light-opacity: 1;
+    --topic-1011-hero-dark-opacity: 0;
+    /* 白皮书 Hero — 浅色底 + 竖线纹理；CTA 黑底白字 */
+    --whitepaper-hero-bg: #ffffff;
+    --whitepaper-hero-foreground: oklch(0.21 0.03 265);
+    --whitepaper-hero-texture-opacity: 0.35;
+    --whitepaper-hero-cta: #000000;
+    --whitepaper-hero-cta-foreground: #ffffff;
+    /* /1011 登船 — Figma 7026:35546（浅）/ 6952:36847 · 6962:46798（深） */
+    --story-checkin-accent: #e8001b;
+    --story-checkin-title: #e8001b;
+    --story-checkin-chip-bg: rgb(34 122 218 / 16%);
+    --story-checkin-chip-text: #00a1ff;
+    --story-checkin-points: #e2a336;
+    --story-checkin-toolbar: rgb(255 255 255 / 15%);
+    --story-checkin-card: rgb(255 255 255 / 60%);
+    /* Hero 磨砂卡 — Overlays/White Alpha ≈ 60% */
+    --story-checkin-hero-panel: rgb(255 255 255 / 60%);
+    /* 登船 Hero 底图压暗 — 浅色不压 */
+    --story-checkin-boarded-hero-overlay: linear-gradient(
+      201.64deg,
+      rgb(0 0 0 / 0%) 50.7%,
+      rgb(0 0 0 / 0%) 98.76%
+    );
+    --story-checkin-input: #f0f0f3;
+    /* 绑定账号 / 顶栏控件 — 纯白提亮，避免 #f0f0f3 在磨砂卡上发闷 */
+    --story-checkin-control: #ffffff;
+    --story-checkin-bubble: rgb(255 255 255 / 91%);
+    --story-checkin-card-border: #05df72;
+    --story-checkin-border-secondary: #d9d9e0;
+    /* 上传区 — Figma 7026:35646：品牌红虚线 + Text/primary / tertiary */
+    --story-checkin-upload-border: #e8001b;
+    --story-checkin-upload-fg: #1c2024;
+    --story-checkin-upload-hint: #8b8d98;
+    /* 登船页底：浅蓝渐变叠 hero 位图 → story Bg #f8f9fb */
+    --story-checkin-page-bg: #f8f9fb;
+    --story-checkin-page-overlay: linear-gradient(
+      180deg,
+      #0075c8 0%,
+      rgb(0 119 205 / 30%) 46.15%,
+      #f8f9fb 100%
+    );
+    /* 表单页左侧压暗 — 浅色不压暗，与深色结构对称 */
+    --story-checkin-form-vignette: linear-gradient(
+      90deg,
+      rgb(0 0 0 / 0%) 0%,
+      rgb(0 0 0 / 0%) 100%
+    );
+    /* 表单 / 登船后 hero：浅色显示 light 图、隐藏 dark 图 */
+    --story-checkin-hero-light-opacity: 1;
+    --story-checkin-hero-dark-opacity: 0;
+    --income-invite-badge-bg: rgb(255 0 8 / 14%);
+    --income-invite-badge-text: #e5484d;
+    /* Sticky site header — keep in sync with layouts/Header.tsx (72px row / 60px row + 0.5px border-b) */
+    --site-header-height: 72.5px;
+    /* V2 侧栏：移动隐藏；<lg 仅图标；≥lg（1024.5）展开文案 + min 200px */
+    --site-side-nav-width: 0px;
+    /* Figma colors/border/tertiary + search border/secondary */
+    --site-nav-border: #f0f0f3;
+    --site-nav-item-active: #f0f0f3;
+    --site-search-border: #d9d9e0;
+    /* 与 layouts/components/MobileBottomNav.tsx h-16 同步 */
+    --site-mobile-bottom-nav-height: 4rem;
+    /* History / 交易记录 — Figma 665:68467 (page border, title bar, table) */
+    --history-border: #d9d9e0;
+    --history-title-bar-bg: rgb(255 255 255 / 70%);
+    --history-table-header: #8b8d98;
+    --history-tab-text-inactive: #60646c;
+    /* Narrator / 叙事者中心 — 发布短剧主卡装饰底（Figma） */
+    --narrator-publish-card-base: #f8f8f8;
+    --narrator-publish-fade-soft: rgb(255 255 255 / 70%);
+    --narrator-publish-radial-violet: rgb(176 167 197 / 28%);
+    --narrator-publish-radial-mint: rgb(231 251 221 / 82%);
+    --narrator-publish-radial-sky: rgb(210 234 255 / 58%);
+    --narrator-decoration-fill: #fafafa;
+    --narrator-review-pending: #3e86ff;
+    --narrator-review-passed: #30a46c;
+    --narrator-review-rejected: #e5484d;
+    /* 叙事者「绑定演员」弹窗 — 已绑定演员·分润分配卡片（Figma 2212:8222） */
+    --narrator-bind-card-surface: rgb(232 0 27 / 6%);
+    --narrator-bind-card-border: rgb(232 0 27 / 16%);
+    --history-row-highlight: #f6f6f6;
+    --history-amount-positive: #30a46c;
+    --history-amount-negative: #e5484d;
+    --wallet-divider: #d9d9e0;
+    --wallet-surface-muted: #f6f6f6;
+    --wallet-text-secondary: #60646c;
+    --wallet-text-tertiary: #8b8d98;
+    --wallet-outline-accent: #05df72;
+    /* 钱包菜单 Toggle — Figma 7390:143096 Off：轨 unavailable / 钮白；开轨品牌红 */
+    --wallet-switch-thumb: #ffffff;
+    --wallet-switch-track-checked: var(--onestory-brand-red);
+    --wallet-switch-track-unchecked: #c3c5ce;
+    /* 充值弹窗选择行 — Figma Colors/Page&Sheet/secondary #f0f0f3 */
+    --deposit-field-surface: #f0f0f3;
+    --deposit-field-surface-hover: #e5e5ea;
+    --order-status-pending: #f3733f;
+    /* /create step 1 — Figma 品牌红条 #e8001b；页底 #f6f6f6 */
+    --create-flow-page-bg: #f6f6f6;
+    --create-flow-accent: var(--onestory-brand-red);
+    --create-flow-input-surface: #f6f6f6;
+    --create-flow-input-border: #f0f0f3;
+    --create-flow-step-inactive-bg: #e5e5e5;
+    --create-flow-upload-progress-track: #f0f0f3;
+    --create-flow-upload-progress-fill: var(--onestory-brand-red);
+    /* Figma 4773:17881 剧集历史视频占位底 */
+    --create-flow-episode-poster-placeholder: #e4e6ec;
+    /* Figma 2254:6857 草稿同步 Toast 浅绿底 */
+    --create-draft-toast-bg: #e6f6eb;
+    --create-draft-toast-shadow: 4px 6px 9px 0 rgb(0 0 0 / 0.13);
+  }
+
+  @media (min-width: 768.5px) {
+    :root {
+      /* Figma 横向导航 56px；md–<lg 侧栏仅图标，不设最小宽度 */
+      --site-header-height: 56px;
+      --site-side-nav-width: 0px;
+    }
+  }
+
+  /* ≥lg（1024.5）：侧栏展开文案，最小宽度 200px；=1024 仍仅图标 */
+  @media (min-width: 1024.5px) {
+    :root {
+      --site-side-nav-width: 200px;
+    }
+  }
+
+  /* Figma 推荐1440+/1920 侧栏默认 200px */
+  @media (min-width: 1280px) {
+    :root {
+      --site-side-nav-width: 200px;
+    }
+  }
+
+  .dark,
+  [data-theme="dark"] {
+    /* StoryFun dark — Figma 7390:96800 Colors/* */
+    color-scheme: dark;
+    --background: #111113;
+    --foreground: #edeef0;
+
+    /*
+     * Privy 登录弹窗色板 — Figma 7390:148666（深色确认码弹窗）
+     * 通过 body/html 级 CSS 变量覆盖 Privy 默认 dark UI，与站点 Page&Sheet 对齐
+     */
+    --privy-color-background: #111113;
+    --privy-color-background-2: #171718;
+    --privy-color-background-3: #212225;
+    --privy-color-foreground: #edeef0;
+    --privy-color-foreground-2: #b0b4ba;
+    --privy-color-foreground-3: #696e77;
+    --privy-color-foreground-4: #696e77;
+    --privy-color-foreground-accent: #ffffff;
+    /* 与 --primary / --onestory-brand-red 对齐（Submit 等强调文案） */
+    --privy-color-accent: var(--onestory-brand-red);
+    --privy-color-accent-light: #ff3d55;
+    --privy-color-accent-lightest: color-mix(
+      in srgb,
+      var(--onestory-brand-red) 16%,
+      transparent
+    );
+    --privy-color-accent-dark: #c40018;
+    --privy-color-accent-darkest: #b80016;
+    --privy-color-success: #30a46c;
+    --privy-color-error: #e5484d;
+    --privy-color-error-light: #e5484d29;
+    --privy-border-radius-sm: 4px;
+    --privy-border-radius-md: 8px;
+    --privy-border-radius-lg: 16px;
+    --privy-border-radius-full: 9999px;
+    --card: #171718;
+    --card-foreground: #edeef0;
+    --popover: #171718;
+    --popover-foreground: #edeef0;
+    --secondary: #212225;
+    --secondary-foreground: #edeef0;
+    --muted: #212225;
+    --muted-foreground: #b0b4ba;
+    --accent: #212225;
+    --accent-foreground: #edeef0;
+    --border: #363a3f;
+    /* 全站滚动条 — Figma Page&Sheet/input disable #252525 */
+    --scrollbar: #252525;
+    --input: #212225;
+    --ring: #ffffff;
+    --sidebar-ring: var(--ring);
+    --play-drama-stat-foreground: #ff6b7a;
+    /* 演员发行信息 — 深红公式同浅色；曲线黄用 Colors/Text/monetary */
+    --actor-issue-formula: #9b0016;
+    --actor-issue-success: #01bab2;
+    --actor-curve-accent: #ffd60a;
+    --actor-chart-grid: rgb(54 58 63 / 0.5);
+    --actor-chart-tick: #696e77;
+    --actor-chart-label: #b0b4ba;
+
+    --history-border: #363a3f;
+    --history-title-bar-bg: rgb(23 23 24 / 70%);
+    --history-table-header: #b0b4ba;
+    --history-tab-text-inactive: #b0b4ba;
+    --history-row-highlight: #212225;
+    --history-amount-positive: #30a46c;
+    --history-amount-negative: #e5484d;
+    --wallet-divider: #363a3f;
+    --wallet-surface-muted: #212225;
+    --wallet-text-secondary: #b0b4ba;
+    --wallet-text-tertiary: #696e77;
+    --wallet-outline-accent: #05df72;
+    /* 深色 Toggle：白钮 / 关轨 unavailable #50535a / 开轨品牌红 — Figma Page&Sheet/unavailable */
+    --wallet-switch-thumb: #ffffff;
+    --wallet-switch-track-checked: var(--onestory-brand-red);
+    --wallet-switch-track-unchecked: #50535a;
+    --site-nav-border: #212225;
+    --site-nav-item-active: #212225;
+    --site-search-border: #363a3f;
+    /* 充值弹窗选择行 — Figma dark Page&Sheet/secondary #212225 */
+    --deposit-field-surface: #212225;
+    --deposit-field-surface-hover: #2a2c31;
+    --order-status-pending: #f3733f;
+    --language-switcher-border: #363a3f;
+    --language-switcher-item: #edeef0;
+    --language-switcher-active: var(--onestory-brand-red);
+    --language-switcher-active-bg: rgb(232 0 27 / 16%);
+    --points-page-surface-muted: #111113;
+    --income-invite-badge-bg: rgb(255 0 8 / 14%);
+    --income-invite-badge-text: #e5484d;
+    /* 1011 专题深色 — Figma 7039:38309 story Bg / Page&Sheet/dark 反色 CTA */
+    --topic-1011-surface: #111113;
+    --topic-1011-cta: #ffffff;
+    --topic-1011-cta-foreground: #111113;
+    /* Hero 底图 — Figma 7039:38353 深色导出 */
+    --topic-1011-hero-light-opacity: 0;
+    --topic-1011-hero-dark-opacity: 1;
+    /* 白皮书 Hero — Figma 2005:202293：黑底 + 纹理 8% + 浅色标题 + 白底 CTA */
+    --whitepaper-hero-bg: #000000;
+    --whitepaper-hero-foreground: #edeef0;
+    --whitepaper-hero-texture-opacity: 0.08;
+    --whitepaper-hero-cta: #ffffff;
+    --whitepaper-hero-cta-foreground: #111113;
+    /* /1011 深色 — Figma 6952:36847（写故事）/ 6962:46798（登船后） */
+    --story-checkin-accent: #e8001b;
+    /* 主标题高光红 — Logo 品牌红衍生 #ff3d55 */
+    --story-checkin-title: #ff3d55;
+    --story-checkin-chip-bg: rgb(34 122 218 / 16%);
+    --story-checkin-chip-text: #00a1ff;
+    --story-checkin-points: #fee661;
+    /* Colors/Overlays/Black Alpha/6 */
+    --story-checkin-toolbar: #00000066;
+    --story-checkin-card: #00000066;
+    /* Hero 磨砂卡 — Figma 6962:46844 Overlays/Black Alpha/8 ≈ 60% */
+    --story-checkin-hero-panel: rgb(0 0 0 / 60%);
+    /* Figma 6962:46844 底图底部渐隐 */
+    --story-checkin-boarded-hero-overlay: linear-gradient(
+      201.64deg,
+      rgb(0 0 0 / 0%) 50.7%,
+      #000000 98.76%
+    );
+    /* 表单输入 / 上传区 — Figma 6952:37428 #041417 */
+    --story-checkin-input: #041417;
+    /* Page&Sheet/secondary — 顶栏控件 */
+    --story-checkin-control: #212225;
+    /* 角色气泡 — Figma 7028:36815 */
+    --story-checkin-bubble: rgb(0 0 0 / 91%);
+    --story-checkin-card-border: #05df72;
+    /* Border/secondary #363a3f */
+    --story-checkin-border-secondary: #363a3f;
+    /* 上传区 — Figma 6962:37731：Border/secondary 虚线 + Text/tertiary */
+    --story-checkin-upload-border: #363a3f;
+    --story-checkin-upload-fg: #696e77;
+    --story-checkin-upload-hint: #696e77;
+    /* story Bg #111113 + hero 暗色渐隐 */
+    --story-checkin-page-bg: #111113;
+    --story-checkin-page-overlay: linear-gradient(
+      180deg,
+      rgb(17 17 19 / 0%) 20.742%,
+      rgb(17 17 19 / 72%) 84.907%,
+      #111113 100%
+    );
+    /* Figma 6962:37507 — 左侧 to-black，保证表单区对比度 */
+    --story-checkin-form-vignette: linear-gradient(
+      90deg,
+      #000000 0%,
+      rgb(0 0 0 / 0%) 100%
+    );
+    /* 深色用 Figma 6962:37865 导出的暗色方舟底图 */
+    --story-checkin-hero-light-opacity: 0;
+    --story-checkin-hero-dark-opacity: 1;
+    --play-unlock-bulk-border: #05df72;
+    --play-unlock-discount-bg: #f3733f;
+    --play-unlock-discount-fg: #ffffff;
+    /* 深色筛选 pill 未选中 — Figma 7390:88994 Page&Sheet/secondary #f0f0f3 + Text/primary */
+    --play-unlock-permanent-badge-surface: #f0f0f3;
+    --play-unlock-permanent-badge-foreground: #1c2024;
+    /* 深色筛选 pill — Figma 7622:85098：选中白底深字 / 未选中 secondary #212225 */
+    --filter-pill-active-surface: #ffffff;
+    --filter-pill-active-foreground: #111113;
+    --filter-pill-inactive-surface: #212225;
+    --filter-pill-inactive-foreground: #edeef0;
+    /* 短剧页筛选 / 卡片 — Figma 14:1611：pill 与浅色同色；卡片 white-to-secondary */
+    --theater-filter-pill-active-surface: #212225;
+    --theater-filter-pill-active-foreground: #ffffff;
+    --theater-filter-pill-inactive-surface: #f0f0f3;
+    --theater-filter-pill-inactive-foreground: #1c2024;
+    --theater-drama-card-surface: #212225;
+    --theater-drama-card-border: #212225;
+    --theater-ip-glass-surface: rgb(0 0 0 / 0.3);
+    /* 剧场卡片评分 — Figma Colors/Text/monetary */
+    --play-rating-star: #ffd60a;
+    --play-episode-selected-surface: #e8001b29;
+    --play-episode-panel-surface: #111113;
+    --play-episode-cell-surface: #212225;
+    --play-episode-bulk-banner-surface: #e8001b0d;
+    --play-episode-bulk-banner-border: #e8001b29;
+    --play-progress-track: rgb(133 133 133 / 0.6);
+    --play-progress-fill: #696e77;
+    --play-progress-hover: #edeef0;
+    --play-progress-paused: #e50815;
+    --play-controls-fg: #696e77;
+    --play-controls-hover: #edeef0;
+    --play-meta-cta-bg: rgb(170 170 170 / 0.2);
+    /* Watch rail — Figma 4685:15029 / 4687:15287 / 4687:15289 */
+    --watch-like-active: #e5484d;
+    --watch-bookmark-active: #ffba18;
+    /* Watch follow + — 深色沉浸层仍用稿面 primary red */
+    --watch-follow-primary: #e50815;
+    /* Site settings — Figma 655:76680 dark（white-to-secondary / white-to-dark） */
+    --site-settings-lang-selected-bg: #212225;
+    --site-settings-lang-selected-fg: #edeef0;
+    --site-settings-switch-checked: #edeef0;
+    --site-settings-panel-surface: #212225;
+    --site-settings-switch-thumb: #111113;
+    --play-side-panel: #212225;
+    --play-drama-side-panel: #212225;
+    --page-thirdly: #111113;
+    --play-toggle-unchecked: #50535a;
+    --play-toggle-checked: #edeef0;
+    --play-toggle-thumb: #111113;
+    /* 发行演员 IP / create-flow — Figma 7369:77127 dark */
+    --create-flow-page-bg: #111113;
+    --create-flow-accent: var(--onestory-brand-red);
+    /* Input：底 story Bg #111113 / 边 page&sheet secondary #212225 */
+    --create-flow-input-surface: #111113;
+    --create-flow-input-border: #212225;
+    --create-flow-step-inactive-bg: #363a3f;
+    --create-flow-upload-progress-track: #212225;
+    --create-flow-upload-progress-fill: var(--onestory-brand-red);
+    --create-flow-episode-poster-placeholder: #212225;
+    /* 草稿同步 Toast — 深绿实心底（对齐 Text/success，避免半透明叠底） */
+    --create-draft-toast-bg: #1a2f24;
+    --create-draft-toast-shadow: 4px 6px 18px 0 rgb(0 0 0 / 0.45);
+    --narrator-publish-card-base: #f8f8f8;
+    --narrator-publish-fade-soft: rgb(255 255 255 / 70%);
+    --narrator-publish-radial-violet: rgb(176 167 197 / 28%);
+    --narrator-publish-radial-mint: rgb(231 251 221 / 82%);
+    --narrator-publish-radial-sky: rgb(210 234 255 / 58%);
+    --narrator-decoration-fill: #fafafa;
+    --narrator-review-pending: #3e86ff;
+    --narrator-review-passed: #30a46c;
+    --narrator-review-rejected: #e5484d;
+    --narrator-bind-card-surface: rgb(232 0 27 / 6%);
+    --narrator-bind-card-border: rgb(232 0 27 / 16%);
+    /* Figma 7390:98041 — unavailable 文案 / 填充底 #50535a + white-to-dark #111113 */
+    --button-disabled-foreground: #50535a;
+    --button-disabled-surface: #50535a;
+    --button-disabled-on-surface: #111113;
+    --mining-card-surface: #212225;
+    --mining-story-amount: #f0f0f3;
+    --mining-pool-chip-surface: rgb(21 93 252 / 20%);
+    --mining-pool-chip-text: #93c5fd;
+    --mining-settlement-badge-surface: rgb(21 93 252 / 20%);
+    --mining-settlement-badge-foreground: #f0f0f3;
+    --mining-quote-foreground: #93c5fd;
+    --mining-section-title: #f0f0f3;
+    --mining-rules-section-title: #f0f0f3;
+    --mining-primary-action-surface: var(--onestory-brand-red);
+    --mining-primary-action-foreground: var(--onestory-brand-red-foreground);
+    --mining-divider-border: #3a3a3f;
+    /* Figma monetary-alpha-2 — 深色下示例卡保持淡黄底 */
+    --mining-rules-example-surface: rgb(244 209 0 / 9%);
+    /* AppLoadingContainer 空态插画 — 对齐深色 page/card/border */
+    --no-data-floor: #212225;
+    --no-data-surface: #171718;
+    --no-data-stroke: #363a3f;
+    --no-data-body: #212225;
+    /* Game / 经纪工坊 — Figma 7371:66107 dark
+       page/primary + story Bg #111113；卡内芯片同 story Bg；卡面走全局 --card #171718 */
+    --game-page-surface: #111113;
+    --game-stat-surface: #111113;
+    /* GamePageHeader — dark：white-to-thirdly / secondary 对齐全局 card·secondary·border */
+    --game-header-surface: #171718;
+    --game-header-title: #edeef0;
+    --game-header-subtitle: #b0b4ba;
+    --game-header-monetary: #ffba18;
+    --game-header-action-surface: #212225;
+    --game-header-action-border: #363a3f;
+    --game-header-action-foreground: #edeef0;
+    --game-header-action-hover: #2a2d31;
+    /* GameTodo / GameUpgrade — Figma 125:127912
+       secondary-to-primary #111113 / CTA 反相白底深字 */
+    --game-panel-row-surface: #111113;
+    --game-panel-dot-success: #30a46c;
+    --game-panel-dot-error: #e5484d;
+    /* 候场 / 待办滚动条 — 复用全站 --scrollbar */
+    --game-panel-scrollbar: var(--scrollbar);
+    --game-panel-cta-surface: #ffffff;
+    --game-panel-cta-foreground: #111113;
+    --game-panel-cta-hover: #f0f0f3;
+    /* Figma page&sheet/thirdly — 深色对比条，相对 card #212225 下沉一档 */
+    --game-upgrade-compare-surface: #171718;
+    /* Figma colors/text/warning #ffc53d — 升级费用数值 */
+    --game-upgrade-fee: #ffc53d;
+    /* Figma primary/primary #e50815 — 角色片酬详情每小时数值 */
+    --game-actor-rate-highlight: #e50815;
+    --game-actor-rate-highlight-surface: rgb(229 8 21 / 5%);
+    --game-actor-rate-highlight-border: rgb(229 8 21 / 15%);
+    /* Figma primary/primary #e50815 — 确认休息等主色 CTA */
+    --game-primary-cta-surface: #e50815;
+    --game-primary-cta-foreground: #ffffff;
+    --game-deploy-slot-highlight-surface: #e8001b0d;
+    --game-deploy-slot-highlight-border: #e8001b29;
+    --game-deploy-slot-nav-active-border: var(--onestory-brand-red);
+    /* Figma 119:124922 — Page&Sheet/unavailable 空槽菱形（深色同色） */
+    --game-deploy-slot-dot-empty: #c3c5ce;
+    --game-deployed-card-warning-border: #ffba18;
+    --game-deployed-card-exhausted-border: #e5484d;
+    --game-deployed-card-replenish-soft-surface: rgb(244 209 0 / 10%);
+    /* Colors/Text/monetary 2 */
+    --game-deployed-card-replenish-soft-text: #8f6424;
+    --game-deployed-card-rest-soft-surface: rgb(255 0 8 / 6%);
+    /* Colors/Text/error */
+    --game-deployed-card-rest-soft-text: #e5484d;
+    --game-deployed-card-replenish-solid-surface: #ffba18;
+    --game-deployed-card-rest-solid-surface: #e5484d;
+    --game-deployed-card-stamina-warning: #ffba18;
+    --game-deployed-card-level-low-surface: rgb(207 138 55 / 50%);
+    /* Figma Page&Sheet/white to secondary #212225；区块 white-to-thirdly 为 --card #171718 */
+    --game-deployed-actor-card-surface: #212225;
+    /* 空槽默认头像 — 深色终稿：#363A3F 底圆 + #1D1D21@70% 叠白后的人物灰 */
+    --game-deploy-slot-empty-avatar-bg: #363a3f;
+    --game-deploy-slot-empty-avatar-overlay: #616163;
+    --game-my-actor-deploy-surface: rgb(0 68 255 / 10%);
+    /* Colors/Text/brand */
+    --game-my-actor-deploy-text: #3e63dd;
+    --game-risk-badge-surface: #f3733f16;
+    --game-risk-badge-text: #f3733f;
+    /* Colors/Text/white to dark — 品牌红主按钮上的深色字 */
+    --onestory-brand-red-foreground: #111113;
+  }
+
+  * {
+    @apply border-border outline-ring/50;
+    /*
+     * 全站原生滚动条：细轨 + 候场面板同色滑块。
+     * 只用 scrollbar-*，不用 ::-webkit-scrollbar，以免关掉 macOS overlay
+     *（默认不占位、滚动时才出现）。
+     */
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar) transparent;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html,
+    body {
+      transition:
+        background-color 180ms ease,
+        color 180ms ease;
+    }
+  }
+  html {
+    @apply font-sans;
+    color-scheme: light;
+  }
+}
+
+@layer components {
+  /* 叙事者中心「发布短剧」主卡：多层渐变叠底，色值来自 :root token */
+  .narrator-publish-card-surface {
+    background:
+      linear-gradient(
+        90deg,
+        var(--card) 24%,
+        var(--narrator-publish-fade-soft) 58%,
+        transparent 100%
+      ),
+      radial-gradient(
+        56% 76% at 50% 54%,
+        var(--narrator-publish-radial-violet) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        48% 68% at 92% 16%,
+        var(--narrator-publish-radial-mint) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        46% 62% at 72% 92%,
+        var(--narrator-publish-radial-sky) 0%,
+        transparent 100%
+      ),
+      var(--narrator-publish-card-base);
+  }
+
+  /* 剧场卡片等：默认无阴影，悬停时 WebMedium */
+  .index-shadow-pipeline-hover {
+    transition:
+      box-shadow 200ms ease,
+      transform 200ms ease;
+  }
+  .index-shadow-pipeline-hover:hover {
+    box-shadow: 3px 4px 12px 0 rgb(0 0 0 / 8%);
+    transform: translateY(-2px);
+  }
+}
+
+/* 全站渐变：统一在 @layer utilities，linear-gradient 直接内联（不依赖 :root 变量） */
+@layer utilities {
+  .onestory-bg-brand-gradient {
+    background-image: linear-gradient(
+      16.5deg,
+      rgb(255, 107, 122) 0%,
+      rgb(232, 0, 27) 50%,
+      rgb(184, 0, 22) 100%
+    );
+  }
+
+  :is(p, h1, h2, h3, span).onestory-text-gradient {
+    display: inline-block;
+    /* 勿写 width:100%：会压过 Tailwind 的 w-fit，渐变铺整条版心导致短文案只露出单色段 */
+    max-width: 100%;
+    vertical-align: top;
+    background-color: transparent;
+    background-image: linear-gradient(
+      6.31deg,
+      rgb(255, 107, 122) 0%,
+      rgb(232, 0, 27) 50%,
+      rgb(184, 0, 22) 100%
+    );
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Play 剧场 Hero 渐变眉题：极轻阴影，略提对比、不改变观感 */
+  .play-hero-kicker-shadow {
+    text-shadow: 0 1px 2px rgb(0 0 0 / 18%);
+  }
+
+  p.play-hero-eyebrow {
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: top;
+    background-color: transparent;
+    background-image: linear-gradient(
+      7.02deg,
+      #ff6b7a 0%,
+      #e8001b 50%,
+      #b80016 100%
+    );
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  p.points-page-balance {
+    background-color: transparent;
+    background-image: linear-gradient(
+      20.10047565683415deg,
+      rgb(255, 107, 122) 0%,
+      rgb(232, 0, 27) 50%,
+      rgb(184, 0, 22) 100%
+    );
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* 推荐嵌入播放器 → 二级全屏播放器：同一视频框平滑变形 */
+.play-immersive-video-frame {
+  view-transition-name: play-immersive-video;
+}
+
+::view-transition-group(play-immersive-video) {
+  animation-duration: 360ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes play-fullscreen-side-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.play-fullscreen-side-panel {
+  animation: play-fullscreen-side-panel-enter 300ms
+    cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes play-comment-composer-attention {
+  0% {
+    transform: translateY(8px);
+    opacity: 0.4;
+    box-shadow: 0 0 0 0 transparent;
+  }
+
+  45% {
+    transform: translateY(0);
+    opacity: 1;
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--foreground) 28%, transparent);
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.play-comment-composer-attention {
+  animation: play-comment-composer-attention 560ms
+    cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(play-immersive-video) {
+    animation-duration: 1ms;
+  }
+
+  .play-fullscreen-side-panel {
+    animation: none;
+  }
+
+  .play-comment-composer-attention {
+    animation: none;
+  }
+}
+
+/*
+ * Privy 登录弹窗输入聚焦（须放在 @layer 外，否则会被 styled-components 非 layer 样式盖掉）：
+ * email / phone / 6 位验证码 pin 等：border 1px + box-shadow 1px，浅色黑 / 深色白（--foreground）。
+ * !important：压过 Privy styled-components 非 layer 样式，不可去掉。
+ */
+#privy-dialog input:focus:not([type="checkbox"]):not([type="radio"]),
+#privy-dialog textarea:focus,
+#privy-dialog input[name^="pin-"]:focus {
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: var(--foreground) !important;
+  box-shadow: 0 0 0 1px var(--foreground) !important;
+  outline: none !important;
+}
+
+/* 验证码错误 / 成功态保持 Privy 语义色 */
+#privy-dialog input[name^="pin-"]:focus.fail,
+#privy-dialog input[name^="pin-"]:focus:invalid {
+  border-color: var(--privy-color-error, #e5484d) !important;
+  box-shadow: 0 0 0 1px var(--privy-color-error, #e5484d) !important;
+}
+
+#privy-dialog input[name^="pin-"]:focus.success {
+  border-color: var(--privy-color-success, #30a46c) !important;
+  box-shadow: 0 0 0 1px var(--privy-color-success, #30a46c) !important;
+}
+
+/*
+ * Privy 邮箱 / 验证码表单旁侧 Submit 等文字按钮：文案用站点主题色。
+ * !important：压过 Privy styled-components 非 layer 样式。
+ */
+#privy-dialog label button {
+  color: var(--primary) !important;
+}

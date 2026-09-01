@@ -1,0 +1,19 @@
+packages:
+  - '.'
+
+allowBuilds:
+  '@reown/appkit': true
+  '@sentry/cli': true
+  '@swc/core': true
+  bigint-buffer: true
+  bufferutil: true
+  esbuild: true
+  gifsicle: true
+  keccak: true
+  msw: true
+  protobufjs: true
+  sharp: true
+  utf-8-validate: true
+
+minimumReleaseAgeExclude:
+  - '@amazing-socrates/telemetry-kit'

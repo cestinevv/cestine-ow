@@ -1,0 +1,309 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 2332">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'JetBrains Mono', 'Noto Sans SC', 'PingFang SC', sans-serif; }
+</style>
+<defs>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+  </pattern>
+</defs>
+<rect width="100%" height="100%" fill="#0f172a"/>
+<rect width="100%" height="100%" fill="url(#grid)"/>
+<path d="M 170 1166 C 230 1166, 240 662, 300 662" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 662 C 480 662, 490 146, 550 146" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 146 C 730 146, 740 62, 800 62" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 146 C 730 146, 740 86, 800 86" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 146 C 730 146, 740 110, 800 110" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 146 C 730 146, 740 134, 800 134" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 146 C 730 146, 740 158, 800 158" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 146 C 730 146, 740 182, 800 182" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 146 C 730 146, 740 206, 800 206" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 146 C 730 146, 740 230, 800 230" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 662 C 480 662, 490 422, 550 422" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 254, 800 254" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 278, 800 278" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 302, 800 302" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 326, 800 326" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 350, 800 350" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 374, 800 374" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 398, 800 398" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 422, 800 422" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 446, 800 446" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 470, 800 470" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 494, 800 494" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 518, 800 518" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 542, 800 542" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 566, 800 566" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 422 C 730 422, 740 590, 800 590" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 662 C 480 662, 490 818, 550 818" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 614, 800 614" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 638, 800 638" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 662, 800 662" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 686, 800 686" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 710, 800 710" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 734, 800 734" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 758, 800 758" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 782, 800 782" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 806, 800 806" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 830, 800 830" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 854, 800 854" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 878, 800 878" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 902, 800 902" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 926, 800 926" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 950, 800 950" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 974, 800 974" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 998, 800 998" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 818 C 730 818, 740 1022, 800 1022" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 662 C 480 662, 490 1094, 550 1094" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1094 C 730 1094, 740 1046, 800 1046" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1094 C 730 1094, 740 1070, 800 1070" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1094 C 730 1094, 740 1094, 800 1094" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1094 C 730 1094, 740 1118, 800 1118" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1094 C 730 1094, 740 1142, 800 1142" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 662 C 480 662, 490 1190, 550 1190" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1190 C 730 1190, 740 1166, 800 1166" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1190 C 730 1190, 740 1190, 800 1190" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1190 C 730 1190, 740 1214, 800 1214" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 662 C 480 662, 490 1250, 550 1250" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1250 C 730 1250, 740 1238, 800 1238" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1250 C 730 1250, 740 1262, 800 1262" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 170 1166 C 230 1166, 240 1418, 300 1418" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1418 C 480 1418, 490 1286, 550 1286" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1286 C 730 1286, 740 1286, 800 1286" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1418 C 480 1418, 490 1406, 550 1406" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1406 C 730 1406, 740 1310, 800 1310" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1406 C 730 1406, 740 1334, 800 1334" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1406 C 730 1406, 740 1358, 800 1358" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1406 C 730 1406, 740 1382, 800 1382" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1406 C 730 1406, 740 1406, 800 1406" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1406 C 730 1406, 740 1430, 800 1430" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1406 C 730 1406, 740 1454, 800 1454" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1406 C 730 1406, 740 1478, 800 1478" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1406 C 730 1406, 740 1502, 800 1502" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1418 C 480 1418, 490 1538, 550 1538" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1538 C 730 1538, 740 1526, 800 1526" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1538 C 730 1538, 740 1550, 800 1550" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 170 1166 C 230 1166, 240 1910, 300 1910" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1910 C 480 1910, 490 1574, 550 1574" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1574 C 730 1574, 740 1574, 800 1574" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1910 C 480 1910, 490 1610, 550 1610" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1610 C 730 1610, 740 1598, 800 1598" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1610 C 730 1610, 740 1622, 800 1622" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1910 C 480 1910, 490 1658, 550 1658" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1658 C 730 1658, 740 1646, 800 1646" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1658 C 730 1658, 740 1670, 800 1670" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1910 C 480 1910, 490 1694, 550 1694" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1694 C 730 1694, 740 1694, 800 1694" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1910 C 480 1910, 490 1730, 550 1730" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1730 C 730 1730, 740 1718, 800 1718" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1730 C 730 1730, 740 1742, 800 1742" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1910 C 480 1910, 490 1766, 550 1766" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1766 C 730 1766, 740 1766, 800 1766" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1910 C 480 1910, 490 1814, 550 1814" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1814 C 730 1814, 740 1790, 800 1790" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1814 C 730 1814, 740 1814, 800 1814" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1814 C 730 1814, 740 1838, 800 1838" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1910 C 480 1910, 490 1874, 550 1874" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1874 C 730 1874, 740 1862, 800 1862" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1874 C 730 1874, 740 1886, 800 1886" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1910 C 480 1910, 490 1970, 550 1970" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1970 C 730 1970, 740 1910, 800 1910" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1970 C 730 1970, 740 1934, 800 1934" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1970 C 730 1970, 740 1958, 800 1958" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1970 C 730 1970, 740 1982, 800 1982" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1970 C 730 1970, 740 2006, 800 2006" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 1970 C 730 1970, 740 2030, 800 2030" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1910 C 480 1910, 490 2054, 550 2054" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2054 C 730 2054, 740 2054, 800 2054" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1910 C 480 1910, 490 2138, 550 2138" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2138 C 730 2138, 740 2078, 800 2078" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2138 C 730 2138, 740 2102, 800 2102" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2138 C 730 2138, 740 2126, 800 2126" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2138 C 730 2138, 740 2150, 800 2150" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2138 C 730 2138, 740 2174, 800 2174" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2138 C 730 2138, 740 2198, 800 2198" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1910 C 480 1910, 490 2234, 550 2234" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2234 C 730 2234, 740 2222, 800 2222" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2234 C 730 2234, 740 2246, 800 2246" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 170 1166 C 230 1166, 240 2270, 300 2270" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 2270 C 480 2270, 490 2270, 550 2270" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2270 C 730 2270, 740 2270, 800 2270" fill="none" stroke="#475569" stroke-width="1.5"/>
+<rect x="50" y="1141" width="160" height="50" rx="6" fill="#0f172a"/>
+<rect x="50" y="1141" width="160" height="50" rx="6" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.5"/>
+<text x="130" y="1170.6666666666667" fill="white" font-size="14" font-weight="600" text-anchor="middle">Backend API</text>
+<rect x="300" y="651" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="300" y="651" width="140" height="22" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="370" y="666" fill="white" font-size="12" font-weight="600" text-anchor="middle">Story Module</text>
+<rect x="550" y="135" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="135" width="140" height="22" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="620" y="149.33333333333334" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Actor IP</text>
+<text x="810" y="65" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">mintActorNft</text>
+<text x="810" y="89" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">mintActorCollection</text>
+<text x="810" y="113" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">prepareActorCollection</text>
+<text x="810" y="137" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listActorCollections</text>
+<text x="810" y="161" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">actorCollectionDetail</text>
+<text x="810" y="185" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">actorCastDramas</text>
+<text x="810" y="209" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">searchActorCollections</text>
+<text x="810" y="233" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ownedActorCollections</text>
+<rect x="550" y="411" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="411" width="140" height="22" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="620" y="425.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Create</text>
+<text x="810" y="257" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listAssets1</text>
+<text x="810" y="281" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">createSession</text>
+<text x="810" y="305" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">createPresign</text>
+<text x="810" y="329" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listDramas</text>
+<text x="810" y="353" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">createDrama</text>
+<text x="810" y="377" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">takeOffline1</text>
+<text x="810" y="401" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">mintDramaNft</text>
+<text x="810" y="425" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">submitEditRevision</text>
+<text x="810" y="449" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">isExpired</text>
+<text x="810" y="473" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">getDrama</text>
+<text x="810" y="497" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">deleteDrama</text>
+<text x="810" y="521" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listEpisodes</text>
+<text x="810" y="545" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">createEditSession</text>
+<text x="810" y="569" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">countOnlineDramas</text>
+<text x="810" y="593" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">cancelSession</text>
+<rect x="550" y="807" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="807" width="140" height="22" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="620" y="821.3333333333334" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Drama</text>
+<text x="810" y="617" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">postReview</text>
+<text x="810" y="641" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">playEpisode</text>
+<text x="810" y="665" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">toggleFavoriteDrama</text>
+<text x="810" y="689" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">toggleLikeEpisode</text>
+<text x="810" y="713" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">postComment</text>
+<text x="810" y="737" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">toggleLikeComment</text>
+<text x="810" y="761" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">completeEpisode</text>
+<text x="810" y="785" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">myReview</text>
+<text x="810" y="809" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listPublicDramas</text>
+<text x="810" y="833" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listReviews</text>
+<text x="810" y="857" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">getEpisodeDetail</text>
+<text x="810" y="881" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">getEpisodeStatistics</text>
+<text x="810" y="905" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listComments</text>
+<text x="810" y="929" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">getDramaDetail</text>
+<text x="810" y="953" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listPublicTags</text>
+<text x="810" y="977" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">searchPublicDramas</text>
+<text x="810" y="1001" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">getEpisodeDetailByEpisodeId</text>
+<text x="810" y="1025" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">deleteComment</text>
+<rect x="550" y="1083" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1083" width="140" height="22" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="620" y="1097.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Internal</text>
+<text x="810" y="1049" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">reviewDrama</text>
+<text x="810" y="1073" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">takeOffline</text>
+<text x="810" y="1097" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">recalculateHeat</text>
+<text x="810" y="1121" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">reviewDramaEditRevision</text>
+<text x="810" y="1145" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listPendingReview</text>
+<rect x="550" y="1179" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1179" width="140" height="22" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="620" y="1193.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Profile</text>
+<text x="810" y="1169" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">publishedDramas</text>
+<text x="810" y="1193" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">likedDramas</text>
+<text x="810" y="1217" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">favoriteDramas</text>
+<rect x="550" y="1239" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1239" width="140" height="22" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="620" y="1253.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Mock</text>
+<text x="810" y="1241" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listAssets</text>
+<text x="810" y="1265" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">getAsset</text>
+<rect x="300" y="1407" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="300" y="1407" width="140" height="22" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="370" y="1422" fill="white" font-size="12" font-weight="600" text-anchor="middle">Mining Module</text>
+<rect x="550" y="1275" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1275" width="140" height="22" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="620" y="1289.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Actor Level Upgrade</text>
+<text x="810" y="1289" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">materials</text>
+<rect x="550" y="1395" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1395" width="140" height="22" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="620" y="1409.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Mining</text>
+<text x="810" y="1313" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">restActor</text>
+<text x="810" y="1337" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">replenishStamina</text>
+<text x="810" y="1361" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">deployActor</text>
+<text x="810" y="1385" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">getWeeklyStats</text>
+<text x="810" y="1409" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">getTotalReward</text>
+<text x="810" y="1433" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listRewardDetails</text>
+<text x="810" y="1457" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listRestActors</text>
+<text x="810" y="1481" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listDeployedActors</text>
+<text x="810" y="1505" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listAllActors</text>
+<rect x="550" y="1527" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1527" width="140" height="22" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="620" y="1541.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Mining Health</text>
+<text x="810" y="1529" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">health</text>
+<text x="810" y="1553" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">liveness</text>
+<rect x="300" y="1899" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="300" y="1899" width="140" height="22" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="370" y="1914" fill="white" font-size="12" font-weight="600" text-anchor="middle">Wallet Module</text>
+<rect x="550" y="1563" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1563" width="140" height="22" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="620" y="1577.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">ActorNFT</text>
+<text x="810" y="1577" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">upgradeOrder</text>
+<rect x="550" y="1599" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1599" width="140" height="22" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="620" y="1613.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Asset</text>
+<text x="810" y="1601" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ledger</text>
+<text x="810" y="1625" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">assets</text>
+<rect x="550" y="1647" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1647" width="140" height="22" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="620" y="1661.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Auth</text>
+<text x="810" y="1649" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">logout</text>
+<text x="810" y="1673" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">login</text>
+<rect x="550" y="1683" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1683" width="140" height="22" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="620" y="1697.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">DramaNFT</text>
+<text x="810" y="1697" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">positions</text>
+<rect x="550" y="1719" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1719" width="140" height="22" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="620" y="1733.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Health</text>
+<text x="810" y="1721" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">health</text>
+<text x="810" y="1745" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">liveness</text>
+<rect x="550" y="1755" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1755" width="140" height="22" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="620" y="1769.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Income</text>
+<text x="810" y="1769" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">usdcIncome</text>
+<rect x="550" y="1803" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1803" width="140" height="22" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="620" y="1817.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Internal NFT</text>
+<text x="810" y="1793" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listActorNftPositions</text>
+<text x="810" y="1817" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">listHeldActorCollectionIds</text>
+<text x="810" y="1841" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">checkActorNftHolding</text>
+<rect x="550" y="1863" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1863" width="140" height="22" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="620" y="1877.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Internal User</text>
+<text x="810" y="1865" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">userInfo</text>
+<text x="810" y="1889" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">userInfoByToken</text>
+<rect x="550" y="1959" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="1959" width="140" height="22" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="620" y="1973.3333333333333" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Internal</text>
+<text x="810" y="1913" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">debit</text>
+<text x="810" y="1937" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">credit</text>
+<text x="810" y="1961" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">platformLedger</text>
+<text x="810" y="1985" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">platformBalance</text>
+<text x="810" y="2009" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">orderResult</text>
+<text x="810" y="2033" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">balance</text>
+<rect x="550" y="2043" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="2043" width="140" height="22" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="620" y="2057.3333333333335" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">MQ</text>
+<text x="810" y="2057" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">send</text>
+<rect x="550" y="2127" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="2127" width="140" height="22" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="620" y="2141.3333333333335" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">User</text>
+<text x="810" y="2081" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">updateNickname</text>
+<text x="810" y="2105" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">updateAvatar</text>
+<text x="810" y="2129" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">userInfo1</text>
+<text x="810" y="2153" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">otherUserInfo</text>
+<text x="810" y="2177" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">inviteRecords</text>
+<text x="810" y="2201" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">inviteInfo</text>
+<rect x="550" y="2223" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="2223" width="140" height="22" rx="6" fill="rgba(76, 29, 149, 0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="620" y="2237.3333333333335" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Withdraw</text>
+<text x="810" y="2225" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">withdraw</text>
+<text x="810" y="2249" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">queryWithdraw</text>
+<rect x="300" y="2259" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="300" y="2259" width="140" height="22" rx="6" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="370" y="2274" fill="white" font-size="12" font-weight="600" text-anchor="middle">Admin Module</text>
+<rect x="550" y="2259" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="2259" width="140" height="22" rx="6" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="620" y="2273.3333333333335" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Default</text>
+<text x="810" y="2273" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">getApiAdminV1ConfigsKeysKeys</text>
+
+<rect x="20" y="20" width="200" height="40" rx="6" fill="#0f172a" fill-opacity="0.8"/>
+<text x="30" y="45" fill="white" font-size="16" font-weight="700">API Mind Map</text>
+</svg>

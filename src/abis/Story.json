@@ -1,0 +1,2202 @@
+{
+  "address": "CJEnSe9eJ3s8qLQNdWrcHQpp6199s4NohcBBHZ3UeRQL",
+  "metadata": {
+    "name": "story",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "accept_authority_transfer",
+      "docs": [
+        "Accept a pending authority transfer (only after the lock expires)."
+      ],
+      "discriminator": [239, 248, 177, 2, 206, 97, 46, 255],
+      "accounts": [
+        {
+          "name": "new_authority",
+          "docs": [
+            "The pending new authority — must sign to accept the transfer"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "batch_mint_actor_nft",
+      "docs": [
+        "Batch-mint up to 10 Actor NFTs (delegator signature required).",
+        "Prices follow on-chain bonding curve: Price = P0 × 20^(minted/total_supply).",
+        "canonical_payload: actor_batch|{actorCollectionId}|{walletAddress}|{quantity}|{totalAmount}|{orderNo}|{expiresAt}"
+      ],
+      "discriminator": [88, 201, 32, 83, 171, 30, 229, 71],
+      "accounts": [
+        {
+          "name": "creator",
+          "docs": [
+            "The user wallet (NFT owner + SPL pay-token authority). Signs but need not hold SOL."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sponor",
+          "docs": [
+            "Pays Core asset rent and should be the transaction fee payer off-chain."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        },
+        {
+          "name": "collection_info",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99, 111, 108, 108, 101, 99, 116, 105, 111, 110, 95, 105, 110,
+                  102, 111
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "collection_info.asset_id",
+                "account": "CollectionInfo"
+              }
+            ]
+          }
+        },
+        {
+          "name": "collection_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99, 111, 108, 108, 101, 99, 116, 105, 111, 110, 95, 109, 105,
+                  110, 116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "collection_info.asset_id",
+                "account": "CollectionInfo"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pay_token_mint"
+        },
+        {
+          "name": "creator_pay_account",
+          "writable": true
+        },
+        {
+          "name": "treasury",
+          "writable": true
+        },
+        {
+          "name": "instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "mpl_core_program",
+          "address": "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "mint_count",
+          "type": "u8"
+        },
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "SignedParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "batch_refill_actor_stamina",
+      "docs": [
+        "Refill up to 5 Actor NFTs in one order (delegator signature + pay token -> treasury).",
+        "canonical_payload: actor_stamina_batch_refill|{orderNo}|{actorNftIds}|{payAmountMinors}|{expiresAt}"
+      ],
+      "discriminator": [67, 159, 179, 127, 253, 208, 205, 128],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sponor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pay_token_mint"
+        },
+        {
+          "name": "payer_pay_account",
+          "writable": true
+        },
+        {
+          "name": "treasury",
+          "writable": true
+        },
+        {
+          "name": "refill_record",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97, 99, 116, 111, 114, 95, 115, 116, 97, 109, 105, 110, 97,
+                  95, 114, 101, 102, 105, 108, 108
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "order_hash"
+              }
+            ]
+          }
+        },
+        {
+          "name": "instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "order_hash",
+          "type": {
+            "array": ["u8", 32]
+          }
+        },
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "SignedParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "cancel_authority_transfer",
+      "docs": [
+        "Cancel a pending authority transfer (only during the lock window)."
+      ],
+      "discriminator": [94, 131, 125, 184, 183, 24, 125, 229],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "cancel_config_update",
+      "docs": [
+        "Cancel a proposed config update (only during the lock window)."
+      ],
+      "discriminator": [216, 180, 255, 207, 118, 146, 126, 89],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112, 101, 110, 100, 105, 110, 103, 95, 99, 111, 110, 102, 105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "commit_config_update",
+      "docs": [
+        "Commit a proposed config update after the time lock has expired."
+      ],
+      "discriminator": [88, 84, 135, 192, 136, 94, 237, 9],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112, 101, 110, 100, 105, 110, 103, 95, 99, 111, 110, 102, 105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_actor_collection",
+      "docs": [
+        "Create an actor collection (any user + delegator signature).",
+        "canonical_payload: actor_collection|{actorCollectionId}|{creatorAddress}|{baseUrl}|{totalSupply}|{feeAmount}|{initialPriceAmount}|{r}|{expiresAt}"
+      ],
+      "discriminator": [51, 247, 218, 151, 198, 93, 167, 124],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sponor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        },
+        {
+          "name": "collection",
+          "docs": ["Core collection PDA — derived from `asset_id`."],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99, 111, 108, 108, 101, 99, 116, 105, 111, 110, 95, 109, 105,
+                  110, 116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "asset_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "collection_info",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99, 111, 108, 108, 101, 99, 116, 105, 111, 110, 95, 105, 110,
+                  102, 111
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "asset_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pay_token_mint"
+        },
+        {
+          "name": "creator_pay_account",
+          "writable": true
+        },
+        {
+          "name": "treasury",
+          "writable": true
+        },
+        {
+          "name": "instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "mpl_core_program",
+          "address": "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "asset_id",
+          "type": "string"
+        },
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "SignedParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "create_collection",
+      "docs": [
+        "Admin creates a Collection NFT (e.g. drama; actor uses `create_actor_collection`)."
+      ],
+      "discriminator": [156, 251, 92, 54, 233, 2, 16, 82],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        },
+        {
+          "name": "collection",
+          "docs": ["Core collection PDA — derived from collection_type."],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99, 111, 108, 108, 101, 99, 116, 105, 111, 110, 95, 109, 105,
+                  110, 116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "params.collection_type"
+              }
+            ]
+          }
+        },
+        {
+          "name": "collection_info",
+          "docs": [
+            "Registry PDA — derived from collection_type, stores the collection address."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99, 111, 108, 108, 101, 99, 116, 105, 111, 110, 95, 105, 110,
+                  102, 111
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "params.collection_type"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mpl_core_program",
+          "address": "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "CreateCollectionParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize",
+      "discriminator": [175, 175, 109, 31, 13, 152, 155, 237],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "InitializeParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "mint_series_nft",
+      "docs": [
+        "Mint a Series NFT (delegator signature required).",
+        "canonical_payload: drama|{dramaId}|{creatorAddress}|{metadataUrl}|{feeAmount}|{expiresAt}"
+      ],
+      "discriminator": [86, 73, 192, 56, 151, 242, 122, 96],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sponor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset",
+          "docs": [
+            "Core asset PDA derived from drama_id — prevents minting same drama twice."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [100, 114, 97, 109, 97, 95, 109, 105, 110, 116]
+              },
+              {
+                "kind": "arg",
+                "path": "drama_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "collection_info",
+          "docs": [
+            "Registered series Core collection (`create_collection` with matching `collection_type`)."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99, 111, 108, 108, 101, 99, 116, 105, 111, 110, 95, 105, 110,
+                  102, 111
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "collection_type"
+              }
+            ]
+          }
+        },
+        {
+          "name": "collection_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99, 111, 108, 108, 101, 99, 116, 105, 111, 110, 95, 109, 105,
+                  110, 116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "collection_type"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pay_token_mint",
+          "docs": [
+            "Payment token mint (compile-time constant; see `utils::pay_token::PAY_TOKEN_MINT`)"
+          ]
+        },
+        {
+          "name": "creator_pay_account",
+          "writable": true
+        },
+        {
+          "name": "treasury",
+          "writable": true
+        },
+        {
+          "name": "instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "mpl_core_program",
+          "address": "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "collection_type",
+          "type": "string"
+        },
+        {
+          "name": "drama_id",
+          "type": "u64"
+        },
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "SignedParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "propose_authority_transfer",
+      "docs": ["Propose transferring authority to a new pubkey (time-locked)."],
+      "discriminator": [57, 206, 225, 129, 35, 111, 174, 145],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "ProposeAuthorityTransferParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "propose_config_update",
+      "docs": [
+        "Propose a timelocked config update (treasury, admin, delegator, pause).",
+        "`story_token_mint` is not settable here — it is immutable after `set_story_token_mint`.",
+        "Must wait lock_duration_secs before calling commit_config_update."
+      ],
+      "discriminator": [134, 33, 64, 84, 30, 156, 236, 79],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_config",
+          "docs": [
+            "PendingConfig PDA — created on first proposal, reused/overwritten on subsequent ones.",
+            "Use init_if_needed so proposing twice overwrites the old proposal."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112, 101, 110, 100, 105, 110, 103, 95, 99, 111, 110, 102, 105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "ProposeConfigUpdateParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "refill_actor_stamina",
+      "docs": [
+        "Refill actor NFT stamina (delegator signature + pay token → treasury).",
+        "canonical_payload: actor_stamina_refill|{orderNo}|{actorNftId}|{payAmountMinor}|{expiresAt}"
+      ],
+      "discriminator": [48, 197, 12, 133, 10, 207, 227, 120],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sponor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        },
+        {
+          "name": "collection_info",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99, 111, 108, 108, 101, 99, 116, 105, 111, 110, 95, 105, 110,
+                  102, 111
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "collection_info.asset_id",
+                "account": "CollectionInfo"
+              }
+            ]
+          }
+        },
+        {
+          "name": "asset",
+          "docs": ["Core actor asset — must already be minted."],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [97, 99, 116, 111, 114, 95, 109, 105, 110, 116]
+              },
+              {
+                "kind": "arg",
+                "path": "asset_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pay_token_mint"
+        },
+        {
+          "name": "payer_pay_account",
+          "writable": true
+        },
+        {
+          "name": "treasury",
+          "writable": true
+        },
+        {
+          "name": "refill_record",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97, 99, 116, 111, 114, 95, 115, 116, 97, 109, 105, 110, 97,
+                  95, 114, 101, 102, 105, 108, 108
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "order_hash"
+              }
+            ]
+          }
+        },
+        {
+          "name": "instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "asset_id",
+          "type": "string"
+        },
+        {
+          "name": "order_hash",
+          "type": {
+            "array": ["u8", 32]
+          }
+        },
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "SignedParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_config",
+      "docs": [
+        "Immediate config update (authority only).",
+        "Honored fields: `paused`, `new_platform_royalty_share`,",
+        "`new_actor_seller_fee_basis_points`, `new_drama_seller_fee_basis_points`.",
+        "`new_authority` is rejected — use `propose_authority_transfer` / `accept_authority_transfer`.",
+        "`new_admin` / `new_delegator` are rejected — use `propose_config_update` / `commit_config_update`.",
+        "`treasury` and `story_token_mint` are not accepted here either."
+      ],
+      "discriminator": [29, 158, 252, 191, 10, 83, 219, 99],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "UpdateConfigParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "upgrade_actor_nft",
+      "docs": [
+        "Upgrade actor NFT: burn materials and update main URI (delegator signature).",
+        "canonical_payload: actor_upgrade|{actorCollectionId}|{amount}|{mainAssetId}|{burnAssetIds}|{metadataUrl}|{orderId}|{expiresAt}"
+      ],
+      "discriminator": [18, 145, 143, 253, 252, 119, 121, 70],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sponor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        },
+        {
+          "name": "collection_info",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99, 111, 108, 108, 101, 99, 116, 105, 111, 110, 95, 105, 110,
+                  102, 111
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "collection_info.asset_id",
+                "account": "CollectionInfo"
+              }
+            ]
+          }
+        },
+        {
+          "name": "collection_mint",
+          "docs": ["Core actor collection."],
+          "writable": true
+        },
+        {
+          "name": "mint",
+          "docs": ["Main actor Core asset to upgrade."],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [97, 99, 116, 111, 114, 95, 109, 105, 110, 116]
+              },
+              {
+                "kind": "arg",
+                "path": "asset_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pay_token_mint"
+        },
+        {
+          "name": "payer_pay_account",
+          "writable": true
+        },
+        {
+          "name": "treasury",
+          "writable": true
+        },
+        {
+          "name": "instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "mpl_core_program",
+          "address": "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "asset_id",
+          "type": "string"
+        },
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "SignedParams"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ActorStaminaBatchRefill",
+      "discriminator": [214, 221, 255, 107, 53, 7, 34, 252]
+    },
+    {
+      "name": "ActorStaminaRefill",
+      "discriminator": [7, 113, 170, 251, 107, 40, 220, 34]
+    },
+    {
+      "name": "CollectionInfo",
+      "discriminator": [158, 196, 243, 54, 113, 156, 20, 128]
+    },
+    {
+      "name": "GlobalConfig",
+      "discriminator": [149, 8, 156, 202, 160, 252, 176, 217]
+    },
+    {
+      "name": "PendingConfig",
+      "discriminator": [109, 48, 178, 191, 125, 67, 26, 70]
+    }
+  ],
+  "events": [
+    {
+      "name": "ActorCollectionCreatedEvent",
+      "discriminator": [21, 45, 99, 220, 127, 193, 82, 84]
+    },
+    {
+      "name": "ActorNftBatchMintEvent",
+      "discriminator": [65, 56, 217, 110, 34, 117, 245, 178]
+    },
+    {
+      "name": "ActorNftUpgradeEvent",
+      "discriminator": [24, 80, 48, 0, 149, 217, 188, 101]
+    },
+    {
+      "name": "ActorStaminaBatchRefillEvent",
+      "discriminator": [139, 226, 201, 200, 1, 186, 182, 69]
+    },
+    {
+      "name": "ActorStaminaRefillEvent",
+      "discriminator": [99, 70, 102, 36, 46, 190, 50, 200]
+    },
+    {
+      "name": "DramaNftMintEvent",
+      "discriminator": [81, 4, 60, 37, 21, 164, 53, 24]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Unauthorized",
+      "msg": "You are not authorized to perform this action"
+    },
+    {
+      "code": 6001,
+      "name": "NameTooLong",
+      "msg": "Name is too long"
+    },
+    {
+      "code": 6002,
+      "name": "UriTooLong",
+      "msg": "URI is too long"
+    },
+    {
+      "code": 6003,
+      "name": "ProgramPaused",
+      "msg": "The program is currently paused"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidNftType",
+      "msg": "Invalid NFT type"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidAmount",
+      "msg": "Invalid amount parameter"
+    },
+    {
+      "code": 6006,
+      "name": "PayAmountExceedsSignedCap",
+      "msg": "On-chain mint cost exceeds the signed totalAmount cap"
+    },
+    {
+      "code": 6007,
+      "name": "StoryTokenMintNotSet",
+      "msg": "STORY token mint has not been configured"
+    },
+    {
+      "code": 6008,
+      "name": "StoryTokenMintAlreadySet",
+      "msg": "STORY token mint is already set and cannot be changed via this instruction"
+    },
+    {
+      "code": 6009,
+      "name": "InvalidSignature",
+      "msg": "Invalid delegator signature"
+    },
+    {
+      "code": 6010,
+      "name": "SignatureExpired",
+      "msg": "Signature has expired"
+    },
+    {
+      "code": 6011,
+      "name": "NoPendingTransfer",
+      "msg": "No pending authority transfer to cancel"
+    },
+    {
+      "code": 6012,
+      "name": "TransferStillLocked",
+      "msg": "Authority transfer is still within the time lock — cannot accept yet"
+    },
+    {
+      "code": 6013,
+      "name": "TransferAlreadyPending",
+      "msg": "A transfer is already pending — cancel it first"
+    },
+    {
+      "code": 6014,
+      "name": "NoPendingConfigUpdate",
+      "msg": "No pending config update to commit or cancel"
+    },
+    {
+      "code": 6015,
+      "name": "ConfigUpdateLocked",
+      "msg": "Config update time lock has not yet expired — wait before committing"
+    },
+    {
+      "code": 6016,
+      "name": "ConfigUpdateAlreadyPending",
+      "msg": "A config update is already pending — cancel it first"
+    },
+    {
+      "code": 6017,
+      "name": "BatchTooLarge",
+      "msg": "Batch size exceeds the maximum allowed"
+    },
+    {
+      "code": 6018,
+      "name": "InvalidBatchAccounts",
+      "msg": "Invalid batch account layout"
+    },
+    {
+      "code": 6019,
+      "name": "InvalidRoyaltyCreators",
+      "msg": "Invalid royalty creators — must be 1..=5 entries whose shares sum to 100"
+    },
+    {
+      "code": 6020,
+      "name": "CollectionSoldOut",
+      "msg": "Actor collection is sold out"
+    },
+    {
+      "code": 6021,
+      "name": "InvalidPayToken",
+      "msg": "Payment token mint does not match the configured PAY_TOKEN_MINT"
+    },
+    {
+      "code": 6022,
+      "name": "NotActorCollection",
+      "msg": "Collection is not an actor collection"
+    },
+    {
+      "code": 6023,
+      "name": "ActorMintAddressMismatch",
+      "msg": "Batch remaining account does not match the expected actor_mint PDA for this mint index"
+    },
+    {
+      "code": 6024,
+      "name": "ActorAlreadyMinted",
+      "msg": "Actor NFT at this mint index has already been minted"
+    },
+    {
+      "code": 6025,
+      "name": "InvalidPayloadFormat",
+      "msg": "Canonical payload is malformed or has unexpected fields"
+    },
+    {
+      "code": 6026,
+      "name": "PayloadCollectionIdMismatch",
+      "msg": "Payload collection id does not match the on-chain collection"
+    },
+    {
+      "code": 6027,
+      "name": "PayloadWalletMismatch",
+      "msg": "Payload wallet does not match the transaction signer"
+    },
+    {
+      "code": 6028,
+      "name": "PayloadQuantityMismatch",
+      "msg": "Payload mint quantity does not match the instruction parameter"
+    },
+    {
+      "code": 6029,
+      "name": "CollectionMintMismatch",
+      "msg": "Collection mint does not match CollectionInfo.mint"
+    },
+    {
+      "code": 6030,
+      "name": "PendingProposalStale",
+      "msg": "The pending config update was proposed by a previous authority — re-propose under the current authority"
+    },
+    {
+      "code": 6031,
+      "name": "EmptyConfigUpdate",
+      "msg": "Config update has no fields set — provide at least one field to update"
+    },
+    {
+      "code": 6032,
+      "name": "LockDurationTooLong",
+      "msg": "Lock duration exceeds the maximum allowed (7 days)"
+    },
+    {
+      "code": 6033,
+      "name": "LockDurationTooShort",
+      "msg": "Lock duration is below the minimum (24 hours) — timelock observation window too short"
+    },
+    {
+      "code": 6034,
+      "name": "OrderNoStale",
+      "msg": "orderNo must be strictly greater than the last accepted orderNo (nonce replay protection)"
+    }
+  ],
+  "types": [
+    {
+      "name": "ActorCollectionCreatedEvent",
+      "docs": [
+        "Emitted when a user creates an actor collection (delegator-signed)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "asset_id",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "collection_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "pay_token",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint_price",
+            "type": "u64"
+          },
+          {
+            "name": "total_supply",
+            "type": "u64"
+          },
+          {
+            "name": "fee_amount",
+            "type": "u64"
+          },
+          {
+            "name": "seller_fee_basis_points",
+            "type": "u16"
+          },
+          {
+            "name": "base_url",
+            "type": "string"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ActorNftBatchMintEvent",
+      "docs": [
+        "Emitted when multiple Actor NFTs are batch-minted.",
+        "Per-NFT metadata lives on Core assets; historical mint prices are in `mint_prices`.",
+        "Mint indices are contiguous: `start_mint_index..=end_mint_index`."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "collection_asset_id",
+            "type": "string"
+          },
+          {
+            "name": "start_mint_index",
+            "type": "u64"
+          },
+          {
+            "name": "end_mint_index",
+            "type": "u64"
+          },
+          {
+            "name": "mint_addresses",
+            "type": {
+              "vec": "pubkey"
+            }
+          },
+          {
+            "name": "mint_prices",
+            "type": {
+              "vec": "u64"
+            }
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "pay_token",
+            "type": "pubkey"
+          },
+          {
+            "name": "pay_amount",
+            "docs": [
+              "Actual mint cost transferred to treasury (bonding-curve sum)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "total_amount",
+            "docs": ["Signed `totalAmount` cap from the canonical payload."],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ActorNftUpgradeEvent",
+      "docs": [
+        "Merge upgrade: burn material NFTs and update the main actor NFT URI."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "collection_id",
+            "type": "string"
+          },
+          {
+            "name": "main_asset_id",
+            "type": "string"
+          },
+          {
+            "name": "burned_asset_ids",
+            "type": {
+              "vec": "string"
+            }
+          },
+          {
+            "name": "main_mint_address",
+            "type": "pubkey"
+          },
+          {
+            "name": "uri",
+            "type": "string"
+          },
+          {
+            "name": "order_id",
+            "docs": ["Backend order id from signed payload (analytics only)."],
+            "type": "string"
+          },
+          {
+            "name": "new_level",
+            "docs": ["New on-chain `level` after this upgrade."],
+            "type": "u64"
+          },
+          {
+            "name": "payer",
+            "type": "pubkey"
+          },
+          {
+            "name": "pay_token",
+            "type": "pubkey"
+          },
+          {
+            "name": "pay_amount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ActorStaminaBatchRefill",
+      "docs": [
+        "On-chain idempotency record for a batch stamina refill order.",
+        "",
+        "Uses the same PDA seed as `ActorStaminaRefill`, so an `order_no` can only be",
+        "consumed once across the single and batch refill instructions."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer",
+            "type": "pubkey"
+          },
+          {
+            "name": "order_no",
+            "type": "string"
+          },
+          {
+            "name": "asset_ids",
+            "type": {
+              "vec": "string"
+            }
+          },
+          {
+            "name": "actor_mints",
+            "type": {
+              "vec": "pubkey"
+            }
+          },
+          {
+            "name": "pay_amounts",
+            "type": {
+              "vec": "u64"
+            }
+          },
+          {
+            "name": "pay_token",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_pay_amount",
+            "type": "u64"
+          },
+          {
+            "name": "refilled_at",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "reserved",
+            "type": {
+              "array": ["u8", 32]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ActorStaminaBatchRefillEvent",
+      "docs": [
+        "Emitted when a user pays to refill multiple Actor NFTs in one order."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer",
+            "type": "pubkey"
+          },
+          {
+            "name": "order_no",
+            "type": "string"
+          },
+          {
+            "name": "asset_ids",
+            "type": {
+              "vec": "string"
+            }
+          },
+          {
+            "name": "mint_addresses",
+            "type": {
+              "vec": "pubkey"
+            }
+          },
+          {
+            "name": "pay_amounts",
+            "type": {
+              "vec": "u64"
+            }
+          },
+          {
+            "name": "pay_token",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_pay_amount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ActorStaminaRefill",
+      "docs": [
+        "On-chain idempotency record for a stamina refill order (keyed by `SHA256(order_no)`)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer",
+            "type": "pubkey"
+          },
+          {
+            "name": "order_no",
+            "type": "string"
+          },
+          {
+            "name": "asset_id",
+            "type": "string"
+          },
+          {
+            "name": "actor_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "pay_token",
+            "type": "pubkey"
+          },
+          {
+            "name": "pay_amount",
+            "type": "u64"
+          },
+          {
+            "name": "refilled_at",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "reserved",
+            "type": {
+              "array": ["u8", 32]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ActorStaminaRefillEvent",
+      "docs": ["Emitted when a user pays to refill actor NFT stamina."],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payer",
+            "type": "pubkey"
+          },
+          {
+            "name": "order_no",
+            "type": "string"
+          },
+          {
+            "name": "asset_id",
+            "type": "string"
+          },
+          {
+            "name": "mint_address",
+            "type": "pubkey"
+          },
+          {
+            "name": "pay_token",
+            "type": "pubkey"
+          },
+          {
+            "name": "pay_amount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CollectionInfo",
+      "docs": [
+        "On-chain registry for a collection NFT (drama or actor).",
+        "",
+        "Actor collections are keyed by `asset_id` (PDA seed). Drama collections use",
+        "`collection_type` as `asset_id` for backward compatibility."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "collection_type",
+            "type": "string"
+          },
+          {
+            "name": "asset_id",
+            "docs": [
+              "PDA seed for this collection (`collection_mint` / `collection_info`)."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "name",
+            "docs": [
+              "Actor: metadata `base_url` (`{base_url}{id}.json`); Drama: full collection URI."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "type": "string"
+          },
+          {
+            "name": "latest_mint_index",
+            "docs": [
+              "Latest mint index assigned under this collection. Next mint uses `latest_mint_index + 1`."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "mint_price",
+            "docs": [
+              "Bonding-curve price of the most recently minted NFT (P0 before any mint)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "p0",
+            "docs": [
+              "Immutable initial mint price P0 (set at collection creation)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "total_supply",
+            "docs": [
+              "Max actor NFTs mintable under this collection (0 = unlimited)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "creator",
+            "docs": [
+              "Creator wallet that created the collection (signed payload)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "seller_fee_basis_points",
+            "docs": [
+              "Royalty bps snapshot at collection creation; new mints read live config (`actor_*` or `drama_*`)."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "r",
+            "type": "u128"
+          },
+          {
+            "name": "reserved",
+            "type": {
+              "array": ["u8", 32]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "CreateCollectionParams",
+      "docs": ["Parameters for `create_collection`"],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "collection_type",
+            "docs": [
+              "Used as PDA seed for the mint: [CollectionInfo::MINT_SEED, collection_type]",
+              "e.g. \"drama\" or \"actor\" (max 16 chars)"
+            ],
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DramaNftMintEvent",
+      "docs": ["Emitted when a Series/Drama NFT is minted"],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "drama_id",
+            "type": "u64"
+          },
+          {
+            "name": "mint_address",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "type": "string"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "pay_token",
+            "docs": ["SPL token mint used for the creation fee payment"],
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_amount",
+            "docs": [
+              "Handling fee paid to treasury (in pay_token's smallest unit)"
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "docs": ["Contract management: pause, update config"],
+            "type": "pubkey"
+          },
+          {
+            "name": "admin",
+            "docs": ["Can create Collection NFTs"],
+            "type": "pubkey"
+          },
+          {
+            "name": "delegator",
+            "docs": ["Backend signer for delegated mint / stake operations"],
+            "type": "pubkey"
+          },
+          {
+            "name": "story_token_mint",
+            "docs": [
+              "The STORY SPL token mint; set one-time via `set_story_token_mint`, immutable thereafter."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "paused",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "pending_authority",
+            "docs": [
+              "Pending new authority for two-step transfer (Pubkey::default() = none)"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "transfer_locked_until",
+            "docs": [
+              "Unix timestamp after which pending authority transfer can be accepted"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "latest_order_no",
+            "docs": [
+              "Global monotonic orderNo nonce for replay protection on signed instructions.",
+              "Repurposed from `rollback_until`; binary layout unchanged (Borsh encodes i64/u64 identically)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "treasury",
+            "docs": [
+              "Treasury wallet address — all payments are sent to this wallet's ATAs.",
+              "Also used as the sole Metaplex secondary-royalty recipient for actor / drama NFTs."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "platform_royalty_share",
+            "docs": [
+              "Platform share in Metaplex secondary-market royalty (0–100).",
+              "Actor NFTs use platform-only royalty; default is 100."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "actor_seller_fee_basis_points",
+            "docs": [
+              "Metaplex secondary-market royalty bps for actor NFTs (0–10000)."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "drama_seller_fee_basis_points",
+            "docs": [
+              "Metaplex secondary-market royalty bps for drama NFTs (0–10000)."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "reserved",
+            "docs": ["reserved space for future config fields"],
+            "type": {
+              "array": ["u8", 45]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializeParams",
+      "docs": [
+        "Parameters for `initialize`",
+        "`admin` and `delegator` are required — must be non-zero pubkeys.",
+        "Setting them at init time avoids a separate update_config call + lock-wait."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "delegator",
+            "type": "pubkey"
+          },
+          {
+            "name": "treasury",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PendingConfig",
+      "docs": [
+        "Stores a proposed config update that has not yet taken effect.",
+        "Created by propose_config_update; applied by commit_config_update.",
+        "Changes are NOT applied to GlobalConfig until commit is called after",
+        "the time lock expires."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "proposer",
+            "docs": ["The authority who proposed this update"],
+            "type": "pubkey"
+          },
+          {
+            "name": "executable_at",
+            "docs": [
+              "When this proposal can be committed (Unix timestamp seconds)"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "new_admin",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "new_delegator",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "new_paused",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "new_story_token_mint",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "new_treasury",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "reserved",
+            "type": {
+              "array": ["u8", 17]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProposeAuthorityTransferParams",
+      "docs": ["Parameters for `propose_authority_transfer`"],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "new_authority",
+            "docs": ["The new authority pubkey to transfer to"],
+            "type": "pubkey"
+          },
+          {
+            "name": "lock_duration_secs",
+            "docs": [
+              "How many seconds to lock before the transfer can be accepted",
+              "Typical: 86400 (1 day) to 604800 (7 days)"
+            ],
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProposeConfigUpdateParams",
+      "docs": [
+        "Parameters for `propose_config_update` (timelocked fields: treasury, admin, delegator, pause).",
+        "`story_token_mint` is intentionally NOT included — it is immutable after",
+        "`set_story_token_mint` (changing it would brick the stake vault and orphan",
+        "staked tokens; see `set_story_token_mint` doc)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "new_admin",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "new_delegator",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "new_paused",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "new_treasury",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "lock_duration_secs",
+            "docs": [
+              "Minimum seconds to wait before committing (e.g. 86400 = 1 day)"
+            ],
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SignedParams",
+      "docs": [
+        "Parameters shared by all delegator-signed instructions:",
+        "`mint_series_nft`, `batch_mint_actor_nft`, `upgrade_actor_nft`,",
+        "`refill_actor_stamina`, `batch_refill_actor_stamina`.",
+        "",
+        "`canonical_payload` is a pipe-delimited UTF-8 string whose format",
+        "depends on the instruction (see each handler's doc comment).",
+        "",
+        "`sig` is the 64-byte Ed25519 signature the backend produces over",
+        "SHA256(canonical_payload)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "canonical_payload",
+            "type": "string"
+          },
+          {
+            "name": "sig",
+            "type": {
+              "array": ["u8", 64]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateConfigParams",
+      "docs": [
+        "Parameters for `update_config`.",
+        "",
+        "Only royalty fields and `paused` are honored — all are immediate (no timelock).",
+        "Sensitive fields (`authority` / `admin` / `delegator` / `treasury`) are NOT",
+        "here: `authority` uses `propose_authority_transfer` → `accept_authority_transfer`;",
+        "`admin` / `delegator` / `treasury` use `propose_config_update` → `commit_config_update`."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "paused",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "new_platform_royalty_share",
+            "type": {
+              "option": "u8"
+            }
+          },
+          {
+            "name": "new_actor_seller_fee_basis_points",
+            "docs": [
+              "Actor NFT Metaplex royalty bps (0–10000). Immediate — no timelock."
+            ],
+            "type": {
+              "option": "u16"
+            }
+          },
+          {
+            "name": "new_drama_seller_fee_basis_points",
+            "docs": [
+              "Drama NFT Metaplex royalty bps (0–10000). Immediate — no timelock."
+            ],
+            "type": {
+              "option": "u16"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

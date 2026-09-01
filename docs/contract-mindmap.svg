@@ -1,0 +1,315 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1270 3268">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'JetBrains Mono', 'Noto Sans SC', 'PingFang SC', sans-serif; }
+</style>
+<defs>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+  </pattern>
+</defs>
+<rect width="100%" height="100%" fill="#0f172a"/>
+<rect width="100%" height="100%" fill="url(#grid)"/>
+<path d="M 170 1634 C 230 1634, 240 1634, 300 1634" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1634 C 480 1634, 490 854, 550 854" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 854 C 730 854, 740 230, 800 230" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 62, 1050 62" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 86, 1050 86" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 110, 1050 110" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 134, 1050 134" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 158, 1050 158" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 182, 1050 182" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 206, 1050 206" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 230, 1050 230" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 254, 1050 254" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 278, 1050 278" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 302, 1050 302" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 326, 1050 326" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 350, 1050 350" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 374, 1050 374" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 230 C 980 230, 990 398, 1050 398" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 854 C 730 854, 740 470, 800 470" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 470 C 980 470, 990 422, 1050 422" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 470 C 980 470, 990 446, 1050 446" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 470 C 980 470, 990 470, 1050 470" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 470 C 980 470, 990 494, 1050 494" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 470 C 980 470, 990 518, 1050 518" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 854 C 730 854, 740 602, 800 602" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 602 C 980 602, 990 542, 1050 542" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 602 C 980 602, 990 566, 1050 566" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 602 C 980 602, 990 590, 1050 590" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 602 C 980 602, 990 614, 1050 614" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 602 C 980 602, 990 638, 1050 638" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 602 C 980 602, 990 662, 1050 662" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 854 C 730 854, 740 746, 800 746" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 746 C 980 746, 990 686, 1050 686" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 746 C 980 746, 990 710, 1050 710" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 746 C 980 746, 990 734, 1050 734" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 746 C 980 746, 990 758, 1050 758" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 746 C 980 746, 990 782, 1050 782" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 746 C 980 746, 990 806, 1050 806" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 854 C 730 854, 740 1238, 800 1238" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 830, 1050 830" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 854, 1050 854" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 878, 1050 878" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 902, 1050 902" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 926, 1050 926" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 950, 1050 950" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 974, 1050 974" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 998, 1050 998" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1022, 1050 1022" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1046, 1050 1046" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1070, 1050 1070" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1094, 1050 1094" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1118, 1050 1118" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1142, 1050 1142" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1166, 1050 1166" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1190, 1050 1190" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1214, 1050 1214" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1238, 1050 1238" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1262, 1050 1262" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1286, 1050 1286" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1310, 1050 1310" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1334, 1050 1334" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1358, 1050 1358" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1382, 1050 1382" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1406, 1050 1406" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1430, 1050 1430" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1454, 1050 1454" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1478, 1050 1478" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1502, 1050 1502" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1526, 1050 1526" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1550, 1050 1550" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1574, 1050 1574" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1598, 1050 1598" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1622, 1050 1622" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1238 C 980 1238, 990 1646, 1050 1646" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 420 1634 C 480 1634, 490 2438, 550 2438" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2438 C 730 2438, 740 1838, 800 1838" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1670, 1050 1670" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1694, 1050 1694" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1718, 1050 1718" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1742, 1050 1742" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1766, 1050 1766" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1790, 1050 1790" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1814, 1050 1814" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1838, 1050 1838" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1862, 1050 1862" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1886, 1050 1886" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1910, 1050 1910" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1934, 1050 1934" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1958, 1050 1958" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 1982, 1050 1982" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 1838 C 980 1838, 990 2006, 1050 2006" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2438 C 730 2438, 740 2078, 800 2078" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2078 C 980 2078, 990 2030, 1050 2030" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2078 C 980 2078, 990 2054, 1050 2054" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2078 C 980 2078, 990 2078, 1050 2078" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2078 C 980 2078, 990 2102, 1050 2102" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2078 C 980 2078, 990 2126, 1050 2126" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2438 C 730 2438, 740 2246, 800 2246" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2246 C 980 2246, 990 2150, 1050 2150" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2246 C 980 2246, 990 2174, 1050 2174" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2246 C 980 2246, 990 2198, 1050 2198" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2246 C 980 2246, 990 2222, 1050 2222" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2246 C 980 2246, 990 2246, 1050 2246" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2246 C 980 2246, 990 2270, 1050 2270" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2246 C 980 2246, 990 2294, 1050 2294" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2246 C 980 2246, 990 2318, 1050 2318" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2246 C 980 2246, 990 2342, 1050 2342" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2438 C 730 2438, 740 2366, 800 2366" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2366 C 980 2366, 990 2366, 1050 2366" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 670 2438 C 730 2438, 740 2798, 800 2798" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2390, 1050 2390" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2414, 1050 2414" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2438, 1050 2438" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2462, 1050 2462" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2486, 1050 2486" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2510, 1050 2510" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2534, 1050 2534" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2558, 1050 2558" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2582, 1050 2582" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2606, 1050 2606" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2630, 1050 2630" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2654, 1050 2654" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2678, 1050 2678" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2702, 1050 2702" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2726, 1050 2726" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2750, 1050 2750" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2774, 1050 2774" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2798, 1050 2798" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2822, 1050 2822" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2846, 1050 2846" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2870, 1050 2870" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2894, 1050 2894" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2918, 1050 2918" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2942, 1050 2942" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2966, 1050 2966" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 2990, 1050 2990" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 3014, 1050 3014" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 3038, 1050 3038" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 3062, 1050 3062" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 3086, 1050 3086" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 3110, 1050 3110" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 3134, 1050 3134" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 3158, 1050 3158" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 3182, 1050 3182" fill="none" stroke="#475569" stroke-width="1.5"/>
+<path d="M 920 2798 C 980 2798, 990 3206, 1050 3206" fill="none" stroke="#475569" stroke-width="1.5"/>
+<rect x="50" y="1609" width="160" height="50" rx="6" fill="#0f172a"/>
+<rect x="50" y="1609" width="160" height="50" rx="6" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.5"/>
+<text x="130" y="1638.6666666666667" fill="white" font-size="14" font-weight="600" text-anchor="middle">Contracts</text>
+<rect x="300" y="1623" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="300" y="1623" width="140" height="22" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="370" y="1638" fill="white" font-size="12" font-weight="600" text-anchor="middle">Solana Story</text>
+<rect x="550" y="843" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="843" width="140" height="22" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="620" y="857.3333333333334" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">IDL (Story.json)</text>
+<text x="810" y="233" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">Instructions</text>
+<text x="1060" y="65" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">accept_authority_transfer</text>
+<text x="1060" y="89" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">batch_mint_actor_nft</text>
+<text x="1060" y="113" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">batch_refill_actor_stamina</text>
+<text x="1060" y="137" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">cancel_authority_transfer</text>
+<text x="1060" y="161" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">cancel_config_update</text>
+<text x="1060" y="185" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">commit_config_update</text>
+<text x="1060" y="209" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">create_actor_collection</text>
+<text x="1060" y="233" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">create_collection</text>
+<text x="1060" y="257" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">initialize</text>
+<text x="1060" y="281" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">mint_series_nft</text>
+<text x="1060" y="305" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">propose_authority_transfer</text>
+<text x="1060" y="329" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">propose_config_update</text>
+<text x="1060" y="353" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">refill_actor_stamina</text>
+<text x="1060" y="377" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">update_config</text>
+<text x="1060" y="401" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">upgrade_actor_nft</text>
+<text x="810" y="473" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">Accounts</text>
+<text x="1060" y="425" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ActorStaminaBatchRefill</text>
+<text x="1060" y="449" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ActorStaminaRefill</text>
+<text x="1060" y="473" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">CollectionInfo</text>
+<text x="1060" y="497" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">GlobalConfig</text>
+<text x="1060" y="521" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">PendingConfig</text>
+<text x="810" y="605" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">Types</text>
+<text x="1060" y="545" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">CreateCollectionParams</text>
+<text x="1060" y="569" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InitializeParams</text>
+<text x="1060" y="593" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ProposeAuthorityTransferParams</text>
+<text x="1060" y="617" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ProposeConfigUpdateParams</text>
+<text x="1060" y="641" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">SignedParams</text>
+<text x="1060" y="665" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">UpdateConfigParams</text>
+<text x="810" y="749" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">Events</text>
+<text x="1060" y="689" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ActorCollectionCreatedEvent</text>
+<text x="1060" y="713" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ActorNftBatchMintEvent</text>
+<text x="1060" y="737" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ActorNftUpgradeEvent</text>
+<text x="1060" y="761" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ActorStaminaBatchRefillEvent</text>
+<text x="1060" y="785" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ActorStaminaRefillEvent</text>
+<text x="1060" y="809" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">DramaNftMintEvent</text>
+<text x="810" y="1241" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">Errors</text>
+<text x="1060" y="833" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ActorAlreadyMinted</text>
+<text x="1060" y="857" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ActorMintAddressMismatch</text>
+<text x="1060" y="881" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">BatchTooLarge</text>
+<text x="1060" y="905" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">CollectionMintMismatch</text>
+<text x="1060" y="929" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">CollectionSoldOut</text>
+<text x="1060" y="953" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ConfigUpdateAlreadyPending</text>
+<text x="1060" y="977" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ConfigUpdateLocked</text>
+<text x="1060" y="1001" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">EmptyConfigUpdate</text>
+<text x="1060" y="1025" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidAmount</text>
+<text x="1060" y="1049" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidBatchAccounts</text>
+<text x="1060" y="1073" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidNftType</text>
+<text x="1060" y="1097" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidPayToken</text>
+<text x="1060" y="1121" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidPayloadFormat</text>
+<text x="1060" y="1145" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidRoyaltyCreators</text>
+<text x="1060" y="1169" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidSignature</text>
+<text x="1060" y="1193" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">LockDurationTooLong</text>
+<text x="1060" y="1217" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">LockDurationTooShort</text>
+<text x="1060" y="1241" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">NameTooLong</text>
+<text x="1060" y="1265" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">NoPendingConfigUpdate</text>
+<text x="1060" y="1289" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">NoPendingTransfer</text>
+<text x="1060" y="1313" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">NotActorCollection</text>
+<text x="1060" y="1337" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">OrderNoStale</text>
+<text x="1060" y="1361" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">PayAmountExceedsSignedCap</text>
+<text x="1060" y="1385" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">PayloadCollectionIdMismatch</text>
+<text x="1060" y="1409" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">PayloadQuantityMismatch</text>
+<text x="1060" y="1433" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">PayloadWalletMismatch</text>
+<text x="1060" y="1457" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">PendingProposalStale</text>
+<text x="1060" y="1481" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ProgramPaused</text>
+<text x="1060" y="1505" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">SignatureExpired</text>
+<text x="1060" y="1529" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">StoryTokenMintAlreadySet</text>
+<text x="1060" y="1553" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">StoryTokenMintNotSet</text>
+<text x="1060" y="1577" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">TransferAlreadyPending</text>
+<text x="1060" y="1601" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">TransferStillLocked</text>
+<text x="1060" y="1625" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">Unauthorized</text>
+<text x="1060" y="1649" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">UriTooLong</text>
+<rect x="550" y="2427" width="140" height="22" rx="6" fill="#0f172a"/>
+<rect x="550" y="2427" width="140" height="22" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="620" y="2441.3333333333335" fill="#e2e8f0" font-size="10" font-weight="400" text-anchor="middle">Generated (Codama)</text>
+<text x="810" y="1841" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">Instructions</text>
+<text x="1060" y="1673" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">acceptAuthorityTransfer</text>
+<text x="1060" y="1697" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">batchMintActorNft</text>
+<text x="1060" y="1721" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">batchRefillActorStamina</text>
+<text x="1060" y="1745" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">cancelAuthorityTransfer</text>
+<text x="1060" y="1769" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">cancelConfigUpdate</text>
+<text x="1060" y="1793" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">commitConfigUpdate</text>
+<text x="1060" y="1817" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">createActorCollection</text>
+<text x="1060" y="1841" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">createCollection</text>
+<text x="1060" y="1865" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">initialize</text>
+<text x="1060" y="1889" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">mintSeriesNft</text>
+<text x="1060" y="1913" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">proposeAuthorityTransfer</text>
+<text x="1060" y="1937" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">proposeConfigUpdate</text>
+<text x="1060" y="1961" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">refillActorStamina</text>
+<text x="1060" y="1985" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">updateConfig</text>
+<text x="1060" y="2009" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">upgradeActorNft</text>
+<text x="810" y="2081" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">Accounts</text>
+<text x="1060" y="2033" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">actorStaminaBatchRefill</text>
+<text x="1060" y="2057" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">actorStaminaRefill</text>
+<text x="1060" y="2081" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">collectionInfo</text>
+<text x="1060" y="2105" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">globalConfig</text>
+<text x="1060" y="2129" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">pendingConfig</text>
+<text x="810" y="2249" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">PDAs</text>
+<text x="1060" y="2153" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">asset</text>
+<text x="1060" y="2177" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">collection</text>
+<text x="1060" y="2201" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">collectionInfo</text>
+<text x="1060" y="2225" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">collectionMint</text>
+<text x="1060" y="2249" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">config</text>
+<text x="1060" y="2273" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">mintSeriesNftCollectionInfo</text>
+<text x="1060" y="2297" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">pendingConfig</text>
+<text x="1060" y="2321" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">refillActorStaminaAsset</text>
+<text x="1060" y="2345" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">refillRecord</text>
+<text x="810" y="2369" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">Types</text>
+<text x="1060" y="2369" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">signedParams</text>
+<text x="810" y="2801" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">Errors</text>
+<text x="1060" y="2393" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">Unauthorized</text>
+<text x="1060" y="2417" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">NameTooLong</text>
+<text x="1060" y="2441" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">UriTooLong</text>
+<text x="1060" y="2465" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ProgramPaused</text>
+<text x="1060" y="2489" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidNftType</text>
+<text x="1060" y="2513" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidAmount</text>
+<text x="1060" y="2537" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">PayAmountExceedsSignedCap</text>
+<text x="1060" y="2561" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">StoryTokenMintNotSet</text>
+<text x="1060" y="2585" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">StoryTokenMintAlreadySet</text>
+<text x="1060" y="2609" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidSignature</text>
+<text x="1060" y="2633" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">SignatureExpired</text>
+<text x="1060" y="2657" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">NoPendingTransfer</text>
+<text x="1060" y="2681" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">TransferStillLocked</text>
+<text x="1060" y="2705" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">TransferAlreadyPending</text>
+<text x="1060" y="2729" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">NoPendingConfigUpdate</text>
+<text x="1060" y="2753" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ConfigUpdateLocked</text>
+<text x="1060" y="2777" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ConfigUpdateAlreadyPending</text>
+<text x="1060" y="2801" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">BatchTooLarge</text>
+<text x="1060" y="2825" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidBatchAccounts</text>
+<text x="1060" y="2849" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidRoyaltyCreators</text>
+<text x="1060" y="2873" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">CollectionSoldOut</text>
+<text x="1060" y="2897" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidPayToken</text>
+<text x="1060" y="2921" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">NotActorCollection</text>
+<text x="1060" y="2945" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ActorMintAddressMismatch</text>
+<text x="1060" y="2969" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">ActorAlreadyMinted</text>
+<text x="1060" y="2993" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">InvalidPayloadFormat</text>
+<text x="1060" y="3017" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">PayloadCollectionIdMismatch</text>
+<text x="1060" y="3041" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">PayloadWalletMismatch</text>
+<text x="1060" y="3065" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">PayloadQuantityMismatch</text>
+<text x="1060" y="3089" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">CollectionMintMismatch</text>
+<text x="1060" y="3113" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">PendingProposalStale</text>
+<text x="1060" y="3137" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">EmptyConfigUpdate</text>
+<text x="1060" y="3161" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">LockDurationTooLong</text>
+<text x="1060" y="3185" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">LockDurationTooShort</text>
+<text x="1060" y="3209" fill="#94a3b8" font-size="9" font-weight="400" text-anchor="start">OrderNoStale</text>
+
+<rect x="20" y="20" width="200" height="40" rx="6" fill="#0f172a" fill-opacity="0.8"/>
+<text x="30" y="45" fill="white" font-size="16" font-weight="700">Contract Mind Map</text>
+</svg>

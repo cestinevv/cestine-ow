@@ -1,0 +1,10 @@
+{
+  "idl": "src/abis/Story.json",
+  "before": [],
+  "scripts": {
+    "js": {
+      "from": "@codama/renderers-js",
+      "args": ["src/solana/generated/story"]
+    }
+  }
+}
