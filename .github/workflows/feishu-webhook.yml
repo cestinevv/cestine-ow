@@ -17,13 +17,7 @@ jobs:
           TIMESTAMP: ${{ github.event.head_commit.timestamp }}
           COMPARE: ${{ github.event.compare }}
         run: |
-          TEXT="🚀 GitHub 代码提交通知
-仓库：${REPO}
-提交人：${ACTOR}
-提交信息：${COMMIT_MSG}
-提交时间：${TIMESTAMP}
-查看代码：${COMPARE}"
-
+          TEXT=$(printf "🚀 GitHub 代码提交通知\n仓库：${REPO}\n提交人：${ACTOR}\n提交信息：${COMMIT_MSG}\n提交时间：${TIMESTAMP}\n查看代码：${COMPARE}")
           curl -s -X POST "$FEISHU_WEBHOOK_URL" \
             -H "Content-Type: application/json" \
             -d "$(jq -n --arg text "$TEXT" '{"msg_type":"text","content":{"text":$text}}')"
