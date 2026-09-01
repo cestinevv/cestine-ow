@@ -9,13 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send Message to Feishu
-        uses: whatwewant/action-robot-feishu@v0.0.1 # 使用社区成熟的飞书推送组件
-        with:
-          url: ${{ secrets.FEISHU_WEBHOOK_URL }}
-          title: "🚀 GitHub 代码提交通知"
-          text: |
-            **仓库**：${{ github.repository }}
-            **提交人**：${{ github.actor }}
-            **提交信息**：${{ github.event.head_commit.message }}
-            **提交时间**：${{ github.event.head_commit.timestamp }}
-            **查看代码**：[点击跳转](${{ github.event.compare }})
+        env:
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+        run: |
+          curl -s -X POST "$FEISHU_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"msg_type\": \"text\",
+              \"content\": {
+                \"text\": \"🚀 GitHub 代码提交通知\n仓库：${{ github.repository }}\n提交人：${{ github.actor }}\n提交信息：${{ github.event.head_commit.message }}\n提交时间：${{ github.event.head_commit.timestamp }}\n查看代码：${{ github.event.compare }}\"
+              }
+            }"
