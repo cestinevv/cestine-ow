@@ -1,0 +1,291 @@
+name: PR Analysis
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# Concurrency: cancel superseded runs on the same PR
+concurrency:
+  group: pr-analysis-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+# =============================================================================
+# Config knobs - flip these in repo/org Variables (Settings → Variables) to
+# turn scans on/off without editing the workflow file.
+#
+#   ENABLE_SONAR       : "true"  → run SonarQube job          (default: false)
+#   ENABLE_PR_AGENT    : "true"  → run PR-Agent job           (default: true)
+#   ENABLE_IMPACT      : "true"  → run impact-analysis job    (default: true)
+#   ENABLE_BUNDLE_DIFF : "true"  → run bundle-size diff job   (default: true)
+#   ENABLE_TSC_DIFF    : "true"  → run tsc error diff job     (default: true)
+#
+#   PR_AGENT_MODEL     : LLM model id used by PR-Agent
+#                        e.g. "anthropic/claude-opus-4-8"
+#                             "openai/gpt-4o"
+#                             "gemini/gemini-2.5-pro"
+#                             "minmax-m3"            ← custom, needs LITELLM_* wired
+#                        (default: "anthropic/claude-opus-4-8")
+# =============================================================================
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # 1. SonarQube static analysis (disabled by default)
+  # ---------------------------------------------------------------------------
+  sonar:
+    name: SonarQube
+    if: vars.ENABLE_SONAR == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v4
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dsonar.projectKey=${{ vars.SONAR_PROJECT_KEY || 'web-onestory' }}
+            -Dsonar.pullrequest.key=${{ github.event.pull_request.number }}
+            -Dsonar.pullrequest.branch=${{ github.head_ref }}
+            -Dsonar.pullrequest.base=${{ github.base_ref }}
+
+  # ---------------------------------------------------------------------------
+  # 2. AI code review via PR-Agent (Qodo)
+  # ---------------------------------------------------------------------------
+  pr-agent:
+    name: PR-Agent (AI Review)
+    if: vars.ENABLE_PR_AGENT != 'false'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+      issues: write
+    steps:
+      - name: PR-Agent action
+        uses: qodo-ai/pr-agent@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # LLM backend selection — pick ONE of the following per your model:
+          OPENAI_KEY:        ${{ secrets.OPENAI_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+          # For self-hosted / custom / non-standard models (e.g. minmax-m3) route
+          # through LiteLLM — set BOTH secrets and use "openai/<model>" as
+          # config.model, since LiteLLM speaks OpenAI protocol at the edge.
+          OPENAI_API_BASE: ${{ secrets.LITELLM_BASE_URL }}
+
+          # PR-Agent config overrides (any config.* key can be set as env var)
+          CONFIG__MODEL: ${{ vars.PR_AGENT_MODEL || 'anthropic/claude-opus-4-8' }}
+          CONFIG__FALLBACK_MODELS: '["anthropic/claude-haiku-4-5-20251001"]'
+          CONFIG__PUBLISH_OUTPUT: 'true'
+          CONFIG__VERBOSITY_LEVEL: '1'
+
+          # Auto-run these on every PR
+          GITHUB_ACTION_CONFIG__AUTO_DESCRIBE: 'true'
+          GITHUB_ACTION_CONFIG__AUTO_REVIEW: 'true'
+          GITHUB_ACTION_CONFIG__AUTO_IMPROVE: 'false'
+
+          # Focused review prompt (impact-oriented, not style)
+          PR_REVIEWER__EXTRA_INSTRUCTIONS: |
+            重点关注:
+            1. 影响范围 — 改动的模块被谁引用,是否有跨页面/跨路由的副作用
+            2. 回归风险 — 是否可能破坏其他功能,尤其是共享 hooks / stores / providers
+            3. 安全 — 敏感数据处理、鉴权、XSS、SQL/命令注入
+            4. 性能 — 不必要的重渲染、bundle 体积、hot path 上的同步操作
+            忽略纯样式和格式化建议(Biome 已经在处理)。
+
+  # ---------------------------------------------------------------------------
+  # 3. Impact analysis — changed files → routes → reverse deps
+  # ---------------------------------------------------------------------------
+  impact:
+    name: Impact Analysis
+    if: vars.ENABLE_IMPACT != 'false'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Install madge
+        run: pnpm add -w -D madge
+
+      - name: Run impact analysis
+        id: impact
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: pnpm exec tsx scripts/pr-impact-analysis.ts > impact-report.md
+
+      - name: Comment on PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: pr-impact
+          path: impact-report.md
+
+  # ---------------------------------------------------------------------------
+  # 4. Bundle-size diff — build base + head, compare .output size and chunks
+  # ---------------------------------------------------------------------------
+  bundle-diff:
+    name: Bundle Size Diff
+    if: vars.ENABLE_BUNDLE_DIFF != 'false'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Build HEAD
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm run build:dev || true
+          if [ -d .output ]; then
+            du -sb .output | awk '{print $1}' > /tmp/head-size.txt
+            find .output -type f -name "*.js" -exec du -b {} \; | sort -rn | head -20 > /tmp/head-chunks.txt
+          else
+            echo "0" > /tmp/head-size.txt
+            echo "" > /tmp/head-chunks.txt
+          fi
+          rm -rf .output dist
+
+      - name: Build BASE
+        run: |
+          git checkout ${{ github.event.pull_request.base.sha }} -- .
+          pnpm install --frozen-lockfile
+          pnpm run build:dev || true
+          if [ -d .output ]; then
+            du -sb .output | awk '{print $1}' > /tmp/base-size.txt
+            find .output -type f -name "*.js" -exec du -b {} \; | sort -rn | head -20 > /tmp/base-chunks.txt
+          else
+            echo "0" > /tmp/base-size.txt
+            echo "" > /tmp/base-chunks.txt
+          fi
+
+      - name: Format diff
+        id: fmt
+        run: |
+          BASE=$(cat /tmp/base-size.txt)
+          HEAD=$(cat /tmp/head-size.txt)
+          DELTA=$((HEAD - BASE))
+          BASE_KB=$(awk -v b="$BASE" 'BEGIN{printf "%.1f", b/1024}')
+          HEAD_KB=$(awk -v h="$HEAD" 'BEGIN{printf "%.1f", h/1024}')
+          DELTA_KB=$(awk -v d="$DELTA" 'BEGIN{printf "%+.1f", d/1024}')
+
+          {
+            echo "## 📦 Bundle Size Diff"
+            echo ""
+            echo "| | Size |"
+            echo "|---|---|"
+            echo "| Base (\`${{ github.base_ref }}\`) | ${BASE_KB} KB |"
+            echo "| Head (\`${{ github.head_ref }}\`) | ${HEAD_KB} KB |"
+            echo "| **Δ** | **${DELTA_KB} KB** |"
+            echo ""
+            echo "<details><summary>Top 20 chunks (HEAD)</summary>"
+            echo ""
+            echo '```'
+            cat /tmp/head-chunks.txt
+            echo '```'
+            echo "</details>"
+          } > bundle-report.md
+
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: pr-bundle
+          path: bundle-report.md
+
+  # ---------------------------------------------------------------------------
+  # 5. tsc error diff — new type errors introduced by this PR
+  # ---------------------------------------------------------------------------
+  tsc-diff:
+    name: TypeScript Error Diff
+    if: vars.ENABLE_TSC_DIFF != 'false'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: tsc on HEAD
+        run: |
+          pnpm exec tsc --noEmit --pretty false 2>&1 \
+            | grep -vE "src/api/__generated__/|src/solana/" \
+            | grep "error TS" | sort -u > /tmp/head-errors.txt || true
+
+      - name: tsc on BASE
+        run: |
+          git checkout ${{ github.event.pull_request.base.sha }} -- .
+          pnpm install --frozen-lockfile
+          pnpm exec tsc --noEmit --pretty false 2>&1 \
+            | grep -vE "src/api/__generated__/|src/solana/" \
+            | grep "error TS" | sort -u > /tmp/base-errors.txt || true
+
+      - name: Diff
+        run: |
+          NEW=$(comm -23 /tmp/head-errors.txt /tmp/base-errors.txt)
+          FIXED=$(comm -13 /tmp/head-errors.txt /tmp/base-errors.txt)
+          NEW_COUNT=$(echo "$NEW" | grep -c "error TS" || true)
+          FIXED_COUNT=$(echo "$FIXED" | grep -c "error TS" || true)
+
+          {
+            echo "## 🔍 TypeScript Error Diff"
+            echo ""
+            echo "- ✅ Fixed: **${FIXED_COUNT}**"
+            echo "- ❌ New:   **${NEW_COUNT}**"
+            echo ""
+            if [ "$NEW_COUNT" -gt 0 ]; then
+              echo "<details open><summary>New errors</summary>"
+              echo ""
+              echo '```'
+              echo "$NEW"
+              echo '```'
+              echo "</details>"
+            fi
+          } > tsc-report.md
+
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: pr-tsc
+          path: tsc-report.md

@@ -2,7 +2,7 @@ name: Feishu Push Notify
 
 on:
   push:
-    branches: [ "main", "master" ] # 监听 main 和 master 分支的提交
+    branches: ["**"]
 
 jobs:
   notify:
